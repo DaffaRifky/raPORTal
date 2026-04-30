@@ -13,3 +13,11 @@ route::get('/login', function () {
 route::get('/sidebar', function () {
     return view('components.sidebar');
 })->name('sidebar');
+
+route::get('/admin/dashboard', function () {
+    return view('pages.admin.dashboard');
+})->name('admin.dashboard');
+
+route::get('/guru/dashboard', function () {
+    return view('pages.guru.dashboard');
+})->name('guru.dashboard');

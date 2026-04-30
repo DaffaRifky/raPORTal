@@ -18,9 +18,9 @@
                         class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-200">
                 </div>
                 <div class="flex items-center justify-between">
-                    <button type="submit"
+                    <a href="guru/dashboard"
                         class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:ring-blue-200 mx-auto">
-                        Sign In
-                    </button>
+                        login
+                    </a>
 
 </body>
