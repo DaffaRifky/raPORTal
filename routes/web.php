@@ -21,3 +21,12 @@ route::get('/admin/dashboard', function () {
 route::get('/guru/dashboard', function () {
     return view('pages.guru.dashboard');
 })->name('guru.dashboard');
+
+route::get('/guru/input-nilai', function () {
+    return view('pages.guru.input-nilai');
+})->name('guru.input-nilai');
+
+route::get('/guru/data-pribadi', function () {
+    return view('pages.guru.data-pribadi');
+})->name('guru.data-pribadi');
+

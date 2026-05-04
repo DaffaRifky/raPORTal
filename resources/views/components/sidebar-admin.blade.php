@@ -6,9 +6,9 @@
         <hr class="opacity-25">
         <nav >
             <ul>
-                <x-sidebarlink href="/dashboard">Dashboard</x-sidebarlink>
-                <x-sidebarlink href="/profile">Profile</x-sidebarlink>
-                <x-sidebarlink href="/settings">Settings</x-sidebarlink>
+                <x-sidebarlink href="/guru/dashboard">Dashboard</x-sidebarlink>
+                <x-sidebarlink href="/guru/input-nilai">Input Nilai</x-sidebarlink>
+                <x-sidebarlink href="/guru/data-pribadi">Data Pribadi</x-sidebarlink>
             </ul>
         </nav>
     </div>
