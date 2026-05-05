@@ -30,3 +30,21 @@ route::get('/guru/data-pribadi', function () {
     return view('pages.guru.data-pribadi');
 })->name('guru.data-pribadi');
 
+route::get('/admin/data-guru', function () {
+    return view('pages.admin.data-guru');
+})->name('admin.data-guru');
+
+route::get('/admin/data-kelas', function () {
+    return view('pages.admin.data-kelas');
+})->name('admin.data-kelas');
+
+route::get('/admin/data-siswa', function () {
+    return view('pages.admin.data-siswa');
+})->name('admin.data-siswa');
+
+route::get('/admin/data-admin', function () {
+    return view('pages.admin.data-admin');
+})->name('admin.data-admin');
+
+
+
