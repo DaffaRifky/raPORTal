@@ -46,5 +46,6 @@ route::get('/admin/data-admin', function () {
     return view('pages.admin.data-admin');
 })->name('admin.data-admin');
 
-
-
+route::get('/header', function () {
+    return view('components.header');
+})->name('components.header');
