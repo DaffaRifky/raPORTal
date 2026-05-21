@@ -3,11 +3,11 @@
 <body class="bg-[#E8F1FE] ml-64 p-4">
     <x-sidebar-admin />
     <div class="container py-4 px-8 bg-white border border-black/30 rounded-2xl shadow-md">
-        <p class="text-2xl mb-4">Data Admin</p>
+        <p class="text-2xl mb-4">Data Admin TU</p>
         <hr class="mb-4 opacity-30 border">
         <div class="grid grid-cols-5 gap-4 mb-6">
             <input class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-200 col-span-4" type="text" placeholder="Masukan Nama atau NIP">
-            <a href="" class="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded-md text-center">Tambah Admin +</a>
+            <a href="" class="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded-md text-center">Tambah Admin TU +</a>
         </div>
         <div class="border border-black/30 rounded-2xl overflow-hidden mb-4">
             <table class="table-auto w-full">
