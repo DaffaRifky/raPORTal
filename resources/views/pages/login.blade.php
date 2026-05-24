@@ -6,20 +6,46 @@
             <img src="{{ asset('img/logo.svg') }}" alt="logo" class="mx-auto mb-6">
             <form method="POST" action="{{ route('login') }}">
                 @csrf
+                @if(
+                    $errors->has('nama')
+                )
+                    <div class="text-red-600 text-sm mb-4 text-center">
+                        {{ $errors->first('nama') }}
+                    </div>
+                @endif
                 <div class="mb-4">
-                    <label for="email" class="block text-gray-700">NIP atau Nama</label>
-                    <input id="email" type="email" name="email" required autofocus
-                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-200">
+                    <label for="nama" class="block text-gray-700">NIP atau Nama</label>
+                    <input
+                        id="nama"
+                        type="text"
+                        name="nama"
+                        value="{{ old('nama') }}"
+                        required
+                        autofocus
+                        autocomplete="nama"
+                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-200"
+                    >
                 </div>
                 <div class="mb-6">
                     <label for="password" class="block text-gray-700">Password</label>
-                    <input id="password" type="password" name="password" required
-                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-200">
+                    <input
+                        id="password"
+                        type="password"
+                        name="password"
+                        required
+                        autocomplete="current-password"
+                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-200"
+                    >
                 </div>
                 <div class="flex items-center justify-between">
-                    <a href="guru/dashboard"
-                        class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:ring-blue-200 mx-auto">
-                        login
-                    </a>
-
+                    <button
+                        type="submit"
+                        class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:ring-blue-200 mx-auto"
+                    >
+                        Login
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
 </body>

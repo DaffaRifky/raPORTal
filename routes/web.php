@@ -3,8 +3,16 @@
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('pages.login');
-})->name('login');
+    return redirect()->route('login');
+});
+
+Route::middleware('guest')->group(function () {
+    Route::get('/login', [Login::class, 'showLoginForm'])->name('login');
+    Route::post('/login', [Login::class, 'login']);
+
+});
+
+Route::post('/logout', [Login::class, 'logout'])->middleware('auth')->name('logout');
 
 // route::get('/login', function () {
 //     return view('pages.login');

@@ -15,7 +15,12 @@
     <div class="mt-auto">
         <hr class="opacity-25">
             <ul class="mt-auto">
-                <x-sidebarlink href="/login">Logout</x-sidebarlink>
+                <li>
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
+                        <button type="submit" class="w-full text-left px-4 py-2 text-white">Logout</button>
+                    </form>
+                </li>
             </ul>
     </div>
 </div>
