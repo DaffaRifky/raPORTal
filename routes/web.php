@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\Login;
 
 Route::get('/', function () {
     return redirect()->route('login');
