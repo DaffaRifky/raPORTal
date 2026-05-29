@@ -14,7 +14,16 @@
                     </div>
                 @endif
                 <div class="mb-4">
-                    <label for="nama" class="block text-gray-700">NIP atau Nama</label>
+                    <select id="peran" name="peran" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-200">
+                        <option value="" selected disabled>Pilih Jenis User</option>
+                        <option value="admin">Admin</option>
+                        <option value="guru">Guru</option>
+                        <option value="wakel">Wali Kelas</option>
+                        <option value="kepsek">Kepala Sekolah</option>
+                    </select>
+                </div>
+                <div class="mb-4">
+                    <label for="nama" class="block text-gray-700"></label>
                     <input
                         id="nama"
                         type="text"
@@ -24,10 +33,11 @@
                         autofocus
                         autocomplete="nama"
                         class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-200"
+                        placeholder="NIP atau Nama"
                     >
                 </div>
                 <div class="mb-6">
-                    <label for="password" class="block text-gray-700">Password</label>
+                    <label for="password" class="block text-gray-700"></label>
                     <input
                         id="password"
                         type="password"
@@ -35,6 +45,7 @@
                         required
                         autocomplete="current-password"
                         class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-200"
+                        placeholder="Password"
                     >
                 </div>
                 <div class="flex items-center justify-between">
