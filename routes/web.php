@@ -2,6 +2,11 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\Login;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\SalesController;
+use App\Http\Controllers\KelasController;
+use App\Http\Controllers\SiswaController;
+use App\Http\Controllers\guruController;
 
 Route::get('/', function () {
     return redirect()->route('login');
@@ -13,7 +18,32 @@ Route::middleware('guest')->group(function () {
 
 });
 
+Route::middleware('auth')->group(function () {
+    route::get('/guru/dashboard', function () {
+    return view('pages.guru.dashboard');
+    })->name('guru.dashboard');
+
+    route::get('/guru/input-nilai', function () {
+        return view('pages.guru.input-nilai');
+    })->name('guru.input-nilai');
+
+    route::get('/guru/data-pribadi', function () {
+        return view('pages.guru.data-pribadi');
+    })->name('guru.data-pribadi');
+});
+
+
 Route::post('/logout', [Login::class, 'logout'])->middleware('auth')->name('logout');
+
+Route::get('/datakelas', [KelasController::class, 'show']);
+Route::post('/datakelas', [KelasController::class, 'simpan'])->name('kelas.simpan');
+
+Route::get('/datasiswa', [SiswaController::class, 'show']);
+Route::post('/datasiswa', [SiswaController::class, 'simpan'])->name('siswa.simpan');
+
+Route::get('/dataguru', [guruController::class, 'show']);
+Route::post('/dataguru', [guruController::class, 'simpan'])->name('guru.simpan');
+
 
 // route::get('/login', function () {
 //     return view('pages.login');
@@ -27,17 +57,7 @@ route::get('/admin/dashboard', function () {
     return view('pages.admin.dashboard');
 })->name('admin.dashboard');
 
-route::get('/guru/dashboard', function () {
-    return view('pages.guru.dashboard');
-})->name('guru.dashboard');
 
-route::get('/guru/input-nilai', function () {
-    return view('pages.guru.input-nilai');
-})->name('guru.input-nilai');
-
-route::get('/guru/data-pribadi', function () {
-    return view('pages.guru.data-pribadi');
-})->name('guru.data-pribadi');
 
 route::get('/admin/data-guru', function () {
     return view('pages.admin.data-guru');

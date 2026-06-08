@@ -1,4 +1,3 @@
-@vite(['resources/css/app.css'])
 <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 <body class="bg-[#E8F1FE] ml-64 p-4">
     <x-sidebar-admin />
@@ -7,139 +6,82 @@
         <hr class="mb-4 opacity-30 border">
         <div class="grid grid-cols-5 gap-4 mb-6">
             <input class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-200 col-span-4" type="text" placeholder="Masukan Nama Kelas">
-            <a href="" class="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded-md text-center">Tambah Kelas +</a>
+            <button
+                onclick="document.getElementById('addKelasModal').classList.remove('hidden')"
+                class="flex items-center gap-2 bg-blue-500 hover:bg-blue-600 text-white text-sm font-medium px-5 py-2 rounded-lg transition whitespace-nowrap">
+                Tambah Kelas
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                </svg>
+            </button>
         </div>
         <div class="border border-black/30 rounded-2xl overflow-hidden mb-4">
-            <table class="table-auto w-full">
-                <thead class="bg-[#D9D9D9]">
+            <table>
+                <thead>
                     <tr>
-                        <th class="text-start px-4 py-3 font-semibold">Nama Kelas</th>
-                        <th class="text-start px-4 py-3 font-semibold">Wali Kelas</th>
-                        <th class="text-start px-4 py-3 font-semibold">Jumlah Siswa</th>
-                        <th class="px-4 py-3 font-semibold text-center">Aksi</th>
+                        <th>Nama </th>
+                        <th>Jumlah Siswa</th>
+                        <th>Wali Kelas</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
-                <tbody id="" class="divide-y divide-black/10">
-                    <tr>
-                        <td class="px-4 py-3">10-A</td>
-                        <td class="px-4 py-3">Andi Saputra, S.Pd</td>
-                        <td class="px-4 py-3">32</td>
-                        <td class="px-4 py-3 text-center">
-                            <button class="bg-amber-400 hover:bg-amber-500 text-white px-3 py-1 rounded-lg text-sm">Edit</button>
-                            <button class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-lg text-sm ml-1">Detail</button>
-                            <button class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-lg text-sm ml-1">Hapus</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="px-4 py-3">10-B</td>
-                        <td class="px-4 py-3">irwan saputra, S.Pd</td>
-                        <td class="px-4 py-3">30</td>
-                        <td class="px-4 py-3 text-center">
-                            <button class="bg-amber-400 hover:bg-amber-500 text-white px-3 py-1 rounded-lg text-sm">Edit</button>
-                            <button class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-lg text-sm ml-1">Detail</button>
-                            <button class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-lg text-sm ml-1">Hapus</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="px-4 py-3">10-C</td>
-                        <td class="px-4 py-3">citra lestari, S.Pd</td>
-                        <td class="px-4 py-3">31</td>
-                        <td class="px-4 py-3 text-center">
-                            <button class="bg-amber-400 hover:bg-amber-500 text-white px-3 py-1 rounded-lg text-sm">Edit</button>
-                            <button class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-lg text-sm ml-1">Detail</button>
-                            <button class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-lg text-sm ml-1">Hapus</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="px-4 py-3">10-D</td>
-                        <td class="px-4 py-3">lyra anggraini, S.Pd</td>
-                        <td class="px-4 py-3">28</td>
-                        <td class="px-4 py-3 text-center">
-                            <button class="bg-amber-400 hover:bg-amber-500 text-white px-3 py-1 rounded-lg text-sm">Edit</button>
-                            <button class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-lg text-sm ml-1">Detail</button>
-                            <button class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-lg text-sm ml-1">Hapus</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="px-4 py-3">11-A</td>
-                        <td class="px-4 py-3">Budi Santoso, S.Pd</td>
-                        <td class="px-4 py-3">35</td>
-                        <td class="px-4 py-3 text-center">
-                            <button class="bg-amber-400 hover:bg-amber-500 text-white px-3 py-1 rounded-lg text-sm">Edit</button>
-                            <button class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-lg text-sm ml-1">Detail</button>
-                            <button class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-lg text-sm ml-1">Hapus</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="px-4 py-3">11-B</td>
-                        <td class="px-4 py-3">Siti Aminah, M.Pd</td>
-                        <td class="px-4 py-3">33</td>
-                        <td class="px-4 py-3 text-center">
-                            <button class="bg-amber-400 hover:bg-amber-500 text-white px-3 py-1 rounded-lg text-sm">Edit</button>
-                            <button class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-lg text-sm ml-1">Detail</button>
-                            <button class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-lg text-sm ml-1">Hapus</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="px-4 py-3">11-C</td>
-                        <td class="px-4 py-3">Ahmad Fauzi, S.Pd</td>
-                        <td class="px-4 py-3">30</td>
-                        <td class="px-4 py-3 text-center">
-                            <button class="bg-amber-400 hover:bg-amber-500 text-white px-3 py-1 rounded-lg text-sm">Edit</button>
-                            <button class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-lg text-sm ml-1">Detail</button>
-                            <button class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-lg text-sm ml-1">Hapus</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="px-4 py-3">11-D</td>
-                        <td class="px-4 py-3">Maria Ulfa, S.Pd</td>
-                        <td class="px-4 py-3">29</td>
-                        <td class="px-4 py-3 text-center">
-                            <button class="bg-amber-400 hover:bg-amber-500 text-white px-3 py-1 rounded-lg text-sm">Edit</button>
-                            <button class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-lg text-sm ml-1">Detail</button>
-                            <button class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-lg text-sm ml-1">Hapus</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="px-4 py-3">12-A</td>
-                        <td class="px-4 py-3">Robertus Smith, M.Pd</td>
-                        <td class="px-4 py-3">34</td>
-                        <td class="px-4 py-3 text-center">
-                            <button class="bg-amber-400 hover:bg-amber-500 text-white px-3 py-1 rounded-lg text-sm">Edit</button>
-                            <button class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-lg text-sm ml-1">Detail</button>
-                            <button class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-lg text-sm ml-1">Hapus</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="px-4 py-3">12-B</td>
-                        <td class="px-4 py-3">Linda Wijaya, S.Pd</td>
-                        <td class="px-4 py-3">32</td>
-                        <td class="px-4 py-3 text-center">
-                            <button class="bg-amber-400 hover:bg-amber-500 text-white px-3 py-1 rounded-lg text-sm">Edit</button>
-                            <button class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-lg text-sm ml-1">Detail</button>
-                            <button class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-lg text-sm ml-1">Hapus</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="px-4 py-3">12-C</td>
-                        <td class="px-4 py-3">Kevin Sanjaya, S.Pd</td>
-                        <td class="px-4 py-3">31</td>
-                        <td class="px-4 py-3 text-center">
-                            <button class="bg-amber-400 hover:bg-amber-500 text-white px-3 py-1 rounded-lg text-sm">Edit</button>
-                            <button class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-lg text-sm ml-1">Detail</button>
-                            <button class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-lg text-sm ml-1">Hapus</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="px-4 py-3">12-D</td>
-                        <td class="px-4 py-3">Putri Indah, S.Pd</td>
-                        <td class="px-4 py-3">30</td>
-                        <td class="px-4 py-3 text-center">
-                            <button class="bg-amber-400 hover:bg-amber-500 text-white px-3 py-1 rounded-lg text-sm">Edit</button>
-                            <button class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-lg text-sm ml-1">Detail</button>
-                            <button class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-lg text-sm ml-1">Hapus</button>
-                        </td>
-                    </tr>
+                <tbody>
+                    @foreach ($huruf as $index => $item)
+                        <tr>
+                            <td class="uppercase">{{ $nomor[$index] }} - {{ $item }}</td>
+
+                        </tr>
+                    @endforeach
                 </tbody>
             </table>
+
+            {{-- modal tambah kelas --}}
+            <div id="addKelasModal"
+            class="hidden fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+            <div class="bg-white rounded-2xl shadow-2xl w-full max-w-lg p-8 relative max-h-[90vh] overflow-y-auto">
+                <button onclick="document.getElementById('addKelasModal').classList.add('hidden')"
+                        class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
+
+                <h2 class="text-xl font-semibold text-gray-800 mb-1">Tambah Kelas Baru</h2>
+
+                <form method="POST" action="{{ route('kelas.simpan') }}" class="space-y-4">
+                    @csrf
+                    <div class="grid grid-cols-5 gap-4">
+
+                        <div class="col-span-4">
+                            <label class="block text-sm font-medium text-gray-600 mb-1.5">Nomor Kelas</label>
+                            <select name="nomor_kelas"
+                                    class="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400">
+                                <option disabled selected>— pilih —</option>
+                                <option value="10"   {{ old('nomor') === '10'   ? 'selected' : '' }}>10</option>
+                                <option value="11" {{ old('nomor') === '11' ? 'selected' : '' }}>11</option>
+                                <option value="12"  {{ old('nomor') === '12'  ? 'selected' : '' }}>12</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-600 mb-1.5">Huruf Kelas</label>
+                            <input type="text" name="huruf_kelas" value="{{ old('huruf') }}"
+                                class="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400">
+                        </div>
+
+                    </div>
+                    <div class="flex gap-3 pt-2">
+                        <button type="button"
+                                onclick="document.getElementById('addKelasModal').classList.add('hidden')"
+                                class="flex-1 border border-gray-300 text-gray-600 hover:bg-gray-50 rounded-xl py-2.5 text-sm font-medium transition">
+                            Cancel
+                        </button>
+                        <button type="submit"
+                                class="flex-1 bg-blue-500 hover:bg-blue-600 text-white rounded-xl py-2.5 text-sm font-medium transition">
+                            Tambah Kelas
+                        </button>
+                    </div>
+                </form>
+            </div>
+            </div>
         </div>

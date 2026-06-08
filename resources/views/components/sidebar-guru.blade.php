@@ -6,9 +6,9 @@
         <hr class="opacity-25">
         <nav >
             <ul>
-                <x-sidebarlink href="/guru/dashboard">Dashboard</x-sidebarlink>
-                <x-sidebarlink href="/guru/input-nilai">Input Nilai</x-sidebarlink>
-                <x-sidebarlink href="/guru/data-pribadi">Data Pribadi</x-sidebarlink>
+                <x-sidebarlink href="{{ route('guru.dashboard') }}">Dashboard</x-sidebarlink>
+                <x-sidebarlink href="{{ route('guru.input-nilai') }}">Input Nilai</x-sidebarlink>
+                <x-sidebarlink href="{{ route('guru.data-pribadi') }}">Data Pribadi</x-sidebarlink>
             </ul>
         </nav>
     </div>

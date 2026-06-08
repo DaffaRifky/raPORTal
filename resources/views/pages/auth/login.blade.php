@@ -1,5 +1,4 @@
-@vite(['resources/css/app.css'])
-
+<link rel="stylesheet" href="{{ asset('css/app.css') }}">
 <body class="bg-[#E8F1FE]">
     <div class="flex items-center justify-center min-h-screen">
         <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
@@ -14,12 +13,15 @@
                     </div>
                 @endif
                 <div class="mb-4">
-                    <select id="peran" name="peran" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-200">
-                        <option value="" selected disabled>Pilih Jenis User</option>
-                        <option value="admin">Admin</option>
-                        <option value="guru">Guru</option>
-                        <option value="wakel">Wali Kelas</option>
-                        <option value="kepsek">Kepala Sekolah</option>
+                    @if($errors->has('role'))
+                        <div class="text-red-600 text-sm mb-2 text-center">{{ $errors->first('role') }}</div>
+                    @endif
+                    <select id="role" name="role" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-200">
+                        <option value="" disabled {{ old('role') ? '' : 'selected' }}>Pilih Jenis User</option>
+                        <option value="admin" {{ old('role') === 'admin' ? 'selected' : '' }}>Admin</option>
+                        <option value="guru" {{ old('role') === 'guru' ? 'selected' : '' }}>Guru</option>
+                        <option value="wakel" {{ old('role') === 'wakel' ? 'selected' : '' }}>Wali Kelas</option>
+                        <option value="kepsek" {{ old('role') === 'kepsek' ? 'selected' : '' }}>Kepala Sekolah</option>
                     </select>
                 </div>
                 <div class="mb-4">

@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('nip');
             $table->string('nama');
+            $table->enum('role', ['admin', 'guru'])->default('user');
             $table->integer('no_hp');
             $table->string('email')->unique();
             $table->string('perguruan');

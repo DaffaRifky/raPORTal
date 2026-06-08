@@ -7,9 +7,9 @@
         <nav >
             <ul>
                 <x-sidebarlink href="/admin/dashboard">Dashboard</x-sidebarlink>
-                <x-sidebarlink href="/admin/data-guru">Data Guru</x-sidebarlink>
-                <x-sidebarlink href="/admin/data-kelas">Data Kelas</x-sidebarlink>
-                <x-sidebarlink href="/admin/data-siswa">Data Siswa</x-sidebarlink>
+                <x-sidebarlink href="/dataguru">Data Guru</x-sidebarlink>
+                <x-sidebarlink href="/datakelas">Data Kelas</x-sidebarlink>
+                <x-sidebarlink href="/datasiswa">Data Siswa</x-sidebarlink>
                 <x-sidebarlink href="/admin/data-admin">Data Admin</x-sidebarlink>
             </ul>
         </nav>
@@ -17,7 +17,12 @@
     <div class="mt-auto">
         <hr class="opacity-25">
             <ul class="mt-auto">
-                <x-sidebarlink href="/login">Logout</x-sidebarlink>
+                <li>
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
+                        <button type="submit" class="w-full text-left px-4 py-2 text-white">Logout</button>
+                    </form>
+                </li>
             </ul>
     </div>
 </div>

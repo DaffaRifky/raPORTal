@@ -1,4 +1,4 @@
-@vite(['resources/css/app.css'])
+<link rel="stylesheet" href="{{ asset('css/app.css') }}">
 
 <body class="bg-[#E8F1FE] p-6 ml-64">
     <x-sidebar-guru />
