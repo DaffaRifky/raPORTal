@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\guru;
+use App\Models\User;
 
 class GuruController extends Controller
 {
@@ -19,7 +20,7 @@ class GuruController extends Controller
 
     public function show()
     {
-        $data = guru::all();
+        $data = guru::where('role', 'guru')->get();
         $NIP = [];
         $nama = [];
         foreach ($data as $guru) {
@@ -28,5 +29,18 @@ class GuruController extends Controller
         }
 
         return view('pages/admin/data-guru', compact('NIP', 'nama'));
+    }
+
+    public function adminData()
+    {
+        $data = guru::where('role', 'Admin')->get();
+        $NIP = [];
+        $nama = [];
+        foreach ($data as $user) {
+            $NIP[] = $user->email;
+            $nama[] = $user->name;
+        }
+
+        return view('pages/admin/data-admin', compact('NIP', 'nama'));
     }
 }

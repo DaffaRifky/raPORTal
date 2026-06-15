@@ -1,9 +1,9 @@
-<link rel="stylesheet" href="{{ asset('css/app.css') }}">
-<body class="bg-[#E8F1FE] ml-64 p-4">
-    <x-sidebar-admin />
-    <div class="container py-4 px-8 bg-white border border-black/30 rounded-2xl shadow-md">
-        <p class="text-2xl mb-4">Data Siswa</p>
-        <hr class="mb-4 opacity-30 border">
+@extends('pages.layout.layout')
+
+@section('title', 'Data Siswa')
+@section('header', 'Data Siswa')
+
+@section('content')
         <div class="grid grid-cols-5 gap-4 mb-6">
             <input class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-200 col-span-4" type="text" placeholder="Masukan Nama atau NIP">
             <button
@@ -15,22 +15,40 @@
                 </svg>
             </button>
         </div>
-        <div class="border border-black/30 rounded-2xl overflow-hidden mb-4">
-
-            <table>
-                <thead>
+        <div class="border border-gray-200 rounded-2xl overflow-hidden mb-4">
+            <table class="w-full">
+                <thead class="bg-gray-100 text-gray-600 font-medium">
                     <tr>
-                        <th>NIS </th>
-                        <th>Nama </th>
-                        <th>Kelas</th>
-                        <th>Action</th>
+                        <th class="px-6 py-4 text-left font-semibold">NIS</th>
+                        <th class="px-6 py-4 text-left font-semibold">Nama</th>
+                        <th class="px-6 py-4 text-left font-semibold">Kelas</th>
+                        <th class="px-6 py-4 text-center font-semibold">Action</th>
                     </tr>
                 </thead>
-                <tbody>
-                    @foreach ($nama as $index => $item)
-                        <tr>
-                            <td>{{ $NIS[$index] }}</td>
-                            <td>{{ $item }}</td>
+                <tbody class="divide-y divide-gray-200">
+                    @foreach ($data as $item)
+                        <tr class="hover:bg-gray-50 transition">
+                            <td class="px-6 py-4 text-gray-700">{{ $item->NIS }}</td>
+                            <td class="px-6 py-4 text-gray-700">{{ $item->nama }}</td>
+                            <td class="px-6 py-4 text-gray-700">{{ $item->kelas }}</td>
+                            <td class="px-6 py-4 flex gap-3 justify-center">
+                                <a onclick=" openEditModal({{ $item->id }}, '{{ $item->NIS }}', '{{ $item->nama }}', '{{ $item->kelas }}')"
+                                    class="p-2 text-blue-500 hover:bg-blue-100 rounded-lg transition"
+                                    title="Edit">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                                    </svg>
+                                </a>
+                                <form method="POST" action="{{ route('siswa.delete', $item->id) }}" style="display:inline;" onsubmit="return confirm('Yakin ingin menghapus?')">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="p-2 text-red-500 hover:bg-red-100 rounded-lg transition" title="Delete">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                                        </svg>
+                                    </button>
+                                </form>
+                            </td>
                         </tr>
                     @endforeach
                 </tbody>
@@ -47,22 +65,35 @@
                     </svg>
                 </button>
 
-                <h2 class="text-xl font-semibold text-gray-800 mb-1">Tambah Siswa Baru</h2>
+                <h2 class="text-xl font-semibold text-gray-800 mb-4">Tambah Siswa Baru</h2>
+                <hr class="mb-4 opacity-30 border">
 
                 <form method="POST" action="{{ route('siswa.simpan') }}" class="space-y-4">
                     @csrf
                     <div class="grid grid-cols-5 gap-4">
-
-                        <div>
+                        <div class="col-span-2">
                             <label class="block text-sm font-medium text-gray-600 mb-1.5">NIS</label>
                             <input type="text" name="NIS" value="{{ old('NIS') }}"
                                 class="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400">
                         </div>
 
-                        <div>
+                        <div class="col-span-2">
                             <label class="block text-sm font-medium text-gray-600 mb-1.5">Nama</label>
                             <input type="text" name="nama" value="{{ old('nama') }}"
                                 class="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400">
+                        </div>
+
+                        <div class="col-span-1">
+                            <label class="block text-sm font-medium text-gray-600 mb-1.5">Kelas</label>
+                            <select name="kelas"
+                                    class="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400">
+                                <option disabled selected >—</option>
+                                @foreach ($kelas as $k)
+                                    <option value="{{ $k->nomor_kelas. " - " . $k->huruf_kelas }}" {{ old('kelas') === $k->id ? 'selected' : '' }}>
+                                        {{ $k->nomor_kelas }} - {{ $k->huruf_kelas }}
+                                    </option>
+                                @endforeach
+                            </select>
                         </div>
 
                     </div>
@@ -95,29 +126,29 @@
                 <h2 class="text-xl font-semibold text-gray-800 mb-4">Edit Siswa</h2>
                 <hr class="mb-4 opacity-30 border">
 
-                {{-- <form method="POST" action="{{ route('siswa.edit', ['id' => $siswa->id]) }}" class="space-y-4">
+                <form id="editSiswaForm" method="POST" action="" class="space-y-4">
                     @csrf
                     @method('PUT')
                     <div class="grid grid-cols-5 gap-4">
                         <div class="col-span-2">
                             <label class="block text-sm font-medium text-gray-600 mb-1.5">NIS</label>
-                            <input type="text" name="NIS" value="{{ old('NIS', $siswa->NIS) }}"
+                            <input type="text" name="NIS" value="" id="editNIS"
                                 class="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400">
                         </div>
 
                         <div class="col-span-2">
                             <label class="block text-sm font-medium text-gray-600 mb-1.5">Nama</label>
-                            <input type="text" name="nama" value="{{ old('nama', $siswa->nama) }}"
+                            <input type="text" name="nama" value="" id="editNama"
                                 class="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400">
                         </div>
 
                         <div class="col-span-1">
                             <label class="block text-sm font-medium text-gray-600 mb-1.5">Kelas</label>
-                            <select name="kelas"
+                            <select name="kelas" id="editKelas"
                                     class="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400">
                                 <option disabled selected >—</option>
                                 @foreach ($kelas as $k)
-                                    <option value="{{ $k->id }}" {{ old('kelas', $siswa->kelas) === $k->id ? 'selected' : '' }}>
+                                    <option value="{{ $k->nomor_kelas. " - " . $k->huruf_kelas }}" {{ old('kelas') === $k->nomor_kelas. " - " . $k->huruf_kelas ? 'selected' : '' }}>
                                         {{ strtoupper($k->nomor_kelas) }} - {{ strtoupper($k->huruf_kelas) }}
                                     </option>
                                 @endforeach
@@ -136,8 +167,29 @@
                             Update Data siswa
                         </button>
                     </div>
-                </form> --}}
+                </form>
             </div>
             </div>
 
 @endsection
+
+@push('scripts')
+<script>
+function openEditModal(id, NIS, nama, kelas) {
+    document.getElementById('editNIS').value       = NIS;
+    document.getElementById('editNama').value      = nama;
+    document.getElementById('editKelas').value       = kelas;
+    document.getElementById('editSiswaForm').action  = '/datasiswa/' + id;
+    document.getElementById('editSiswaModal').classList.remove('hidden');
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    @if(isset($siswa))
+    const editModal = document.getElementById('editSiswaModal');
+    if (editModal) {
+        editModal.classList.remove('hidden');
+    }
+    @endif
+});
+</script>
+@endpush

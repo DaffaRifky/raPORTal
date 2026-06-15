@@ -1,10 +1,9 @@
-<link rel="stylesheet" href="{{ asset('css/app.css') }}">
+@extends('pages.layout.layout')
 
-<body class="bg-[#E8F1FE] p-6 ml-64">
-    <x-sidebar-guru />
-    <div class="container py-4 px-8 bg-white border border-black/30 rounded-2xl shadow-md">
-        <p class="text-2xl mb-4">Input Nilai</p>
-        <hr class="mb-4 opacity-30 border">
+@section('title', 'Input Nilai')
+@section('header', 'Input Nilai')
+
+@section('content')
         <div class="grid grid-cols-3 gap-4 mb-6">
             <div class="col-span-3">
                 <input class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-200" type="text" placeholder="Masukan Nama atau NIS">
@@ -63,7 +62,6 @@
                 <a href="" class="border border-black/30 p-2 rounded-xl w-10 text-center bg-[#E9E9EB]">3</a>
                 <a href="" class="border border-black/30 p-2 rounded-xl w-10 text-center bg-[#E9E9EB]">▷</a>
         </div>
-    </div>
 
     <script>
         const studentData = {
@@ -159,4 +157,5 @@
             if (isEditing) input.focus();
         }
     </script>
-</body>
+
+@endsection

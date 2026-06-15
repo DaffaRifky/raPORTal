@@ -1,31 +1,41 @@
-<link rel="stylesheet" href="{{ asset('css/app.css') }}">
-<body class="bg-[#E8F1FE] ml-64 p-4">
-    <x-sidebar-admin />
-    <div class="container py-4 px-8 bg-white border border-black/30 rounded-2xl shadow-md">
-        <p class="text-2xl mb-4">Data Guru</p>
-        <hr class="mb-4 opacity-30 border">
+@extends('pages.layout.layout')
+
+@section('title', 'Data Guru')
+@section('header', 'Data Guru')
+
+@section('content')
         <div class="grid grid-cols-5 gap-4 mb-6">
             <input class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-200 col-span-4" type="text" placeholder="Masukan Nama atau NIP">
             <a href="" class="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded-md text-center">Tambah Guru +</a>
         </div>
-        <div class="border border-black/30 rounded-2xl overflow-hidden mb-4">
-
-            <table>
-                <thead>
+        <div class="border border-gray-200 rounded-2xl overflow-hidden mb-4">
+            <table class="w-full">
+                <thead class="bg-gray-100 text-gray-600 font-medium">
                     <tr>
-                        <th>NIP</th>
-                        <th>Nama </th>
-                        <th>Mata Pelajaran</th>
-                        <th>Action</th>
+                        <th class="px-6 py-4 text-left font-semibold">NIP</th>
+                        <th class="px-6 py-4 text-left font-semibold">Nama</th>
+                        <th class="px-6 py-4 text-left font-semibold">Mata Pelajaran</th>
+                        <th class="px-6 py-4 text-center font-semibold">Action</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($nama as $index => $item)
-                        <tr>
-                            <td>{{ $NIP[$index] }}</td>
-                            <td>{{ $item }}</td>
-
-                        </tr>
+                        <tr class="hover:bg-gray-50 transition">
+                            <td class="px-6 py-4">{{ $NIP[$index] }}</td>
+                            <td class="px-6 py-4">{{ $item }}</td>
+                            <td class="px-6 py-4"></td>
+                            <td class="px-6 py-4 text-center">
+                                <button class="text-blue-500 hover:text-blue-700">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                                    </svg>
+                                </button>
+                                <button class="text-red-500 hover:text-red-700 ml-2">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                                    </svg>
+                                </button>
+                            </td>
                     @endforeach
                 </tbody>
             </table>
@@ -77,3 +87,4 @@
         </div>
 
 
+@endsection

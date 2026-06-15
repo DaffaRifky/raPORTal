@@ -22,6 +22,7 @@ class guru extends Authenticatable
         'email',
         'perguruan',
         'pendidikan',
+        'alamat',
         'password',
     ];
 

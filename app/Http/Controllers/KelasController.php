@@ -19,14 +19,9 @@ class KelasController extends Controller
 
     public function show()
     {
-        $data = Kelas::all();
-        $nomor = [];
-        $huruf = [];
-        foreach ($data as $kelas) {
-            $nomor[] = $kelas->nomor_kelas;
-            $huruf[] = $kelas->huruf_kelas;
-        }
+        $kelas = Kelas::orderBy('nomor_kelas')->orderBy('huruf_kelas')->get();
 
-        return view('pages/admin/data-kelas', compact('nomor', 'huruf'));
+        return view('pages.admin.data-kelas', compact('kelas'));
+        return view('pages.admin.data-siswa', compact('kelas'));
     }
 }

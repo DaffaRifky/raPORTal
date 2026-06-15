@@ -1,9 +1,9 @@
-<link rel="stylesheet" href="{{ asset('css/app.css') }}">
-<body class="bg-[#E8F1FE] p-6 ml-64">
-    <x-sidebar-guru />
-    <div class="container py-4 px-8 bg-white border border-black/30 rounded-2xl shadow-md">
-        <p class="text-2xl mb-4">Data Pribadi</p>
-        <hr class="mb-6 opacity-30 border">
+@extends('pages.layout.layout')
+
+@section('title', 'Data Pribadi')
+@section('header', 'Data Pribadi')
+
+@section('content')
         <div class="flex gap-6 mb-6">
             <div class="flex-none">
                 <div class="bg-white w-60 h-84 border border-black/30 rounded-xl shadow-md">
@@ -47,4 +47,5 @@
             <a class="w-full text-center bg-[#F3F3F5] hover:bg-[#0A95FF] hover:text-white hover:border-[#0A95FF] border border-2 border-black/30 p-2 rounded-2xl" href="dashboard">Simpan Perubahan</a>
         </div>
     </div>
-</body>
+
+@endsection
