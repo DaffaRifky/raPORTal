@@ -11,9 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('mps', function (Blueprint $table) {
+        Schema::create('tugas', function (Blueprint $table) {
             $table->id();
-            $table->string("nama");
+            $table->string('nama');                                              // "Tugas 1", "UH 1"
+            $table->enum('tipe', ['Tugas', 'UH', 'UTS', 'UAS'])->default('Tugas');
+            $table->foreignId('mp_id')->constrained('mps')->cascadeOnDelete();
             $table->timestamps();
         });
     }
@@ -23,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('mps');
+        Schema::dropIfExists('tugas');
     }
 };

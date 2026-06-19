@@ -2,31 +2,52 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Database\Factories\UserFactory;
-use Illuminate\Database\Eloquent\Attributes\Fillable;
-use Illuminate\Database\Eloquent\Attributes\Hidden;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
-#[Fillable(['name', 'email', 'password'])]
-#[Hidden(['password', 'remember_token'])]
-class User extends Authenticatable
+class user extends Authenticatable
 {
-    /** @use HasFactory<UserFactory> */
-    use HasFactory, Notifiable;
+    use Notifiable, HasFactory;
 
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
-    protected function casts(): array
+
+    protected $table = 'users';
+
+    protected $fillable = [
+        'nip',
+        'nama',
+        'role',
+        'no_hp',
+        'email',
+        'perguruan',
+        'pendidikan',
+        'alamat',
+        'password',
+    ];
+
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
+
+    public $timestamps = false;
+
+    public function mps()
     {
-        return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-        ];
+        return $this->belongsToMany(Mp::class, 'mp_user', 'user_id', 'mp_id');
+    }
+    public function mengajar()
+    {
+        return $this->hasMany(GuruMengajar::class, 'user_id');
+    }
+    // Role helpers based on your actual enum values
+    public function isGuru(): bool
+    {
+        return $this->role === 'Guru';
+    }
+    public function isAdmin(): bool
+    {
+        return in_array($this->role, ['Admin TU', 'Kepala Sekolah']);
     }
 }

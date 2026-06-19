@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use App\Models\guru;
+use App\Models\user;
 
 class Login extends Controller
 {
@@ -32,12 +32,12 @@ class Login extends Controller
         $identifier = $request->input('nama');
         $password = $request->input('password');
 
-        $guru = guru::where('nip', $identifier)
+        $user = user::where('nip', $identifier)
             ->orWhere('nama', $identifier)
             ->first();
 
-        if ($guru && Hash::check($password, $guru->password)) {
-            Auth::login($guru, $request->boolean('remember'));
+        if ($user && Hash::check($password, $user->password)) {
+            Auth::login($user, $request->boolean('remember'));
             $request->session()->regenerate();
         }
 

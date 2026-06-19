@@ -21,7 +21,7 @@ class KelasController extends Controller
     {
         $kelas = Kelas::orderBy('nomor_kelas')->orderBy('huruf_kelas')->get();
 
-        return view('pages.admin.data-kelas', compact('kelas'));
-        return view('pages.admin.data-siswa', compact('kelas'));
+        return view('pages.adminTU.data-kelas', compact('kelas'));
+        return view('pages.adminTU.data-siswa', compact('kelas'));
     }
 }

@@ -9,15 +9,15 @@
     <div class="container">
         <div class="mb-6 p-6 bg-[#E2E2E2] rounded-lg shadow-md">
             <div class="grid grid-cols-3 gap-6 mb-6">
-                <div class="container bg-white shadow-md rounded-xl p-6 ">
+                <div class="container bg-white shadow-md rounded-xl p-4">
                     <p class="text-sm">Kelas Diampu</p>
-                    <p class="text-2xl">14</p>
+                    <p class="text-2xl">4</p>
                 </div>
-                <div class="container bg-white shadow-md rounded-xl p-6 ">
+                <div class="container bg-white shadow-md rounded-xl p-4 ">
                     <p class="text-sm">Jumlah Siswa</p>
-                    <p class="text-2xl">453</p>
+                    <p class="text-2xl">120</p>
                 </div>
-                <div class="container bg-white shadow-md rounded-xl p-6 ">
+                <div class="container bg-white shadow-md rounded-xl p-4 ">
                     <p class="text-sm mb-1">Mata Pelajaran Diampu</p>
                     <ul class="flex flex-row gap-2">
                         <li class="text-lg rounded-full bg-gray-300 px-2">Matematika</li>
@@ -26,37 +26,37 @@
                 </div>
             </div>
             <div class="container bg-white shadow-md rounded-xl px-6 py-2 w-full m-auto">
-                    <p class="text-sm">Kepala Sekolah</p>
-                    <p class="text-2xl">John Doe</p>
+                    <p class="text-xs">Kepala Sekolah</p>
+                    <p class="text-xl">John Doe</p>
             </div>
         </div>
     </div>
 @endif
 
-@if(auth()->user()->role === 'Admin')
+@if(auth()->user()->role === 'Admin TU')
     <div class="container">
         <div class="mb-6 p-6 bg-[#E2E2E2] rounded-lg shadow-md">
             <div class="grid grid-cols-4 gap-6 mb-6">
-                <div class="container bg-white shadow-md rounded-xl p-6 ">
+                <div class="container bg-white shadow-md rounded-xl p-4 ">
                     <p class="text-sm">Jumlah Guru</p>
                     <p class="text-2xl">35</p>
                 </div>
-                <div class="container bg-white shadow-md rounded-xl p-6 ">
+                <div class="container bg-white shadow-md rounded-xl p-4">
                     <p class="text-sm">Jumlah Kelas</p>
                     <p class="text-2xl">14</p>
                 </div>
-                <div class="container bg-white shadow-md rounded-xl p-6 ">
+                <div class="container bg-white shadow-md rounded-xl p-4">
                     <p class="text-sm">Jumlah Siswa</p>
                     <p class="text-2xl">453</p>
                 </div>
-                <div class="container bg-white shadow-md rounded-xl p-6 ">
-                    <p class="text-sm">Jumlah Admin</p>
+                <div class="container bg-white shadow-md rounded-xl p-4 ">
+                    <p class="text-sm">Jumlah Admin TU</p>
                     <p class="text-2xl">15</p>
                 </div>
             </div>
             <div class="container bg-white shadow-md rounded-xl px-6 py-2 w-[100%] m-auto">
-                    <p class="text-sm">Kepala Sekolah</p>
-                    <p class="text-2xl">John Doe</p>
+                    <p class="text-xs">Kepala Sekolah</p>
+                    <p class="text-xl">John Doe</p>
             </div>
         </div>
     </div>
@@ -66,19 +66,19 @@
     <div class="container">
         <div class="mb-6 p-6 bg-[#E2E2E2] rounded-lg shadow-md">
             <div class="grid grid-cols-4 gap-6 mb-6">
-                <div class="container bg-white shadow-md rounded-xl p-6 ">
+                <div class="container bg-white shadow-md rounded-xl p-4">
                     <p class="text-sm">Jumlah Guru</p>
                     <p class="text-2xl">35</p>
                 </div>
-                <div class="container bg-white shadow-md rounded-xl p-6 ">
+                <div class="container bg-white shadow-md rounded-xl p-4 ">
                     <p class="text-sm">Jumlah Kelas</p>
                     <p class="text-2xl">14</p>
                 </div>
-                <div class="container bg-white shadow-md rounded-xl p-6 ">
+                <div class="container bg-white shadow-md rounded-xl p-4 ">
                     <p class="text-sm">Jumlah Siswa</p>
                     <p class="text-2xl">453</p>
                 </div>
-                <div class="container bg-white shadow-md rounded-xl p-6 ">
+                <div class="container bg-white shadow-md rounded-xl p-4 ">
                     <p class="text-sm">Jumlah Admin</p>
                     <p class="text-2xl">15</p>
                 </div>

@@ -11,8 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('kelas', function (Blueprint $table) {
+        Schema::create('siswa', function (Blueprint $table) {
             $table->id();
+            $table->string('NIS', 50);
+            $table->string('nama', 255);
+            $table->foreignId('kelas_id')
+                ->nullable()
+                ->constrained('kelas')
+                ->nullOnDelete();   // if class is deleted, student becomes unassigned
             $table->timestamps();
         });
     }
@@ -22,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('kelas');
+        Schema::dropIfExists('siswa');
     }
 };

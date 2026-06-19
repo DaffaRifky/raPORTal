@@ -11,18 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('gurus', function (Blueprint $table) {
-            $table->string('no_hp')->change();
+        Schema::create('mps', function (Blueprint $table) {
+            $table->id();
+            $table->string('nama');
+            $table->string('singkatan');
+            $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
-        Schema::table('gurus', function (Blueprint $table) {
-            $table->integer('no_hp')->change();
-        });
+        Schema::dropIfExists('mps');
     }
 };

@@ -24,12 +24,13 @@
                     <x-sidebarlink href="{{ route('guru.input-nilai') }}">Input Nilai</x-sidebarlink>
                     <x-sidebarlink href="{{ route('guru.data-pribadi') }}">Data Pribadi</x-sidebarlink>
                 @endif
-                @if(auth()->user()->role === 'Admin')
+                @if(auth()->user()->role === 'Admin TU')
                     <x-sidebarlink href="/dashboard">Dashboard</x-sidebarlink>
                     <x-sidebarlink href="/dataguru">Data Guru</x-sidebarlink>
                     <x-sidebarlink href="/datakelas">Data Kelas</x-sidebarlink>
                     <x-sidebarlink href="/datasiswa">Data Siswa</x-sidebarlink>
-                    <x-sidebarlink href="/admin/data-admin">Data Admin</x-sidebarlink>
+                    <x-sidebarlink href="/dataadminTU">Data Admin</x-sidebarlink>
+                    <x-sidebarlink href="{{ route('tugas.index') }}">Kelola Tugas</x-sidebarlink>
                 @endif
             </ul>
         </nav>

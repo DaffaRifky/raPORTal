@@ -4,158 +4,209 @@
 @section('header', 'Input Nilai')
 
 @section('content')
-        <div class="grid grid-cols-3 gap-4 mb-6">
-            <div class="col-span-3">
-                <input class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-200" type="text" placeholder="Masukan Nama atau NIS">
-            </div>
-            <div>
-                <label for="mp" class="block text-sm font-medium mb-1">Pilih Mata Pelajaran</label>
-                <select class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-200" id="mp" name="mata-pelajaran">
-                    <option value="MTK">Matematika</option>
-                    <option value="FIS">Fisika</option>
-                </select>
-            </div>
-            <div>
-                <label for="tugas" class="block text-sm font-medium mb-1">Pilih Tugas</label>
-                <select class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-200" id="tugas" name="tugas">
-                    <option value="t1">Tugas 1</option>
-                    <option value="t2">Tugas 2</option>
-                    <option value="t3">Tugas 3</option>
-                    <option value="ats">ATS</option>
-                    <option value="t4">Tugas 4</option>
-                    <option value="t5">Tugas 5</option>
-                    <option value="t6">Tugas 6</option>
-                    <option value="UAS">UAS</option>
-                </select>
-            </div>
-            <div>
-                <label for="kelas" class="block text-sm font-medium mb-1">Pilih Kelas</label>
-                <select class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-200" id="kelas" name="kelas">
-                    <option value="10c">10-C</option>
-                    <option value="11a">11-A</option>
-                    <option value="11b">11-B</option>
-                    <option value="12a">12-A</option>
-                    <option value="12b">12-B</option>
-                    <option value="12d">12-D</option>
-                </select>
-            </div>
-        </div>
-        <div class="border border-black/30 rounded-2xl overflow-hidden mb-4">
-            <table class="table-auto w-full">
-                <thead class="bg-[#D9D9D9]">
-                    <tr>
-                        <th class="text-start px-4 py-3 font-semibold">NIS</th>
-                        <th class="text-start px-4 py-3 font-semibold">Nama Siswa</th>
-                        <th class="text-start px-4 py-3 font-semibold">Nilai</th>
-                        <th class="px-4 py-3 font-semibold text-center">Aksi</th>
-                    </tr>
-                </thead>
-                <tbody id="student-list" class="divide-y divide-black/10">
-                    <!-- Content loaded via JavaScript -->
-                </tbody>
-            </table>
-        </div>
-        <div class="flex flex-row gap-2">
-                <a href="" class="border border-black/30 p-2 rounded-xl w-10 text-center bg-[#E9E9EB]">◁</a>
-                <a href="" class="border border-black/30 p-2 rounded-xl w-10 text-center bg-[#E9E9EB]">1</a>
-                <a href="" class="border border-black/30 p-2 rounded-xl w-10 text-center bg-[#E9E9EB]">2</a>
-                <a href="" class="border border-black/30 p-2 rounded-xl w-10 text-center bg-[#E9E9EB]">3</a>
-                <a href="" class="border border-black/30 p-2 rounded-xl w-10 text-center bg-[#E9E9EB]">▷</a>
-        </div>
 
-    <script>
-        const studentData = {
-            '10c': [
-                { nis: '10-10001', name: 'Alice Wonderland' },
-                { nis: '10-10002', name: 'Bob Builder' },
-                { nis: '10-10003', name: 'Charlie Chaplin' }
-            ],
-            '11a': [
-                { nis: '11-20001', name: 'Dewi Sartika' },
-                { nis: '11-20002', name: 'Eko Prasetyo' },
-                { nis: '11-20003', name: 'Farah Quinn' }
-            ],
-            '11b': [
-                { nis: '11-30001', name: 'Gading Marten' },
-                { nis: '11-30002', name: 'Hamish Daud' }
-            ],
-            '12a': [
-                { nis: '12-40001', name: 'Indra Herlambang' },
-                { nis: '12-40002', name: 'Joko Anwar' }
-            ],
-            'default': [
-                { nis: '12-12301', name: 'Aditya Pratama' },
-                { nis: '12-12302', name: 'Budi Santoso' },
-                { nis: '12-12303', name: 'Citra Lestari' }
-            ]
-        };
+{{-- Search --}}
+<input type="text" id="searchInput"
+    placeholder="Masukan Nama atau NIS"
+    class="w-full px-4 py-2.5 border border-gray-300 rounded-xl mb-4
+           focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm">
 
-        const kelasSelect = document.getElementById('kelas');
-        const studentTableBody = document.getElementById('student-list');
+{{-- Dropdown filters — reload page with selected values --}}
+<div class="grid grid-cols-3 gap-4 mb-6">
 
-        function renderStudents(classId) {
-            const students = studentData[classId] || studentData['default'];
-            studentTableBody.innerHTML = '';
+    {{-- Pilih Mata Pelajaran --}}
+    <div>
+        <label class="block text-xs text-gray-500 mb-1">Pilih Mata Pelajaran</label>
+        <select onchange="applyFilter('mp_id', this.value)"
+            class="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-sm
+                   focus:outline-none focus:ring-2 focus:ring-blue-400">
+            @foreach ($myMps as $mp)
+                <option value="{{ $mp->id }}" {{ $mp->id == $selectedMpId ? 'selected' : '' }}>
+                    {{ $mp->nama }}
+                </option>
+            @endforeach
+        </select>
+    </div>
 
-            students.forEach(student => {
-                const row = `
-                    <tr class="hover:bg-gray-50 transition-colors">
-                        <td class="px-4 py-3">${student.nis}</td>
-                        <td class="px-4 py-3 uppercase">${student.name}</td>
-                        <td class="px-4 py-3">
-                            <span class="nilai-text">100</span>
-                            <input type="number" class="nilai-input hidden w-20 px-2 py-1 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-200" value="100">
-                        </td>
-                        <td class="px-4 py-3 text-center">
-                            <button class="edit-btn bg-amber-400 hover:bg-amber-500 text-white px-4 py-1 rounded-lg transition-colors text-sm font-medium">Edit</button>
-                            <div class="save-actions hidden flex gap-2 justify-center">
-                                <button class="save-btn bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded-lg transition-colors text-sm font-medium">Simpan</button>
-                                <button class="cancel-btn bg-gray-400 hover:bg-gray-500 text-white px-3 py-1 rounded-lg transition-colors text-sm font-medium">Batal</button>
-                            </div>
-                        </td>
-                    </tr>`;
-                studentTableBody.insertAdjacentHTML('beforeend', row);
-            });
-        }
+    {{-- Pilih Tugas --}}
+    <div>
+        <label class="block text-xs text-gray-500 mb-1">Pilih Tugas</label>
+        <select onchange="applyFilter('tugas_id', this.value)"
+            class="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-sm
+                   focus:outline-none focus:ring-2 focus:ring-blue-400">
+            @forelse ($tugasList as $tugas)
+                <option value="{{ $tugas->id }}" {{ $tugas->id == $selectedTugasId ? 'selected' : '' }}>
+                    {{ $tugas->nama }} ({{ $tugas->tipe }})
+                </option>
+            @empty
+                <option value="">-- Tidak ada tugas --</option>
+            @endforelse
+        </select>
+    </div>
 
-        // Initial load
-        renderStudents(kelasSelect.value);
+    {{-- Pilih Kelas --}}
+    <div>
+        <label class="block text-xs text-gray-500 mb-1">Pilih Kelas</label>
+        <select onchange="applyFilter('kelas_id', this.value)"
+            class="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-sm
+                   focus:outline-none focus:ring-2 focus:ring-blue-400">
+            @foreach ($myKelas as $k)
+                <option value="{{ $k->id }}" {{ $k->id == $selectedKelasId ? 'selected' : '' }}>
+                    {{ $k->nomor_kelas }} - {{ $k->huruf_kelas }}
+                </option>
+            @endforeach
+        </select>
+    </div>
+</div>
 
-        // Change listener for dropdown
-        kelasSelect.addEventListener('change', (e) => {
-            renderStudents(e.target.value);
-        });
+{{-- Table --}}
+<div class="border border-gray-200 rounded-2xl overflow-hidden">
+    <table class="w-full">
+        <thead class="bg-gray-100 text-gray-600">
+            <tr>
+                <th class="px-6 py-4 text-left font-semibold">NIS</th>
+                <th class="px-6 py-4 text-left font-semibold">Nama Siswa</th>
+                <th class="px-6 py-4 text-left font-semibold">Nilai</th>
+                <th class="px-6 py-4 text-center font-semibold">Aksi</th>
+            </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-200" id="nilaiTable">
+            @forelse ($siswas as $siswa)
+                <tr class="hover:bg-gray-50 transition" id="row-{{ $siswa->id }}">
+                    <td class="px-6 py-4 text-sm">{{ $siswa->NIS }}</td>
+                    <td class="px-6 py-4 text-sm">{{ $siswa->nama }}</td>
 
-        // Event Delegation for Table Actions
-        studentTableBody.addEventListener('click', (e) => {
-            const row = e.target.closest('tr');
-            if (!row) return;
+                    {{-- Nilai cell --}}
+                    <td class="px-6 py-4 text-sm" id="nilai-cell-{{ $siswa->id }}">
+                        <span id="nilai-display-{{ $siswa->id }}">
+                            {{ $siswa->nilai?->nilai ?? '-' }}
+                        </span>
+                        <input type="number"
+                            id="nilai-input-{{ $siswa->id }}"
+                            value="{{ $siswa->nilai?->nilai ?? '' }}"
+                            min="0" max="100" step="0.5"
+                            class="hidden w-24 border border-gray-300 rounded-lg px-3 py-1.5
+                                   text-sm focus:outline-none focus:ring-2 focus:ring-blue-400">
+                    </td>
 
-            if (e.target.classList.contains('edit-btn')) {
-                toggleRow(row, true);
-            } else if (e.target.classList.contains('save-btn')) {
-                const text = row.querySelector('.nilai-text');
-                const input = row.querySelector('.nilai-input');
-                text.textContent = input.value;
-                toggleRow(row, false);
-            } else if (e.target.classList.contains('cancel-btn')) {
-                toggleRow(row, false);
-            }
-        });
+                    {{-- Action cell --}}
+                    <td class="px-6 py-4 text-center" id="action-cell-{{ $siswa->id }}">
+                        {{-- Default button (Input or Edit) --}}
+                        <button id="btn-edit-{{ $siswa->id }}"
+                            onclick="startEdit({{ $siswa->id }})"
+                            class="px-3 py-1.5 rounded-lg text-xs font-medium text-white
+                                   {{ $siswa->nilai ? 'bg-yellow-400 hover:bg-yellow-500' : 'bg-blue-500 hover:bg-blue-600' }}">
+                            {{ $siswa->nilai ? 'Edit' : 'Input Nilai' }}
+                        </button>
 
-        function toggleRow(row, isEditing) {
-            const text = row.querySelector('.nilai-text');
-            const input = row.querySelector('.nilai-input');
-            const editBtn = row.querySelector('.edit-btn');
-            const saveActions = row.querySelector('.save-actions');
-
-            text.classList.toggle('hidden', isEditing);
-            input.classList.toggle('hidden', !isEditing);
-            editBtn.classList.toggle('hidden', isEditing);
-            saveActions.classList.toggle('hidden', !isEditing);
-
-            if (isEditing) input.focus();
-        }
-    </script>
+                        {{-- Simpan + Batal (hidden by default) --}}
+                        <button id="btn-simpan-{{ $siswa->id }}"
+                            onclick="saveNilai({{ $siswa->id }}, {{ $selectedTugasId ?? 'null' }})"
+                            class="hidden px-3 py-1.5 rounded-lg text-xs font-medium
+                                   text-white bg-green-500 hover:bg-green-600">
+                            Simpan
+                        </button>
+                        <button id="btn-batal-{{ $siswa->id }}"
+                            onclick="cancelEdit({{ $siswa->id }})"
+                            class="hidden px-3 py-1.5 rounded-lg text-xs font-medium
+                                   text-white bg-gray-400 hover:bg-gray-500">
+                            Batal
+                        </button>
+                    </td>
+                </tr>
+            @empty
+                <tr>
+                    <td colspan="4" class="px-6 py-8 text-center text-gray-400 text-sm">
+                        Pilih kelas dan tugas untuk menampilkan data siswa
+                    </td>
+                </tr>
+            @endforelse
+        </tbody>
+    </table>
+</div>
 
 @endsection
+
+@push('scripts')
+<script>
+// Build current URL params
+const urlParams = new URLSearchParams(window.location.search);
+
+// When a dropdown changes, update its URL param and reload
+function applyFilter(key, value) {
+    urlParams.set(key, value);
+    // If MP changes, remove tugas_id so it resets
+    if (key === 'mp_id') urlParams.delete('tugas_id');
+    window.location.href = window.location.pathname + '?' + urlParams.toString();
+}
+
+// Toggle row into edit mode
+function startEdit(siswaId) {
+    document.getElementById(`nilai-display-${siswaId}`).classList.add('hidden');
+    document.getElementById(`nilai-input-${siswaId}`).classList.remove('hidden');
+    document.getElementById(`btn-edit-${siswaId}`).classList.add('hidden');
+    document.getElementById(`btn-simpan-${siswaId}`).classList.remove('hidden');
+    document.getElementById(`btn-batal-${siswaId}`).classList.remove('hidden');
+    document.getElementById(`nilai-input-${siswaId}`).focus();
+}
+
+// Cancel — restore original display
+function cancelEdit(siswaId) {
+    document.getElementById(`nilai-display-${siswaId}`).classList.remove('hidden');
+    document.getElementById(`nilai-input-${siswaId}`).classList.add('hidden');
+    document.getElementById(`btn-edit-${siswaId}`).classList.remove('hidden');
+    document.getElementById(`btn-simpan-${siswaId}`).classList.add('hidden');
+    document.getElementById(`btn-batal-${siswaId}`).classList.add('hidden');
+}
+
+// Save score via fetch (no page reload)
+async function saveNilai(siswaId, tugasId) {
+    const nilaiInput = document.getElementById(`nilai-input-${siswaId}`);
+    const nilai      = nilaiInput.value;
+
+    if (nilai === '' || isNaN(nilai)) {
+        alert('Masukan nilai yang valid (0-100)');
+        return;
+    }
+
+    const response = await fetch('{{ route("guru.simpan-nilai") }}', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+        },
+        body: JSON.stringify({
+            siswa_id: siswaId,
+            tugas_id: tugasId,
+            nilai:    parseFloat(nilai),
+        }),
+    });
+
+    const result = await response.json();
+
+    if (result.success) {
+        // Update display without reload
+        document.getElementById(`nilai-display-${siswaId}`).textContent = nilai;
+
+        // Change button to yellow "Edit"
+        const editBtn = document.getElementById(`btn-edit-${siswaId}`);
+        editBtn.textContent = 'Edit';
+        editBtn.classList.remove('bg-blue-500', 'hover:bg-blue-600');
+        editBtn.classList.add('bg-yellow-400', 'hover:bg-yellow-500');
+
+        cancelEdit(siswaId);
+    } else {
+        alert('Gagal menyimpan nilai. Silakan coba lagi.');
+    }
+}
+
+// Search filter
+document.getElementById('searchInput').addEventListener('input', function () {
+    const query = this.value.toLowerCase();
+    document.querySelectorAll('#nilaiTable tr').forEach(row => {
+        const text = row.textContent.toLowerCase();
+        row.style.display = text.includes(query) ? '' : 'none';
+    });
+});
+</script>
+@endpush

@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\guru;
+use App\Models\user;
 
 return [
 
@@ -64,7 +64,7 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => env('AUTH_MODEL', guru::class),
+            'model' => env('AUTH_MODEL', user::class),
         ],
 
         // 'users' => [
