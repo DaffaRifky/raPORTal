@@ -51,7 +51,7 @@
             class="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-sm
                    focus:outline-none focus:ring-2 focus:ring-blue-400">
             @foreach ($myKelas as $k)
-                <option value="{{ $k->id }}" {{ $k->id == $selectedKelasId ? 'selected' : '' }}>
+                <option class="uppercase" value="{{ $k->id }}" {{ $k->id == $selectedKelasId ? 'selected' : '' }}>
                     {{ $k->nomor_kelas }} - {{ $k->huruf_kelas }}
                 </option>
             @endforeach
@@ -96,7 +96,7 @@
                             onclick="startEdit({{ $siswa->id }})"
                             class="px-3 py-1.5 rounded-lg text-xs font-medium text-white
                                    {{ $siswa->nilai ? 'bg-yellow-400 hover:bg-yellow-500' : 'bg-blue-500 hover:bg-blue-600' }}">
-                            {{ $siswa->nilai ? 'Edit' : 'Input Nilai' }}
+                            {{ $siswa->nilai ? 'Edit Nilai' : 'Input Nilai' }}
                         </button>
 
                         {{-- Simpan + Batal (hidden by default) --}}

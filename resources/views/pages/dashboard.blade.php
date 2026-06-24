@@ -6,82 +6,92 @@
 @section('content')
 
 @if(auth()->user()->role === 'Guru')
-    <div class="container">
-        <div class="mb-6 p-6 bg-[#E2E2E2] rounded-lg shadow-md">
-            <div class="grid grid-cols-3 gap-6 mb-6">
-                <div class="container bg-white shadow-md rounded-xl p-4">
-                    <p class="text-sm">Kelas Diampu</p>
-                    <p class="text-2xl">4</p>
-                </div>
-                <div class="container bg-white shadow-md rounded-xl p-4 ">
-                    <p class="text-sm">Jumlah Siswa</p>
-                    <p class="text-2xl">120</p>
-                </div>
-                <div class="container bg-white shadow-md rounded-xl p-4 ">
-                    <p class="text-sm mb-1">Mata Pelajaran Diampu</p>
-                    <ul class="flex flex-row gap-2">
-                        <li class="text-lg rounded-full bg-gray-300 px-2">Matematika</li>
-                        <li class="text-lg rounded-full bg-gray-300 px-2">Fisika</li>
-                    </ul>
-                </div>
+<div class="container">
+    <div class="mb-6 p-6 bg-[#E2E2E2] rounded-lg shadow-md">
+        <div class="grid grid-cols-3 gap-4 mb-4">
+            <div class="bg-white rounded-lg px-6 py-4 shadow-sm">
+                <p class="text-sm text-gray-500">Kelas Diampu</p>
+                <p class="text-3xl font-semibold mt-1">{{ $jumlahKelas }}</p>
             </div>
-            <div class="container bg-white shadow-md rounded-xl px-6 py-2 w-full m-auto">
-                    <p class="text-xs">Kepala Sekolah</p>
-                    <p class="text-xl">John Doe</p>
+            <div class="bg-white rounded-lg px-6 py-4 shadow-sm">
+                <p class="text-sm text-gray-500">Jumlah Siswa</p>
+                <p class="text-3xl font-semibold mt-1">{{ $jumlahSiswa }}</p>
+            </div>
+            <div class="bg-white rounded-lg px-6 py-4 shadow-sm">
+                <p class="text-sm text-gray-500">Mata Pelajaran Diampu</p>
+                <div class="flex flex-wrap gap-2 mt-2">
+                    @forelse ($mataPelajaran as $mp)
+                        <span class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm">
+                            {{ $mp->nama }}
+                        </span>
+                    @empty
+                        <span class="text-gray-400 text-sm">Belum ada</span>
+                    @endforelse
+                </div>
             </div>
         </div>
+        {{-- Kepala Sekolah --}}
+        <div class="bg-white rounded-lg px-6 py-2 shadow-sm">
+            <p class="text-sm text-gray-500">Kepala Sekolah</p>
+            <p class="text-2xl font-semibold">
+                {{ $kepalaSekolah?->nama ?? 'Belum ditentukan' }}
+            </p>
+        </div>
     </div>
+</div>
 @endif
 
 @if(auth()->user()->role === 'Admin TU')
-    <div class="container">
-        <div class="mb-6 p-6 bg-[#E2E2E2] rounded-lg shadow-md">
-            <div class="grid grid-cols-4 gap-6 mb-6">
-                <div class="container bg-white shadow-md rounded-xl p-4 ">
-                    <p class="text-sm">Jumlah Guru</p>
-                    <p class="text-2xl">35</p>
-                </div>
-                <div class="container bg-white shadow-md rounded-xl p-4">
-                    <p class="text-sm">Jumlah Kelas</p>
-                    <p class="text-2xl">14</p>
-                </div>
-                <div class="container bg-white shadow-md rounded-xl p-4">
-                    <p class="text-sm">Jumlah Siswa</p>
-                    <p class="text-2xl">453</p>
-                </div>
-                <div class="container bg-white shadow-md rounded-xl p-4 ">
-                    <p class="text-sm">Jumlah Admin TU</p>
-                    <p class="text-2xl">15</p>
-                </div>
+    {{-- Stat Cards --}}
+<div class="container">
+    <div class="mb-6 p-6 bg-[#E2E2E2] rounded-lg shadow-md">
+        <div class="grid grid-cols-4 gap-4 mb-4">
+            <div class="bg-white border border-gray-200 rounded-2xl px-6 py-4">
+                <p class="text-sm text-gray-500 mb-1">Jumlah Guru</p>
+                <p class="text-3xl font-bold text-gray-800">{{ $jumlahGuru }}</p>
             </div>
-            <div class="container bg-white shadow-md rounded-xl px-6 py-2 w-[100%] m-auto">
-                    <p class="text-xs">Kepala Sekolah</p>
-                    <p class="text-xl">John Doe</p>
+            <div class="bg-white border border-gray-200 rounded-2xl px-6 py-4">
+                <p class="text-sm text-gray-500 mb-1">Jumlah Kelas</p>
+                <p class="text-3xl font-bold text-gray-800">{{ $jumlahKelas }}</p>
+            </div>
+            <div class="bg-white border border-gray-200 rounded-2xl px-6 py-4">
+                <p class="text-sm text-gray-500 mb-1">Jumlah Siswa</p>
+                <p class="text-3xl font-bold text-gray-800">{{ $jumlahSiswa }}</p>
+            </div>
+            <div class="bg-white border border-gray-200 rounded-2xl px-6 py-4">
+                <p class="text-sm text-gray-500 mb-1">Jumlah Admin TU</p>
+                <p class="text-3xl font-bold text-gray-800">{{ $jumlahAdminTU }}</p>
             </div>
         </div>
+        {{-- Kepala Sekolah Card --}}
+        <div class="bg-white border border-gray-200 rounded-2xl px-6 py-2">
+            <p class="text-sm text-gray-500 ">Kepala Sekolah</p>
+            <p class="text-2xl font-semibold text-gray-800">
+                {{ $kepalaSekolah?->nama ?? 'Belum ada data Kepala Sekolah' }}
+            </p>
+        </div>
     </div>
+</div>
 @endif
 
 @if(auth()->user()->role === 'Kepala Sekolah')
-    <div class="container">
-        <div class="mb-6 p-6 bg-[#E2E2E2] rounded-lg shadow-md">
-            <div class="grid grid-cols-4 gap-6 mb-6">
-                <div class="container bg-white shadow-md rounded-xl p-4">
-                    <p class="text-sm">Jumlah Guru</p>
-                    <p class="text-2xl">35</p>
-                </div>
-                <div class="container bg-white shadow-md rounded-xl p-4 ">
-                    <p class="text-sm">Jumlah Kelas</p>
-                    <p class="text-2xl">14</p>
-                </div>
-                <div class="container bg-white shadow-md rounded-xl p-4 ">
-                    <p class="text-sm">Jumlah Siswa</p>
-                    <p class="text-2xl">453</p>
-                </div>
-                <div class="container bg-white shadow-md rounded-xl p-4 ">
-                    <p class="text-sm">Jumlah Admin</p>
-                    <p class="text-2xl">15</p>
-                </div>
+    <div class="mb-6 p-6 bg-[#E2E2E2] rounded-lg shadow-md">
+        <div class="grid grid-cols-4 gap-6">
+            <div class="bg-white shadow-md rounded-xl p-4">
+                <p class="text-sm">Jumlah Guru</p>
+                <p class="text-2xl">{{ $jumlahGuru }}</p>   {{-- was hardcoded 35 --}}
+            </div>
+            <div class="bg-white shadow-md rounded-xl p-4">
+                <p class="text-sm">Jumlah Kelas</p>
+                <p class="text-2xl">{{ $jumlahKelas }}</p>  {{-- was hardcoded 14 --}}
+            </div>
+            <div class="bg-white shadow-md rounded-xl p-4">
+                <p class="text-sm">Jumlah Siswa</p>
+                <p class="text-2xl">{{ $jumlahSiswa }}</p>  {{-- was hardcoded 453 --}}
+            </div>
+            <div class="bg-white shadow-md rounded-xl p-4">
+                <p class="text-sm">Jumlah Admin</p>
+                <p class="text-2xl">{{ $jumlahAdminTU }}</p> {{-- was hardcoded 15 --}}
             </div>
         </div>
     </div>
@@ -92,8 +102,15 @@
 {{-- kartu data pribadi --}}
     <div class="p-8  bg-[#E2E2E2] rounded-lg shadow-md flex gap-6 ">
         <div class="flex-none">
-            <div class="bg-white w-40 h-60 rounded-xl border border-black/30 shadow-md">
-            </div>
+            @if (empty(Auth::user()->image))
+                {{-- show placeholder --}}
+                <div class="bg-white w-60 h-80 rounded-xl border-2 border-black/30 shadow-md">
+                </div>
+            @else
+                <img class="image rounded-xl w-60 h-80 shadow-md border-2 border-black/30"
+                    src="{{ asset('storage/images/' . auth()->user()->image) }}"
+                    alt="profile_image">
+            @endif
         </div>
         <div class="flex-1">
             <div class="mb-4 rounded-lg">

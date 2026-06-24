@@ -23,6 +23,7 @@ class user extends Authenticatable
         'perguruan',
         'pendidikan',
         'alamat',
+        'image',
         'password',
     ];
 
@@ -33,6 +34,10 @@ class user extends Authenticatable
 
     public $timestamps = false;
 
+    public function kelasWali()
+    {
+        return $this->hasOne(Kelas::class, 'wali_kelas_id');
+    }
     public function mps()
     {
         return $this->belongsToMany(Mp::class, 'mp_user', 'user_id', 'mp_id');

@@ -12,16 +12,15 @@
 @endif
 
 {{-- Top bar --}}
-<div class="flex justify-between items-center mb-4">
-    <input type="text" id="searchInput"
-        placeholder="Cari nama tugas..."
-        class="w-72 px-4 py-2.5 border border-gray-300 rounded-xl text-sm
-               focus:outline-none focus:ring-2 focus:ring-blue-400">
+<div class="grid grid-cols-5 gap-4 mb-6">
+            <input type="text" id="searchInput"
+            placeholder="Masukkan Nama atau NIS"
+            class="w-full px-3 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring focus:ring-blue-200 col-span-4">
 
     <button onclick="document.getElementById('addModal').classList.remove('hidden')"
-        class="px-4 py-2.5 bg-blue-600 text-white text-sm font-medium rounded-xl
+        class="px-4 py-2.5 bg-blue-600 text-white rounded-xl
                hover:bg-blue-700 transition">
-        + Tambah Tugas
+        Tambah Tugas +
     </button>
 </div>
 

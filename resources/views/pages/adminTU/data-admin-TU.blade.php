@@ -5,8 +5,10 @@
 
 @section('content')
         <div class="grid grid-cols-5 gap-4 mb-6">
-            <input class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-200 col-span-4" type="text" placeholder="Masukan Nama atau NIP">
-            <a onclick="document.getElementById('addAdminTUModal').classList.remove('hidden')" class="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded-md text-center">Tambah Admin TU +</a>
+            <input type="text" id="searchInput"
+            placeholder="Masukkan Nama atau NIP"
+            class="w-full px-3 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring focus:ring-blue-200 col-span-4">
+            <a onclick="document.getElementById('addAdminTUModal').classList.remove('hidden')" class="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-xl text-center">Tambah Admin TU +</a>
         </div>
         <div class="border border-gray-200 rounded-2xl overflow-hidden mb-4">
             <table class="table-auto w-full">
@@ -17,28 +19,28 @@
                         <th class="px-4 py-3 font-semibold text-center">Action</th>
                     </tr>
                 </thead>
-                <tbody id="" class="divide-y divide-black/10">
+                <tbody id="adminTUTable" class="divide-y divide-black/10">
                     @foreach ($adminTUs as $adminTU)
                     <tr class="hover:bg-gray-50 transition">
                         <td class="px-4 py-3">{{ $adminTU->nip }}</td>
                         <td class="px-4 py-3">{{ $adminTU->nama }}</td>
-                        <td class="px-4 py-3 text-center">
-                            <a onclick=" openEditModal({{ $adminTU->id }}, '{{ $adminTU->nip }}', '{{ $adminTU->nama }}')"
-                                class=" text-blue-500 hover:bg-blue-100 rounded-lg transition"
-                                title="Edit">
-                                <svg class="w-5 h-5 " fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
-                                </svg>
-                            </a>
-                            <form method="POST" action="{{ route('admin-TU.delete', $adminTU->id) }}" style="display:inline;" onsubmit="return confirm('Yakin ingin menghapus?')">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class=" text-red-500 hover:bg-red-100 rounded-lg transition" title="Delete">
+                        <td class="px-6 py-4 text-center">
+                                <button onclick=" openEditModal({{ $adminTU->id }}, '{{ $adminTU->nip }}', '{{ $adminTU->nama }}')"
+                                class="text-blue-500 hover:text-blue-700">
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
                                     </svg>
                                 </button>
-                            </form>
+                                <form method="POST" action="{{ route('admin-TU.delete', $adminTU->id) }}" style="display:inline;" onsubmit="return confirm('Yakin ingin menghapus?')">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class=" text-red-500 hover:bg-red-100 rounded-lg transition" title="Delete">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                                </svg>
+                                    </button>
+                                </form>
                         </td>
                     </tr>
                     @endforeach
@@ -169,6 +171,13 @@ document.addEventListener('DOMContentLoaded', function() {
     //     editModal.classList.remove('hidden');
     // }
     @endif
+});
+
+document.getElementById('searchInput').addEventListener('input', function () {
+    const query = this.value.toLowerCase();
+    document.querySelectorAll('#adminTUTable tr').forEach(row => {
+        row.style.display = row.textContent.toLowerCase().includes(query) ? '' : 'none';
+    });
 });
 </script>
 @endpush

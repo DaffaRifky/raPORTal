@@ -5,9 +5,13 @@
 
 @section('content')
         <div class="grid grid-cols-5 gap-4 mb-6">
-            <input class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-200 col-span-4" type="text" placeholder="Masukan Nama atau NIP">
-            <a                 onclick="document.getElementById('addGuruModal').classList.remove('hidden')" class="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded-md text-center">Tambah Guru +</a>
+            <input type="text" id="searchInput"
+        placeholder="Masukkan Nama atau NIP"
+        class="w-full px-3 py-2 border border-gray-300 rounded-xl
+               focus:outline-none focus:ring focus:ring-blue-200 col-span-4">
+            <a onclick="document.getElementById('addGuruModal').classList.remove('hidden')" class="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-xl text-center">Tambah Guru +</a>
         </div>
+
         <div class="border border-gray-200 rounded-2xl overflow-hidden mb-4">
             <table class="w-full">
                 <thead class="bg-gray-100 text-gray-600 font-medium">
@@ -19,7 +23,7 @@
                         <th class="px-6 py-4 text-right font-semibold"><p class="px-2">Action</p></th>
                     </tr>
                 </thead>
-                <tbody class="divide-y divide-gray-200">
+                <tbody class="divide-y divide-gray-200" id="guruTable">
                     @foreach ($gurus as $guru)
                         @php
                             $assignedMpIds    = $guru->mengajar->pluck('mp_id')->unique()->values();
@@ -326,5 +330,13 @@ function openEditModal(button) {
 function closeEditModal() {
     document.getElementById('editGuruModal').classList.add('hidden');
 }
+
+// Search
+document.getElementById('searchInput').addEventListener('input', function () {
+    const query = this.value.toLowerCase();
+    document.querySelectorAll('#guruTable tr').forEach(row => {
+        row.style.display = row.textContent.toLowerCase().includes(query) ? '' : 'none';
+    });
+});
 </script>
 @endpush

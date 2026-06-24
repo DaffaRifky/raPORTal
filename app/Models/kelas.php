@@ -15,7 +15,12 @@ class Kelas extends Model
     {
         return $this->hasMany(Siswa::class, 'kelas_id');
     }
-    public $timestamps = false;
+
+    // A class has one homeroom teacher
+    public function waliKelas()
+    {
+        return $this->belongsTo(User::class, 'wali_kelas_id');
+    }
 
     // All teaching assignments for this class
     public function gurumengajars()
@@ -28,4 +33,6 @@ class Kelas extends Model
         return $this->belongsToMany(User::class, 'guru_mengajar', 'kelas_id', 'user_id')
                     ->withPivot('mp_id');
     }
+
+        public $timestamps = false;
 }

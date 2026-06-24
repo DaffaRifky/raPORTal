@@ -28,9 +28,9 @@ class NilaiController extends Controller
         )->orderBy('nomor_kelas')->orderBy('huruf_kelas')->get();
 
         // Selected values from URL params (default to first available)
-        $selectedMpId    = $request->get('mp_id',    $myMps->first()?->id);
-        $selectedKelasId = $request->get('kelas_id', $myKelas->first()?->id);
-        $selectedTugasId = $request->get('tugas_id');
+        $selectedMpId    = $request->input('mp_id',    $myMps->first()?->id);
+        $selectedKelasId = $request->input('kelas_id', $myKelas->first()?->id);
+        $selectedTugasId = $request->input('tugas_id');
 
         // Tugas filtered by selected MP
         $tugasList = $selectedMpId

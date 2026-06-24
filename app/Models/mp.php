@@ -17,4 +17,8 @@ class Mp extends Model
     }
     public $timestamps = false;
 
+    public function tugas()
+    {
+        return $this->hasMany(\App\Models\Tugas::class, 'mp_id');
+    }
 }

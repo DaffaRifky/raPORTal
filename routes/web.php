@@ -4,12 +4,16 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\Login;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\SalesController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\KelasController;
 use App\Http\Controllers\SiswaController;
 use App\Http\Controllers\GuruController;
 use App\Http\Controllers\AdminTUController;
 use App\Http\Controllers\NilaiController;
 use App\Http\Controllers\TugasController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\WaliKelasController;
+use App\Http\Controllers\KepalaSekolahController;
 
 Route::get('/', function () {
     return redirect()->route('login');
@@ -20,42 +24,15 @@ Route::post('/login', [Login::class, 'login']);
 
 
 Route::middleware('auth')->group(function () {
-    route::get('/guru/dashboard', function () {
-    return view('pages.guru.dashboard');
-    })->name('guru.dashboard');
 
-    route::get('/dashboard', function () {
-    return view('pages.dashboard');
-    })->name('dashboard');
-
-    route::get('/guru/input-nilai', function () {
-        return view('pages.guru.input-nilai');
-    })->name('guru.input-nilai');
-
-    route::get('/guru/data-pribadi', function () {
-        return view('pages.guru.data-pribadi');
-    })->name('guru.data-pribadi');
-
-    route::get('/admin/dashboard', function () {
-    return view('pages.admin.dashboard');
-    })->name('admin.dashboard');
-
-    route::get('/admin/data-guru', [guruController::class, 'show'])->name('admin.data-guru');
-
-    route::get('/admin/data-kelas', function () {
-        return view('pages.admin.data-kelas');
-    })->name('admin.data-kelas');
-
-    route::get('/admin/data-siswa', function () {
-        return view('pages.admin.data-siswa');
-    })->name('admin.data-siswa');
-
+    Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
 
     Route::post('/logout', [Login::class, 'logout'])->middleware('auth')->name('logout');
 
-    Route::get('/datakelas', [KelasController::class, 'show']);
-    Route::get('/datasiswa', [KelasController::class, 'show']);
-    Route::post('/datakelas', [KelasController::class, 'simpan'])->name('kelas.simpan');
+    Route::get('/datakelas',         [KelasController::class, 'show']);
+    Route::post('/datakelas',        [KelasController::class, 'simpan'])->name('kelas.simpan');
+    Route::put('/datakelas/{id}',    [KelasController::class, 'update'])->name('kelas.update');
+    Route::delete('/datakelas/{id}', [KelasController::class, 'delete'])->name('kelas.delete');
 
     Route::get('/datasiswa', [SiswaController::class, 'show']);
     Route::post('/datasiswa', [SiswaController::class, 'simpan'])->name('siswa.simpan');
@@ -66,7 +43,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/dataguru', [GuruController::class, 'simpan'])->name('guru.simpan');
     Route::delete('/dataguru/{id}', [GuruController::class, 'delete'])->name('guru.delete');
     Route::put('/dataguru/{id}', [GuruController::class, 'update'])->name('guru.update');
-    
+
     Route::get('/guru/input-nilai',  [NilaiController::class, 'show'])->name('guru.input-nilai');
     Route::post('/guru/input-nilai', [NilaiController::class, 'simpan'])->name('guru.simpan-nilai');
 
@@ -79,18 +56,19 @@ Route::middleware('auth')->group(function () {
     Route::post('/kelola-tugas',         [TugasController::class, 'simpan'])->name('tugas.simpan');
     Route::put('/kelola-tugas/{id}',     [TugasController::class, 'update'])->name('tugas.update');
     Route::delete('/kelola-tugas/{id}',  [TugasController::class, 'delete'])->name('tugas.delete');
+
+    Route::get('/wali-kelas/kelas-saya', [WaliKelasController::class, 'index'])->name('wali-kelas.kelas-saya');
+
+    Route::get('/kepala-sekolah/penilaian-siswa', [KepalaSekolahController::class, 'index'])
+     ->name('kepala-sekolah.penilaian-siswa');
+
+    // route::get('/profil-saya', function () {
+    //     return view('pages.profil-saya');
+    // })->name('profil-saya');
+
+    Route::get('/profil-saya',  [ProfileController::class, 'show'])->name('profil-saya');
+    Route::post('/profil-saya', [ProfileController::class, 'upload'])->name('profil-saya.upload');
 });
-
-
-
-
-
-// route::get('/login', function () {
-//     return view('pages.login');
-// })->name('login');
-
-
-
 
 route::get('/header', function () {
     return view('components.header');

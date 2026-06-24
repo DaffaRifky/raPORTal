@@ -5,14 +5,13 @@
 
 @section('content')
         <div class="grid grid-cols-5 gap-4 mb-6">
-            <input class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-200 col-span-4" type="text" placeholder="Masukan Nama atau NIP">
+            <input type="text" id="searchInput"
+            placeholder="Masukkan Nama atau NIS"
+            class="w-full px-3 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring focus:ring-blue-200 col-span-4">
             <button
                 onclick="document.getElementById('addSiswaModal').classList.remove('hidden')"
-                class="flex items-center gap-2 bg-blue-500 hover:bg-blue-600 text-white text-sm font-medium px-5 py-2 rounded-lg transition whitespace-nowrap">
-                Tambah Siswa
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
-                </svg>
+                class="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-xl">
+                Tambah Siswa +
             </button>
         </div>
         <div class="border border-gray-200 rounded-2xl overflow-hidden mb-4">
@@ -25,7 +24,7 @@
                         <th class="px-6 py-4 text-center font-semibold">Action</th>
                     </tr>
                 </thead>
-                <tbody class="divide-y divide-gray-200">
+                <tbody class="divide-y divide-gray-200" id="siswaTable">
                     @foreach ($data as $siswa)
                         <tr class="hover:bg-gray-50 transition">
                             <td >{{ $siswa->NIS }}</td>
@@ -190,6 +189,12 @@ document.addEventListener('DOMContentLoaded', function() {
     //     editModal.classList.remove('hidden');
     // }
     @endif
+});
+document.getElementById('searchInput').addEventListener('input', function () {
+    const query = this.value.toLowerCase();
+    document.querySelectorAll('#siswaTable tr').forEach(row => {
+        row.style.display = row.textContent.toLowerCase().includes(query) ? '' : 'none';
+    });
 });
 </script>
 @endpush
