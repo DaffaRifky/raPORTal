@@ -190,7 +190,7 @@ async function saveNilai(siswaId, tugasId) {
 
         // Change button to yellow "Edit"
         const editBtn = document.getElementById(`btn-edit-${siswaId}`);
-        editBtn.textContent = 'Edit';
+        editBtn.textContent = `Edit Nilai`;
         editBtn.classList.remove('bg-blue-500', 'hover:bg-blue-600');
         editBtn.classList.add('bg-yellow-400', 'hover:bg-yellow-500');
 

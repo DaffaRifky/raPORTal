@@ -18,4 +18,5 @@ class Nilai extends Model
     {
         return $this->belongsTo(Tugas::class, 'tugas_id');
     }
+
 }

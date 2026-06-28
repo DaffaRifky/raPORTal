@@ -13,10 +13,11 @@ class ProfileController extends Controller
     {
         return view('pages/profil-saya');
     }
+
     public function update(Request $request, $id)
     {
         $users             = User::findOrFail($id);
-        $users->nip        = $request->input('nip');   // ← lowercase, matches name="nip" in edit form
+        $users->nip        = $request->input('nip');
         $users->nama       = $request->input('nama');
         $users->no_hp      = $request->input('no_hp');
         $users->email      = $request->input('email');
@@ -32,27 +33,15 @@ class ProfileController extends Controller
 
         return redirect()->back()->with('success', 'Data berhasil diperbarui');
     }
+    
     public function upload(Request $request)
     {
-        // Validate the request (Recommended)
-        $request->validate([
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,jpeg|max:2048',
-        ]);
-
-        if ($request->hasFile('image')) {
-            // Get the file instance correctly
-            $file = $request->file('image');
-
-            // Generate a unique filename to prevent overwrites
+        if($request->hasFile('image')){
+            $file = $request->image;
             $filename = $file->hashName();
-
-            // Store in 'storage/app/public/images'
-            $path = $file->storeAs('images', $filename, 'public');
-
-            // Update the database with just the filename (or the relative path)
-            Auth::user()->update(['image' => $filename]);
+            $request->image->storeAs('images',$filename,'public');
+            Auth()->user()->update(['image'=>$filename]);
         }
-
         return redirect()->back()->with('success', 'Image uploaded successfully.');
     }
 }

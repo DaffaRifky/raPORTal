@@ -44,8 +44,10 @@ Route::middleware('auth')->group(function () {
     Route::delete('/dataguru/{id}', [GuruController::class, 'delete'])->name('guru.delete');
     Route::put('/dataguru/{id}', [GuruController::class, 'update'])->name('guru.update');
 
-    Route::get('/guru/input-nilai',  [NilaiController::class, 'show'])->name('guru.input-nilai');
+    Route::get('/guru/input-nilai',  [NilaiController::class, 'showInput'])->name('guru.input-nilai');
     Route::post('/guru/input-nilai', [NilaiController::class, 'simpan'])->name('guru.simpan-nilai');
+
+    Route::get('/guru/rekap-nilai',  [NilaiController::class, 'showRekap'])->name('guru.rekap-nilai');
 
     Route::get('/dataadminTU', [AdminTUController::class, 'show']);
     Route::post('/dataadminTU', [AdminTUController::class, 'simpan'])->name('admin-TU.simpan');

@@ -14,7 +14,7 @@
 {{-- Top bar --}}
 <div class="grid grid-cols-5 gap-4 mb-6">
     <input type="text" id="searchInput"
-        placeholder="Cari nama kelas..."
+        placeholder="Masukkan nama kelas"
         class="w-full px-3 py-2 border border-gray-300 rounded-xl
                focus:outline-none focus:ring focus:ring-blue-200 col-span-4">
     <button onclick="document.getElementById('addKelasModal').classList.remove('hidden')"

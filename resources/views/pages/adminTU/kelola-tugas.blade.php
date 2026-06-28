@@ -14,7 +14,7 @@
 {{-- Top bar --}}
 <div class="grid grid-cols-5 gap-4 mb-6">
             <input type="text" id="searchInput"
-            placeholder="Masukkan Nama atau NIS"
+            placeholder="Masukkan Nama Tugas"
             class="w-full px-3 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring focus:ring-blue-200 col-span-4">
 
     <button onclick="document.getElementById('addModal').classList.remove('hidden')"
@@ -30,8 +30,8 @@
         <thead class="bg-gray-100 text-gray-600">
             <tr>
                 <th class="px-6 py-4 text-left font-semibold">Nama Tugas</th>
-                <th class="px-6 py-4 text-left font-semibold">Tipe</th>
                 <th class="px-6 py-4 text-left font-semibold">Mata Pelajaran</th>
+                <th class="px-6 py-4 text-left font-semibold">Tipe</th>
                 <th class="px-6 py-4 text-center font-semibold">Aksi</th>
             </tr>
         </thead>
@@ -39,6 +39,7 @@
             @forelse ($tugasList as $tugas)
                 <tr class="hover:bg-gray-50 transition">
                     <td class="px-6 py-4 text-sm">{{ $tugas->nama }}</td>
+                    <td class="px-6 py-4 text-sm">{{ $tugas->mp->nama ?? '-' }}</td>
                     <td class="px-6 py-4 text-sm">
                         @php
                             $tipeColor = match($tugas->tipe) {
@@ -52,7 +53,6 @@
                             {{ $tugas->tipe }}
                         </span>
                     </td>
-                    <td class="px-6 py-4 text-sm">{{ $tugas->mp->nama ?? '-' }}</td>
                     <td class="px-6 py-4 text-center">
                         {{-- Edit button --}}
                         <button

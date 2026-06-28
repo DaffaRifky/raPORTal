@@ -24,17 +24,17 @@
 <div class="container">
     <div class="mb-6 p-6 bg-[#E2E2E2] rounded-lg shadow-md">
         <div class="grid grid-cols-3 gap-6">
-            <div class="bg-white border border-gray-200 rounded-2xl px-6 py-5">
+            <div class="bg-white border border-gray-200 rounded-2xl px-6 py-3">
                 <p class="text-xs text-gray-500 mb-1">Kelas</p>
                 <p class="text-3xl font-bold text-gray-800 uppercase">
                     {{ $kelas->nomor_kelas }} - {{ $kelas->huruf_kelas }}
                 </p>
             </div>
-            <div class="bg-white border border-gray-200 rounded-2xl px-6 py-5">
+            <div class="bg-white border border-gray-200 rounded-2xl px-6 py-3">
                 <p class="text-xs text-gray-500 mb-1">Jumlah Siswa</p>
                 <p class="text-3xl font-bold text-gray-800">{{ $siswas->count() }}</p>
             </div>
-            <div class="bg-white border border-gray-200 rounded-2xl px-6 py-5">
+            <div class="bg-white border border-gray-200 rounded-2xl px-6 py-3">
                 <p class="text-xs text-gray-500 mb-1">Rata-rata Keseluruhan Siswa</p>
                 <p class="text-3xl font-bold text-gray-800">
                     {{ $classAverage ?? '-' }}

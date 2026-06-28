@@ -13,7 +13,7 @@ use App\Models\GuruMengajar;
 
 class NilaiController extends Controller
 {
-    public function show(Request $request)
+    public function showInput(Request $request)
     {
         $guru = Auth::user();
 
@@ -58,6 +58,57 @@ class NilaiController extends Controller
         }
 
         return view('pages.guru.input-nilai', compact(
+            'myMps', 'myKelas', 'tugasList',
+            'siswas',
+            'selectedMpId', 'selectedKelasId', 'selectedTugasId'
+        ));
+    }
+
+    public function showRekap(Request $request)
+    {
+        $guru = Auth::user();
+
+        // Only show MPs this teacher teaches
+        $myMps = Mp::whereIn('id',
+            GuruMengajar::where('user_id', $guru->id)->pluck('mp_id')->unique()
+        )->get();
+
+        // Only show kelas this teacher teaches
+        $myKelas = Kelas::whereIn('id',
+            GuruMengajar::where('user_id', $guru->id)->pluck('kelas_id')->unique()
+        )->orderBy('nomor_kelas')->orderBy('huruf_kelas')->get();
+
+        // Selected values from URL params (default to first available)
+        $selectedMpId    = $request->input('mp_id',    $myMps->first()?->id);
+        $selectedKelasId = $request->input('kelas_id', $myKelas->first()?->id);
+        $selectedTugasId = $request->input('tugas_id');
+
+        // Tugas filtered by selected MP
+        $tugasList = $selectedMpId
+            ? Tugas::where('mp_id', $selectedMpId)->get()
+            : collect();
+
+        if (!$selectedTugasId) {
+            $selectedTugasId = $tugasList->first()?->id;
+        }
+
+        // Students in selected class with their score for selected task
+        $siswas = collect();
+        if ($selectedKelasId) {
+            $siswas = Siswa::where('kelas_id', $selectedKelasId)
+                ->orderBy('nama')
+                ->get()
+                ->map(function ($siswa) use ($selectedTugasId) {
+                    $siswa->nilai = $selectedTugasId
+                        ? Nilai::where('siswa_id', $siswa->id)
+                               ->where('tugas_id', $selectedTugasId)
+                               ->first()
+                        : null;
+                    return $siswa;
+                });
+        }
+
+        return view('pages.guru.rekap-nilai', compact(
             'myMps', 'myKelas', 'tugasList',
             'siswas',
             'selectedMpId', 'selectedKelasId', 'selectedTugasId'

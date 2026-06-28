@@ -4,18 +4,18 @@
 @section('header', 'Profil Saya')
 
 @section('content')
-<form {{-- action="{{ route('profil-saya.update') }}" --}} >
+<form>
     <div class="flex mb-6">
         <div class="flex-none bg-[#617a9e] p-4 rounded-tl-xl rounded-bl-xl shadow-md ">
             <p class="text-white mb-2 text-center text-xl font-medium mt-2">Foto Profil</p>
             @if (empty(Auth::user()->image))
                 {{-- show placeholder --}}
-                <a onclick="document.getElementById('updateProfileModal').classList.remove('hidden')" class="bg-white cursor-pointer hover:bg-gray-100 w-60 h-80 border border-black/30 rounded-xl shadow-md m-6 text-lg text-gray-500 text-center flex items-center justify-center">No Image</a>
+                <a onclick="document.getElementById('updateProfileModal').classList.remove('hidden')" class="bg-white cursor-pointer hover:bg-gray-100 w-60 h-80 border border-black/30 rounded-xl shadow-md m-6 text-lg text-gray-500 text-center flex items-center justify-center">No Image <br> (3 X 4)</a>
             @else
             <a onclick="document.getElementById('updateProfileModal').classList.remove('hidden')" class="w-60 h-80 cursor-pointer hover:bg-amber-50 rounded-xl shadow-md m-6 text-xl font-medium text-gray-500 text-center flex items-center justify-center">
                 <img class="image rounded-xl w-60 h-80 shadow-md border-2 border-black/30 absolute hover:opacity-30"
                     src="{{ asset('storage/images/' . auth()->user()->image) }}"
-                    alt="profile_image">Pilih Foto Profil Baru</a>
+                    alt="profile_image">Pilih Foto Profil Baru <br> (3 X 4)</a>
             @endif
         </div>
 
@@ -68,7 +68,7 @@
             </svg>
         </button>
 
-        <h2 class="mb-4 text-xl font-semibold text-gray-800 mb-1">Masukkan foto profil baru</h2>
+        <h2 class="mb-4 text-xl font-semibold text-gray-800">Masukkan foto profil baru</h2>
         <hr class="mb-4 opacity-30 border">
         <form action="{{route('profil-saya.upload')}}" method="POST" class="grid grid-cols-3 gap-4" enctype="multipart/form-data">
                 @csrf
