@@ -15,31 +15,33 @@
         class="flex-1 px-4 py-2.5 border border-gray-300 rounded-xl text-sm
                focus:outline-none focus:ring-2 focus:ring-blue-400">
 
-    {{-- Pilih Kelas --}}
-    <div>
-        <label class="block text-xs text-gray-500 mb-1">Pilih Kelas</label>
+        {{-- Pilih Kelas --}}
+    <div class="w-48">
         <select onchange="applyFilter('kelas_id', this.value)"
             class="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-sm
                    focus:outline-none focus:ring-2 focus:ring-blue-400">
-            @foreach ($myKelas as $k)
-                <option class="uppercase" value="{{ $k->id }}" {{ $k->id == $selectedKelasId ? 'selected' : '' }}>
+            @forelse ($myKelas as $k)
+                <option value="{{ $k->id }}" {{ $k->id == $selectedKelasId ? 'selected' : '' }}>
                     {{ $k->nomor_kelas }} - {{ $k->huruf_kelas }}
                 </option>
-            @endforeach
+            @empty
+                <option value="">-- Belum ada kelas --</option>
+            @endforelse
         </select>
     </div>
 
     {{-- Pilih Mata Pelajaran --}}
-    <div>
-        <label class="block text-xs text-gray-500 mb-1">Pilih Mata Pelajaran</label>
+    <div class="w-64">
         <select onchange="applyFilter('mp_id', this.value)"
             class="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-sm
                    focus:outline-none focus:ring-2 focus:ring-blue-400">
-            @foreach ($myMps as $mp)
+            @forelse ($myMps as $mp)
                 <option value="{{ $mp->id }}" {{ $mp->id == $selectedMpId ? 'selected' : '' }}>
                     {{ $mp->nama }}
                 </option>
-            @endforeach
+            @empty
+                <option value="">-- Belum ada mata pelajaran --</option>
+            @endforelse
         </select>
     </div>
 </div>
@@ -71,9 +73,9 @@
         </thead>
         <tbody class="divide-y divide-gray-200" id="siswaTable">
             @forelse ($siswas as $siswa)
-                <tr class="hover:bg-gray-50 transition">
-                    <td class="px-4 py-3 text-sm text-gray-600">{{ $siswa->NIS }}</td>
-                    <td class="px-4 py-3 text-sm uppercase font-medium">{{ $siswa->nama }}</td>
+                <tr class="hover:bg-gray-50 transition" id="row-{{ $siswa->id }}">
+                    <td class="px-6 py-4 text-sm">{{ $siswa->NIS }}</td>
+                    <td class="px-6 py-4 text-sm">{{ $siswa->nama }}</td>
 
                     @forelse ($tugasList as $tugas)
                         @php $score = $siswa->scores[$tugas->id] ?? null; @endphp
@@ -118,16 +120,14 @@
 
 @push('scripts')
 <script>
-function applyFilter(mpId) {
-    const url = new URL(window.location.href);
-    url.searchParams.set('mp_id', mpId);
-    window.location.href = url.toString();
-}
+const urlParams = new URLSearchParams(window.location.search);
 
-function applyFilter(kelasId) {
-    const url = new URL(window.location.href);
-    url.searchParams.set('kelas_id', mpId);
-    window.location.href = url.toString();
+// When a dropdown changes, update its URL param and reload
+function applyFilter(key, value) {
+    urlParams.set(key, value);
+    // If MP changes, remove tugas_id so it resets
+    if (key === 'mp_id') urlParams.delete('tugas_id');
+    window.location.href = window.location.pathname + '?' + urlParams.toString();
 }
 
 document.getElementById('searchInput')?.addEventListener('input', function () {

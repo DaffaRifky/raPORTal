@@ -7,6 +7,7 @@ use App\Http\Controllers\SalesController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\KelasController;
 use App\Http\Controllers\SiswaController;
+use App\Http\Controllers\MPController;
 use App\Http\Controllers\GuruController;
 use App\Http\Controllers\AdminTUController;
 use App\Http\Controllers\NilaiController;
@@ -39,6 +40,11 @@ Route::middleware('auth')->group(function () {
     Route::delete('/datasiswa/{id}', [SiswaController::class, 'delete'])->name('siswa.delete');
     Route::put('/datasiswa/{id}', [SiswaController::class, 'update'])->name('siswa.update');
 
+    Route::get('/mata-pelajaran', [MPController::class, 'show'])->name('mp.show');
+    Route::post('/mata-pelajaran', [MPController::class, 'simpan'])->name('mp.simpan');
+    Route::delete('/mata-pelajaran/{id}', [MPController::class, 'delete'])->name('mp.delete');
+    Route::put('/mata-pelajaran/{id}', [MPController::class, 'update'])->name('mp.update');
+
     Route::get('/dataguru', [GuruController::class, 'show']);
     Route::post('/dataguru', [GuruController::class, 'simpan'])->name('guru.simpan');
     Route::delete('/dataguru/{id}', [GuruController::class, 'delete'])->name('guru.delete');
@@ -64,19 +70,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/kepala-sekolah/penilaian-siswa', [KepalaSekolahController::class, 'index'])
      ->name('kepala-sekolah.penilaian-siswa');
 
-    // route::get('/profil-saya', function () {
-    //     return view('pages.profil-saya');
-    // })->name('profil-saya');
-
     Route::get('/profil-saya',  [ProfileController::class, 'show'])->name('profil-saya');
     Route::post('/profil-saya', [ProfileController::class, 'upload'])->name('profil-saya.upload');
 });
 
-route::get('/header', function () {
-    return view('components.header');
-})->name('components.header');
-
-route::get('/sidebar', function () {
-    return view('components.sidebar');
-})->name('components.sidebar');
+route::get('/test', function () {
+    return view('pages.test');
+});
+// ->name('test');
 

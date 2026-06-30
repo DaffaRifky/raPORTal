@@ -9,7 +9,7 @@ use App\Models\User;
 
 class ProfileController extends Controller
 {
-        public function show()
+    public function show()
     {
         return view('pages/profil-saya');
     }
@@ -33,7 +33,7 @@ class ProfileController extends Controller
 
         return redirect()->back()->with('success', 'Data berhasil diperbarui');
     }
-    
+
     public function upload(Request $request)
     {
         if($request->hasFile('image')){

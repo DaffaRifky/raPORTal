@@ -39,28 +39,55 @@ class WaliKelasController extends Controller
 
         // Students in this class, each with their scores per task
         $siswas = Siswa::where('kelas_id', $kelas->id)
-                       ->orderBy('nama')
-                       ->get()
-                       ->map(function ($siswa) use ($tugasList) {
-                           $scores = [];
-                           $filled = 0;
-                           $total  = 0;
+            ->orderBy('nama')
+            ->get()
+            ->map(function ($siswa) use ($tugasList) {
+                $scores       = [];
+                $totalTugas   = 0;
+                $countTugas   = 0;
+                $nilaiUts     = 0;
+                $nilaiUas     = 0;
+                $hasUts       = false;
+                $hasUas       = false;
 
-                           foreach ($tugasList as $tugas) {
-                               $nilai = Nilai::where('siswa_id', $siswa->id)
-                                            ->where('tugas_id', $tugas->id)
-                                            ->value('nilai');
-                               $scores[$tugas->id] = $nilai;
-                               if ($nilai !== null) {
-                                   $total += $nilai;
-                                   $filled++;
-                               }
-                           }
+                foreach ($tugasList as $tugas) {
+                    $nilai = Nilai::where('siswa_id', $siswa->id)
+                                 ->where('tugas_id', $tugas->id)
+                                 ->value('nilai');
 
-                           $siswa->scores    = $scores;
-                           $siswa->rata_rata = $filled > 0
-                               ? round($total / $filled, 1)
-                               : null;
+                    $scores[$tugas->id] = $nilai;
+
+                    if ($nilai !== null) {
+                        // Kelompokkan berdasarkan tipe tugas
+                        if ($tugas->tipe === 'Tugas') {
+                            $totalTugas += $nilai;
+                            $countTugas++;
+                        } elseif ($tugas->tipe === 'UTS') {
+                            $nilaiUts = $nilai;
+                            $hasUts = true;
+                        } elseif ($tugas->tipe === 'UAS') {
+                            $nilaiUas = $nilai;
+                            $hasUas = true;
+                        }
+                    }
+                }
+
+                $rataTugas = ($countTugas > 0) ? ($totalTugas / $countTugas) : 0;
+
+
+                $bobotTugas = 0.60;
+                $bobotUts   = 0.20;
+                $bobotUas   = 0.20;
+
+                $finalScore = 0;
+
+                $finalScore += ($rataTugas * $bobotTugas);
+                $finalScore += ($hasUts ? ($nilaiUts * $bobotUts) : 0);
+                $finalScore += ($hasUas ? ($nilaiUas * $bobotUas) : 0);
+
+
+                $siswa->scores    = $scores;
+                $siswa->rata_rata = $finalScore > 0 ? round($finalScore, 1) : null;
 
                            return $siswa;
                        });
