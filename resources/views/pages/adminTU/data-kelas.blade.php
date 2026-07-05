@@ -223,7 +223,7 @@ function openEditModal(button) {
     const huruf = button.dataset.huruf;
     const wali  = button.dataset.wali;
 
-    document.getElementById('editForm').action  = `/datakelas/${id}`;
+    document.getElementById('editForm').action  = `/data-kelas/${id}`;
     document.getElementById('edit-nomor').value = nomor;
     document.getElementById('edit-huruf').value = huruf;
     document.getElementById('edit-wali').value  = wali || '';

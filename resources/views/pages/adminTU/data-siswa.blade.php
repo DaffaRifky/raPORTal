@@ -81,8 +81,9 @@ class="hidden fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-
         <div class="grid grid-cols-5 gap-4">
             <div class="col-span-2">
                 <label class="block text-sm font-medium text-gray-600 mb-1.5">NIS</label>
-                <input type="text" name="NIS" value="{{ old('NIS') }}"
+                <input type="text" name="NIS" id="addNIS" value="{{ old('NIS') }}"
                     class="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400">
+                <p id="addNISError" class="text-red-500 text-xs mt-1 hidden">NIS sudah terdaftar</p>
             </div>
 
             <div class="col-span-2">
@@ -111,7 +112,7 @@ class="hidden fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-
                     class="flex-1 border border-gray-300 text-gray-600 hover:bg-gray-50 rounded-xl py-2.5 text-sm font-medium transition">
                 Cancel
             </button>
-            <button type="submit"
+            <button type="submit" id="addSiswaBtn"
                     class="flex-1 bg-blue-500 hover:bg-blue-600 text-white rounded-xl py-2.5 text-sm font-medium transition">
                 Tambah siswa
             </button>
@@ -142,6 +143,7 @@ class="fixed flex inset-0 bg-black/50 items-center justify-center z-50 p-4 hidde
                 <label class="block text-sm font-medium text-gray-600 mb-1.5">NIS</label>
                 <input type="text" name="NIS" value="" id="editNIS"
                     class="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400">
+                <p id="editNISError" class="text-red-500 text-xs mt-1 hidden">NIS sudah terdaftar</p>
             </div>
 
             <div class="col-span-2">
@@ -169,7 +171,7 @@ class="fixed flex inset-0 bg-black/50 items-center justify-center z-50 p-4 hidde
                     class="flex-1 border border-gray-300 text-gray-600 hover:bg-gray-50 rounded-xl py-2.5 text-sm font-medium transition">
                 Cancel
             </button>
-            <button type="submit"
+            <button type="submit" id="editSiswaBtn"
                     class="flex-1 bg-blue-500 hover:bg-blue-600 text-white rounded-xl py-2.5 text-sm font-medium transition">
                 Update Data siswa
             </button>
@@ -182,12 +184,16 @@ class="fixed flex inset-0 bg-black/50 items-center justify-center z-50 p-4 hidde
 
 @push('scripts')
 <script>
+let currentEditId = null;
+
 function openEditModal(id, NIS, nama, kelas) {
+    currentEditId = id;
     document.getElementById('editNIS').value       = NIS;
     document.getElementById('editNama').value      = nama;
     document.getElementById('editKelas').value       = kelas;
-    document.getElementById('editSiswaForm').action  = '/datasiswa/' + id;
+    document.getElementById('editSiswaForm').action  = '/data-siswa/' + id;
     document.getElementById('editSiswaModal').classList.remove('hidden');
+    document.getElementById('editNISError').classList.add('hidden');
 }
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -203,6 +209,85 @@ document.getElementById('searchInput').addEventListener('input', function () {
     document.querySelectorAll('#siswaTable tr').forEach(row => {
         row.style.display = row.textContent.toLowerCase().includes(query) ? '' : 'none';
     });
+});
+
+// Check NIS duplication for Add modal
+const addNISInput = document.getElementById('addNIS');
+const addNISError = document.getElementById('addNISError');
+const addSiswaBtn = document.getElementById('addSiswaBtn');
+
+addNISInput.addEventListener('input', async function() {
+    const nis = this.value.trim();
+
+    if (nis.length === 0) {
+        addNISError.classList.add('hidden');
+        addSiswaBtn.disabled = false;
+        return;
+    }
+
+    try {
+        const response = await fetch('{{ route("siswa.checkNis") }}', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content || ''
+            },
+            body: JSON.stringify({ nis: nis })
+        });
+
+        const data = await response.json();
+
+        if (data.exists) {
+            addNISError.classList.remove('hidden');
+            addSiswaBtn.disabled = true;
+        } else {
+            addNISError.classList.add('hidden');
+            addSiswaBtn.disabled = false;
+        }
+    } catch (error) {
+        console.error('Error checking NIS:', error);
+    }
+});
+
+// Check NIS duplication for Edit modal
+const editNISInput = document.getElementById('editNIS');
+const editNISError = document.getElementById('editNISError');
+const editSiswaBtn = document.getElementById('editSiswaBtn');
+
+editNISInput.addEventListener('input', async function() {
+    const nis = this.value.trim();
+
+    if (nis.length === 0) {
+        editNISError.classList.add('hidden');
+        editSiswaBtn.disabled = false;
+        return;
+    }
+
+    try {
+        const response = await fetch('{{ route("siswa.checkNis") }}', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content || ''
+            },
+            body: JSON.stringify({
+                nis: nis,
+                exclude_id: currentEditId
+            })
+        });
+
+        const data = await response.json();
+
+        if (data.exists) {
+            editNISError.classList.remove('hidden');
+            editSiswaBtn.disabled = true;
+        } else {
+            editNISError.classList.add('hidden');
+            editSiswaBtn.disabled = false;
+        }
+    } catch (error) {
+        console.error('Error checking NIS:', error);
+    }
 });
 </script>
 @endpush

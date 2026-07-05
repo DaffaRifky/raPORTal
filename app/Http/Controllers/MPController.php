@@ -14,7 +14,7 @@ class MPController extends Controller
         $singkatan = [];
         foreach ($mps as $mp) {
             $nama[] = $mp->nama;
-            $singkatand[] = $mp->singkatan;
+            $singkatan[] = $mp->singkatan;
         }
 
         return view('pages/adminTU/mata-pelajaran', compact('mps'));
@@ -22,10 +22,11 @@ class MPController extends Controller
 
     public function simpan(Request $request)
     {
-        $mp = new Mp;
-        $mp->nama = $request->input('nama');
-        $mp->singkatan = $request->input('singkatan');
-        $mp->save();
+
+        Mp::create([
+            'nama' => $request->input('nama'),
+            'singkatan' => $request->input('singkatan'),
+        ]);
 
         return redirect()->back()->with('success', 'Mata Pelajaran berhasil disimpan');
     }
@@ -38,10 +39,10 @@ class MPController extends Controller
 
     public function update(Request $request, $id)
     {
-        $mp = Mp::findOrFail($id);
-        $mp->nama = $request->input('nama');
-        $mp->singkatan = $request->input('singkatan');
-        $mp->save();
+        Mp::where('id', $id)->update([
+            'nama' => $request->input('nama'),
+            'singkatan' => $request->input('singkatan'),
+        ]);
 
         return redirect()->back()->with('success', 'Mata Pelajaran berhasil diperbarui');
     }

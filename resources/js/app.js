@@ -1,5 +1,6 @@
-import './bootstrap';
 import '../css/app.css';
-import 'flowbite';
+import Alpine from 'alpinejs';
 
-<script src="{{ asset('js/app.js') }}"></script>
+window.Alpine = Alpine;
+
+Alpine.start();

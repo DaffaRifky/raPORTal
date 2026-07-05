@@ -24,22 +24,23 @@ class KelasController extends Controller
 
     public function simpan(Request $request)
     {
-        $k                = new Kelas;
-        $k->nomor_kelas   = $request->input('nomor_kelas');
-        $k->huruf_kelas   = strtoupper($request->input('huruf_kelas'));
-        $k->wali_kelas_id = $request->input('wali_kelas_id') ?: null;
-        $k->save();
+
+        kelas::create([
+            'nomor_kelas'   => $request->input('nomor_kelas'),
+            'huruf_kelas'   => strtoupper($request->input('huruf_kelas')),
+            'wali_kelas_id' => $request->input('wali_kelas_id') ?: null,
+        ]);
 
         return redirect()->back()->with('success', 'Kelas berhasil disimpan');
     }
 
     public function update(Request $request, $id)
     {
-        $k                = Kelas::findOrFail($id);
-        $k->nomor_kelas   = $request->input('nomor_kelas');
-        $k->huruf_kelas   = strtoupper($request->input('huruf_kelas'));
-        $k->wali_kelas_id = $request->input('wali_kelas_id') ?: null;
-        $k->save();
+        Kelas::where('id', $id)->update([
+            'nomor_kelas'   => $request->input('nomor_kelas'),
+            'huruf_kelas'   => strtoupper($request->input('huruf_kelas')),
+            'wali_kelas_id' => $request->input('wali_kelas_id') ?: null,
+        ]);
 
         return redirect()->back()->with('success', 'Kelas berhasil diperbarui');
     }

@@ -15,6 +15,7 @@ use App\Http\Controllers\TugasController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\WaliKelasController;
 use App\Http\Controllers\KepalaSekolahController;
+use App\Http\Controllers\RaportController;
 
 Route::get('/', function () {
     return redirect()->route('login');
@@ -30,52 +31,54 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/logout', [Login::class, 'logout'])->middleware('auth')->name('logout');
 
-    Route::get('/datakelas',         [KelasController::class, 'show']);
-    Route::post('/datakelas',        [KelasController::class, 'simpan'])->name('kelas.simpan');
-    Route::put('/datakelas/{id}',    [KelasController::class, 'update'])->name('kelas.update');
-    Route::delete('/datakelas/{id}', [KelasController::class, 'delete'])->name('kelas.delete');
+    Route::get('/data-kelas',         [KelasController::class, 'show'])->name('kelas.show');
+    Route::post('/data-kelas',        [KelasController::class, 'simpan'])->name('kelas.simpan');
+    Route::put('/data-kelas/{id}',    [KelasController::class, 'update'])->name('kelas.update');
+    Route::delete('/data-kelas/{id}', [KelasController::class, 'delete'])->name('kelas.delete');
 
-    Route::get('/datasiswa', [SiswaController::class, 'show']);
-    Route::post('/datasiswa', [SiswaController::class, 'simpan'])->name('siswa.simpan');
-    Route::delete('/datasiswa/{id}', [SiswaController::class, 'delete'])->name('siswa.delete');
-    Route::put('/datasiswa/{id}', [SiswaController::class, 'update'])->name('siswa.update');
+    Route::get('/data-siswa', [SiswaController::class, 'show'])->name('siswa.show');
+    Route::post('/data-siswa', [SiswaController::class, 'simpan'])->name('siswa.simpan');
+    Route::delete('/data-siswa/{id}', [SiswaController::class, 'delete'])->name('siswa.delete');
+    Route::put('/data-siswa/{id}', [SiswaController::class, 'update'])->name('siswa.update');
+    Route::post('/check-nis', [SiswaController::class, 'checkNis'])->name('siswa.checkNis');
 
     Route::get('/mata-pelajaran', [MPController::class, 'show'])->name('mp.show');
     Route::post('/mata-pelajaran', [MPController::class, 'simpan'])->name('mp.simpan');
     Route::delete('/mata-pelajaran/{id}', [MPController::class, 'delete'])->name('mp.delete');
     Route::put('/mata-pelajaran/{id}', [MPController::class, 'update'])->name('mp.update');
 
-    Route::get('/dataguru', [GuruController::class, 'show']);
-    Route::post('/dataguru', [GuruController::class, 'simpan'])->name('guru.simpan');
-    Route::delete('/dataguru/{id}', [GuruController::class, 'delete'])->name('guru.delete');
-    Route::put('/dataguru/{id}', [GuruController::class, 'update'])->name('guru.update');
+    Route::get('/data-guru', [GuruController::class, 'show'])->name('guru.show');
+    Route::post('/data-guru', [GuruController::class, 'simpan'])->name('guru.simpan');
+    Route::delete('/data-guru/{id}', [GuruController::class, 'delete'])->name('guru.delete');
+    Route::put('/data-guru/{id}', [GuruController::class, 'update'])->name('guru.update');
 
     Route::get('/guru/input-nilai',  [NilaiController::class, 'showInput'])->name('guru.input-nilai');
     Route::post('/guru/input-nilai', [NilaiController::class, 'simpan'])->name('guru.simpan-nilai');
 
     Route::get('/guru/rekap-nilai',  [NilaiController::class, 'showRekap'])->name('guru.rekap-nilai');
 
-    Route::get('/dataadminTU', [AdminTUController::class, 'show']);
-    Route::post('/dataadminTU', [AdminTUController::class, 'simpan'])->name('admin-TU.simpan');
-    Route::delete('/dataadminTU/{id}', [AdminTUController::class, 'delete'])->name('admin-TU.delete');
-    Route::put('/dataadminTU/{id}', [AdminTUController::class, 'update'])->name('admin-TU.update');
+    Route::get('/data-admin-TU', [AdminTUController::class, 'show'])->name('admin-TU.show');
+    Route::post('/data-admin-TU', [AdminTUController::class, 'simpan'])->name('admin-TU.simpan');
+    Route::delete('/data-admin-TU/{id}', [AdminTUController::class, 'delete'])->name('admin-TU.delete');
+    Route::put('/data-admin-TU/{id}', [AdminTUController::class, 'update'])->name('admin-TU.update');
 
     Route::get('/kelola-tugas',          [TugasController::class, 'index'])->name('tugas.index');
     Route::post('/kelola-tugas',         [TugasController::class, 'simpan'])->name('tugas.simpan');
     Route::put('/kelola-tugas/{id}',     [TugasController::class, 'update'])->name('tugas.update');
     Route::delete('/kelola-tugas/{id}',  [TugasController::class, 'delete'])->name('tugas.delete');
 
-    Route::get('/wali-kelas/kelas-saya', [WaliKelasController::class, 'index'])->name('wali-kelas.kelas-saya');
+    Route::get('/wali-kelas/kelas-saya', [WaliKelasController::class, 'kelas_saya'])->name('wali-kelas.kelas-saya');
+    Route::get('/wali-kelas/rapor', [WaliKelasController::class, 'rapor'])->name('wali-kelas.rapor');
 
     Route::get('/kepala-sekolah/penilaian-siswa', [KepalaSekolahController::class, 'index'])
      ->name('kepala-sekolah.penilaian-siswa');
 
-    Route::get('/profil-saya',  [ProfileController::class, 'show'])->name('profil-saya');
+    Route::get('/profil-saya',  [ProfileController::class, 'show'])->name('profil-saya.show');
+    Route::put('/profil-saya', [ProfileController::class, 'update'])->name('profil-saya.update');
     Route::post('/profil-saya', [ProfileController::class, 'upload'])->name('profil-saya.upload');
-});
 
-route::get('/test', function () {
-    return view('pages.test');
+    Route::post('/guru-check-duplicate', [ProfileController::class, 'checkDuplicate'])->name('guru.checkDuplicate');
+    Route::post('/admin-TU-check-duplicate', [ProfileController::class, 'checkDuplicate'])->name('admin-TU.checkDuplicate');
+    
 });
-// ->name('test');
 

@@ -95,7 +95,7 @@
             @forelse ($siswas as $siswa)
                 <tr class="hover:bg-gray-50 transition">
                     <td class="px-4 py-3 text-sm text-gray-600">{{ $siswa->NIS }}</td>
-                    <td class="px-4 py-3 text-sm uppercase font-medium">{{ $siswa->nama }}</td>
+                    <td class="px-4 py-3 text-base">{{ $siswa->nama }}</td>
 
                     @forelse ($tugasList as $tugas)
                         @php $score = $siswa->scores[$tugas->id] ?? null; @endphp

@@ -9,32 +9,22 @@ use App\Models\Mp;
 use App\Models\Kelas;
 use App\Models\GuruMengajar;
 
+
 class GuruController extends Controller
 {
-    public function show()
-    {
-        $gurus = User::where('role', 'Guru')
-                     ->with(['mengajar.kelas', 'mengajar.mp'])
-                     ->get();
-        $mps   = Mp::all();
-        $kelas = Kelas::orderBy('huruf_kelas')->get();
-
-        return view('pages/adminTU/data-guru', compact('gurus', 'mps', 'kelas'));
-    }
-
     public function simpan(Request $request)
     {
-        $guru = new User;
-        $guru->nip        = $request->input('NIP');
-        $guru->nama       = $request->input('nama');
-        $guru->role       = 'Guru';
-        $guru->no_hp      = $request->input('no_hp');
-        $guru->email      = $request->input('email');
-        $guru->perguruan  = $request->input('perguruan');
-        $guru->pendidikan = $request->input('pendidikan');
-        $guru->alamat     = $request->input('alamat');
-        $guru->password   = Hash::make($request->input('password'));
-        $guru->save();
+        $guru = User::create([
+            'nip'  => $request->input('NIP'),
+            'nama' => $request->input('nama'),
+            'role' => 'Guru',
+            'no_hp' => $request->input('no_hp') ?? null,
+            'email' => $request->input('email') ?? null,
+            'perguruan' => $request->input('perguruan') ?? null,
+            'pendidikan' => $request->input('pendidikan') ?? null,
+            'alamat' => $request->input('alamat') ?? null,
+            'password' => Hash::make($request->input('password')),
+        ]);
 
         // Save subject × class teaching assignments
         if ($request->filled('mps') && $request->filled('kelas')) {
@@ -50,6 +40,20 @@ class GuruController extends Controller
         }
 
         return redirect()->back()->with('success', 'Guru berhasil disimpan');
+    }
+
+        public function show()
+    {
+        $gurus = User::where('role', 'Guru')->get();
+        $mps   = mp::all();
+        $kelas = Kelas::orderBy('huruf_kelas')->get();
+        return view('pages/adminTU/data-guru', compact('gurus', 'mps', 'kelas'));
+    }
+
+        public function delete($id)
+    {
+        User::findOrFail($id)->delete();
+        return redirect()->back()->with('success', 'Guru berhasil dihapus');
     }
 
     public function update(Request $request, $id)
@@ -85,10 +89,7 @@ class GuruController extends Controller
 
         return redirect()->back()->with('success', 'Guru berhasil diperbarui');
     }
+    
 
-    public function delete($id)
-    {
-        User::findOrFail($id)->delete();
-        return redirect()->back()->with('success', 'Guru berhasil dihapus');
-    }
+
 }

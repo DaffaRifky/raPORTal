@@ -11,25 +11,21 @@ class ProfileController extends Controller
 {
     public function show()
     {
-        return view('pages/profil-saya');
+        $user = Auth::user();
+
+        return view('pages/profil-saya', compact('user'));
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        $users             = User::findOrFail($id);
-        $users->nip        = $request->input('nip');
-        $users->nama       = $request->input('nama');
-        $users->no_hp      = $request->input('no_hp');
-        $users->email      = $request->input('email');
-        $users->perguruan  = $request->input('perguruan');
-        $users->pendidikan = $request->input('pendidikan');
-        $users->alamat     = $request->input('alamat');
+        $user = Auth::user();
 
-        if ($request->filled('password')) {
-            $users->password = Hash::make($request->input('password'));
-        }
-
-        $users->save();
+        $user->update([
+            'nama' => $request->input('nama'),
+            'no_hp' => $request->input('no_hp'),
+            'email' => $request->input('email'),
+            'alamat' => $request->input('alamat'),
+        ]);
 
         return redirect()->back()->with('success', 'Data berhasil diperbarui');
     }
@@ -40,8 +36,36 @@ class ProfileController extends Controller
             $file = $request->image;
             $filename = $file->hashName();
             $request->image->storeAs('images',$filename,'public');
-            Auth()->user()->update(['image'=>$filename]);
+            Auth::user()->update(['image'=>$filename]);
         }
         return redirect()->back()->with('success', 'Image uploaded successfully.');
+    }
+
+    public function checkDuplicate(Request $request)
+    {
+        $nip = $request->input('nip');
+        $email = $request->input('email');
+        $no_hp = $request->input('no_hp');
+        $excludeId = $request->input('exclude_id');
+        
+        $query = User::where(function ($q) use ($nip, $email, $no_hp) {
+            if ($nip) {
+                $q->orWhere('nip', $nip);
+            }
+            if ($email) {
+                $q->orWhere('email', $email);
+            }
+            if ($no_hp) {
+                $q->orWhere('no_hp', $no_hp);
+            }
+        });
+        
+        if ($excludeId) {
+            $query->where('id', '!=', $excludeId);
+        }
+        
+        $exists = $query->exists();
+        
+        return response()->json(['exists' => $exists]);
     }
 }

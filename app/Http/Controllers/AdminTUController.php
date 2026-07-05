@@ -8,7 +8,7 @@ use App\Models\User;
 
 class AdminTUController extends Controller
 {
-        public function simpan(Request $request)
+    public function simpan(Request $request)
     {
         user::create([
             'nip'  => $request->input('NIP'),
@@ -19,6 +19,7 @@ class AdminTUController extends Controller
             'perguruan' => $request->input('perguruan') ?? null,
             'pendidikan' => $request->input('pendidikan') ?? null,
             'alamat' => $request->input('alamat') ?? null,
+            'image' => $request->input('image') ?? null,
             'password' => Hash::make($request->input('password')),
         ]);
 
@@ -46,13 +47,16 @@ class AdminTUController extends Controller
 
     public function update(Request $request, $id)
     {
-        $adminTU = user::findOrFail($id);
-        $adminTU->NIP = $request->input('NIP');
-        $adminTU->nama = $request->input('nama');
-        if ($request->filled('password')) {
-            $adminTU->password = Hash::make($request->input('password'));
-        }
-        $adminTU->save();
+
+        user::where('id', $id)->update([
+            'nip' => $request->input('NIP'),
+            'nama' => $request->input('nama'),
+            'no_hp' => $request->input('no_hp'),
+            'email' => $request->input('email'),
+            'perguruan' => $request->input('perguruan'),
+            'pendidikan' => $request->input('pendidikan'),
+            'alamat' => $request->input('alamat'),
+        ]);
 
         return redirect()->back()->with('success', 'Admin TU berhasil diperbarui');
     }

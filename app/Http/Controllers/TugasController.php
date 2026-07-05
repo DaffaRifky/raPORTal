@@ -18,22 +18,22 @@ class TugasController extends Controller
 
     public function simpan(Request $request)
     {
-        $tugas       = new Tugas;
-        $tugas->nama = $request->input('nama');
-        $tugas->tipe = $request->input('tipe');
-        $tugas->mp_id = $request->input('mp_id');
-        $tugas->save();
+        Tugas::create([
+            'nama' => $request->input('nama'),
+            'tipe' => $request->input('tipe'),
+            'mp_id' => $request->input('mp_id'),
+        ]);
 
         return redirect()->back()->with('success', 'Tugas berhasil ditambahkan');
     }
 
     public function update(Request $request, $id)
     {
-        $tugas       = Tugas::findOrFail($id);
-        $tugas->nama = $request->input('nama');
-        $tugas->tipe = $request->input('tipe');
-        $tugas->mp_id = $request->input('mp_id');
-        $tugas->save();
+        Tugas::where('id', $id)->update([
+            'nama' => $request->input('nama'),
+            'tipe' => $request->input('tipe'),
+            'mp_id' => $request->input('mp_id'),
+        ]);
 
         return redirect()->back()->with('success', 'Tugas berhasil diperbarui');
     }

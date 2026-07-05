@@ -70,6 +70,11 @@ class="w-full px-3 py-2 border border-gray-300 rounded-xl
                         data-id="{{ $guru->id }}"
                         data-nip="{{ $guru->nip }}"
                         data-nama="{{ $guru->nama }}"
+                        data-email="{{ $guru->email }}"
+                        data-no_hp="{{ $guru->no_hp }}"
+                        data-perguruan="{{ $guru->perguruan }}"
+                        data-pendidikan="{{ $guru->pendidikan }}"
+                        data-alamat="{{ $guru->alamat }}"
                         data-mps="{{ json_encode($assignedMpIds) }}"
                         data-kelas="{{ json_encode($assignedKelasIds) }}"
                         >
@@ -111,20 +116,21 @@ class="w-full px-3 py-2 border border-gray-300 rounded-xl
             <div class="grid grid-cols-5 gap-4">
                 <div class="col-span-2">
                     <label class="block text-sm font-medium text-gray-600 mb-1.5">NIP</label>
-                    <input type="text" name="NIP" value="{{ old('NIP') }}"
+                    <input type="text" name="NIP" id="addNIP" value="{{ old('NIP') }}" required
                         class="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400">
+                    <p id="addNIPError" class="text-red-500 text-xs mt-1 hidden">NIP sudah terdaftar</p>
                 </div>
 
                 <div class="col-span-3">
                     <label class="block text-sm font-medium text-gray-600 mb-1.5">Nama</label>
-                    <input type="text" name="nama" value="{{ old('nama') }}"
+                    <input type="text" name="nama" value="{{ old('nama') }}" required
                         class="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400">
                 </div>
             </div>
 
             <div class="mb-4">
                 <label class="block text-sm font-medium text-gray-600 mb-1.5">Password</label>
-                <input type="text" name="password" value="{{ old('password') }}"
+                <input type="text" name="password" value="{{ old('password') }}" required
                     class="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400">
             </div>
 
@@ -162,13 +168,49 @@ class="w-full px-3 py-2 border border-gray-300 rounded-xl
                 <div id="kelas-inputs"></div>
             </div>
 
+            <h1 class="text-lg font-semibold text-gray-800 mb-4">Data Lainnya</h1>
+
+            <div class="grid grid-cols-2 gap-4">
+                <div class="">
+                    <label class="block text-sm font-medium text-gray-600 mb-1.5">Email</label>
+                    <input type="text" name="email" id="addEmail" value="{{ old('email') }}"
+                        class="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400">
+                    <p id="addEmailError" class="text-red-500 text-xs mt-1 hidden">Email sudah terdaftar</p>
+                </div>
+
+                <div class="">
+                    <label class="block text-sm font-medium text-gray-600 mb-1.5">No. HP</label>
+                    <input type="text" name="no_hp" id="addNoHP" value="{{ old('no_hp') }}"
+                        class="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400">
+                    <p id="addNoHPError" class="text-red-500 text-xs mt-1 hidden">No. HP sudah terdaftar</p>
+                </div>
+
+                <div class="">
+                    <label class="block text-sm font-medium text-gray-600 mb-1.5">Perguruan Terakhir</label>
+                    <input type="text" name="perguruan" value="{{ old('perguruan') }}"
+                        class="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400">
+                </div>
+
+                <div class="">
+                    <label class="block text-sm font-medium text-gray-600 mb-1.5">Pendidikan Terakhir</label>
+                    <input type="text" name="pendidikan" value="{{ old('pendidikan') }}"
+                        class="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400">
+                </div>
+
+                <div class="col-span-2">
+                    <label class="block text-sm font-medium text-gray-600 mb-1.5">Alamat</label>
+                    <input type="text" name="alamat" value="{{ old('alamat') }}"
+                        class="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400">
+                </div>
+            </div>
+
             <div class="flex gap-3 pt-2">
                 <button type="button"
                         onclick="document.getElementById('addGuruModal').classList.add('hidden')"
                         class="flex-1 border border-gray-300 text-gray-600 hover:bg-gray-50 rounded-xl py-2.5 text-sm font-medium transition">
                     Batal
                 </button>
-                <button type="submit"
+                <button type="submit" id="addGuruBtn"
                         class="flex-1 bg-blue-500 hover:bg-blue-600 text-white rounded-xl py-2.5 text-sm font-medium transition">
                     Tambah guru
                 </button>
@@ -197,12 +239,13 @@ class="hidden fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-
             <div class="grid grid-cols-5 gap-4 mb-4">
                 <div class="col-span-2">
                     <label class="block text-sm font-medium text-gray-600 mb-1.5">NIP</label>
-                    <input type="text" id="edit-nip" name="nip"
+                    <input type="text" id="edit-nip" name="nip" required
                         class="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400">
+                    <p id="editNIPError" class="text-red-500 text-xs mt-1 hidden">NIP sudah terdaftar</p>
                 </div>
                 <div class="col-span-3">
                     <label class="block text-sm font-medium text-gray-600 mb-1.5">Nama</label>
-                    <input type="text" id="edit-nama" name="nama"
+                    <input type="text" id="edit-nama" name="nama" required
                         class="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400">
                 </div>
             </div>
@@ -247,12 +290,49 @@ class="hidden fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-
                 </div>
                 <div id="edit-kelas-inputs"></div>
             </div>
+
+            <h1 class="text-lg font-semibold text-gray-800 mb-4">Data Lainnya</h1>
+
+            <div class="grid grid-cols-2 gap-4">
+                <div class="">
+                    <label class="block text-sm font-medium text-gray-600 mb-1.5">Email</label>
+                    <input type="text" name="email" value="" id="editEmail"
+                        class="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400">
+                    <p id="editEmailError" class="text-red-500 text-xs mt-1 hidden">Email sudah terdaftar</p>
+                </div>
+
+                <div class="">
+                    <label class="block text-sm font-medium text-gray-600 mb-1.5">No. HP</label>
+                    <input type="text" name="no_hp" value="" id="editNoHP"
+                        class="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400">
+                    <p id="editNoHPError" class="text-red-500 text-xs mt-1 hidden">No. HP sudah terdaftar</p>
+                </div>
+
+                <div class="">
+                    <label class="block text-sm font-medium text-gray-600 mb-1.5">Perguruan Terakhir</label>
+                    <input type="text" name="perguruan" value="" id="editPerguruan"
+                        class="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400">
+                </div>
+
+                <div class="">
+                    <label class="block text-sm font-medium text-gray-600 mb-1.5">Pendidikan Terakhir</label>
+                    <input type="text" name="pendidikan" value="" id="editPendidikan"
+                        class="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400">
+                </div>
+
+                <div class="col-span-2">
+                    <label class="block text-sm font-medium text-gray-600 mb-1.5">Alamat</label>
+                    <input type="text" name="alamat" value="" id="editAlamat"
+                        class="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400">
+                </div>
+            </div>
+
             <div class="flex gap-3 mt-6">
                 <button type="button" onclick="closeEditModal()"
                     class="flex-1 border border-gray-300 text-gray-600 hover:bg-gray-50 rounded-xl py-2.5 text-sm font-medium transition">
                     Batal
                 </button>
-                <button type="submit"
+                <button type="submit" id="editGuruBtn"
                     class="flex-1 bg-blue-500 hover:bg-blue-600 text-white rounded-xl py-2.5 text-sm font-medium transition">
                     Update Data Guru
                 </button>
@@ -294,17 +374,30 @@ function toggleChip(button, containerId, inputName) {
     }
 }
 
+let currentEditId = null;
+
 function openEditModal(button) {
     const id    = button.dataset.id;
     const nip   = button.dataset.nip;
     const nama  = button.dataset.nama;
+    const email = button.dataset.email;
+    const no_hp = button.dataset.no_hp;
+    const perguruan = button.dataset.perguruan;
+    const pendidikan = button.dataset.pendidikan;
+    const alamat = button.dataset.alamat;
 
     const assignedMps   = JSON.parse(button.dataset.mps   || '[]');
     const assignedKelas = JSON.parse(button.dataset.kelas || '[]');
 
-    document.getElementById('editForm').action = `/dataguru/${id}`;
+    currentEditId = id;
+    document.getElementById('editForm').action = `/data-guru/${id}`;
     document.getElementById('edit-nip').value  = nip;
     document.getElementById('edit-nama').value = nama;
+    document.getElementById('editEmail').value = email;
+    document.getElementById('editNoHP').value = no_hp;
+    document.getElementById('editPerguruan').value = perguruan;
+    document.getElementById('editPendidikan').value = pendidikan;
+    document.getElementById('editAlamat').value = alamat;
 
     // Reset edit modal chips and inputs only (scoped to edit modal)
     const editModal = document.getElementById('editGuruModal');
@@ -345,5 +438,222 @@ document.getElementById('searchInput').addEventListener('input', function () {
         row.style.display = row.textContent.toLowerCase().includes(query) ? '' : 'none';
     });
 });
+
+// Check NIP duplication for Add modal
+const addNIPInput = document.getElementById('addNIP');
+const addNIPError = document.getElementById('addNIPError');
+const addEmailInput = document.getElementById('addEmail');
+const addEmailError = document.getElementById('addEmailError');
+const addNoHPInput = document.getElementById('addNoHP');
+const addNoHPError = document.getElementById('addNoHPError');
+const addGuruBtn = document.getElementById('addGuruBtn');
+
+addNIPInput.addEventListener('input', async function() {
+    const nip = this.value.trim();
+    
+    if (nip.length === 0) {
+        addNIPError.classList.add('hidden');
+        addGuruBtn.disabled = false;
+        return;
+    }
+    
+    try {
+        const response = await fetch('{{ route("guru.checkDuplicate") }}', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content || ''
+            },
+            body: JSON.stringify({ nip: nip })
+        });
+        
+        const data = await response.json();
+        
+        if (data.exists) {
+            addNIPError.classList.remove('hidden');
+            addGuruBtn.disabled = true;
+        } else {
+            addNIPError.classList.add('hidden');
+            addGuruBtn.disabled = false;
+        }
+    } catch (error) {
+        console.error('Error checking NIP:', error);
+    }
+});
+
+addEmailInput.addEventListener('input', async function() {
+    const email = this.value.trim();
+    
+    if (email.length === 0) {
+        addEmailError.classList.add('hidden');
+        addGuruBtn.disabled = false;
+        return;
+    }
+    
+    try {
+        const response = await fetch('{{ route("guru.checkDuplicate") }}', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content || ''
+            },
+            body: JSON.stringify({ email: email })
+        });
+        
+        const data = await response.json();
+        
+        if (data.exists) {
+            addEmailError.classList.remove('hidden');
+            addGuruBtn.disabled = true;
+        } else {
+            addEmailError.classList.add('hidden');
+            addGuruBtn.disabled = false;
+        }
+    } catch (error) {
+        console.error('Error checking Email:', error);
+    }
+});
+
+addNoHPInput.addEventListener('input', async function() {
+    const no_hp = this.value.trim();
+    
+    if (no_hp.length === 0) {
+        addNoHPError.classList.add('hidden');
+        addGuruBtn.disabled = false;
+        return;
+    }
+    
+    try {
+        const response = await fetch('{{ route("guru.checkDuplicate") }}', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content || ''
+            },
+            body: JSON.stringify({ no_hp: no_hp })
+        });
+        
+        const data = await response.json();
+        
+        if (data.exists) {
+            addNoHPError.classList.remove('hidden');
+            addGuruBtn.disabled = true;
+        } else {
+            addNoHPError.classList.add('hidden');
+            addGuruBtn.disabled = false;
+        }
+    } catch (error) {
+        console.error('Error checking No HP:', error);
+    }
+});
+
+// Check NIP duplication for Edit modal
+const editNIPInput = document.getElementById('edit-nip');
+const editNIPError = document.getElementById('editNIPError');
+const editEmailInput = document.getElementById('editEmail');
+const editEmailError = document.getElementById('editEmailError');
+const editNoHPInput = document.getElementById('editNoHP');
+const editNoHPError = document.getElementById('editNoHPError');
+const editGuruBtn = document.getElementById('editGuruBtn');
+
+editNIPInput.addEventListener('input', async function() {
+    const nip = this.value.trim();
+    
+    if (nip.length === 0) {
+        editNIPError.classList.add('hidden');
+        editGuruBtn.disabled = false;
+        return;
+    }
+    
+    try {
+        const response = await fetch('{{ route("guru.checkDuplicate") }}', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content || ''
+            },
+            body: JSON.stringify({ nip: nip })
+        });
+        
+        const data = await response.json();
+        
+        if (data.exists) {
+            editNIPError.classList.remove('hidden');
+            editGuruBtn.disabled = true;
+        } else {
+            editNIPError.classList.add('hidden');
+            editGuruBtn.disabled = false;
+        }
+    } catch (error) {
+        console.error('Error checking NIP:', error);
+    }
+});
+
+editEmailInput.addEventListener('input', async function() {
+    const email = this.value.trim();
+    
+    if (email.length === 0) {
+        editEmailError.classList.add('hidden');
+        editGuruBtn.disabled = false;
+        return;
+    }
+    
+    try {
+        const response = await fetch('{{ route("guru.checkDuplicate") }}', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content || ''
+            },
+            body: JSON.stringify({ email: email })
+        });
+        
+        const data = await response.json();
+        
+        if (data.exists) {
+            editEmailError.classList.remove('hidden');
+            editGuruBtn.disabled = true;
+        } else {
+            editEmailError.classList.add('hidden');
+            editGuruBtn.disabled = false;
+        }
+    } catch (error) {
+        console.error('Error checking Email:', error);
+    }
+});
+
+editNoHPInput.addEventListener('input', async function() {
+    const no_hp = this.value.trim();
+    
+    if (no_hp.length === 0) {
+        editNoHPError.classList.add('hidden');
+        editGuruBtn.disabled = false;
+        return;
+    }
+    
+    try {
+        const response = await fetch('{{ route("guru.checkDuplicate") }}', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content || ''
+            },
+            body: JSON.stringify({ no_hp: no_hp })
+        });
+        
+        const data = await response.json();
+        
+        if (data.exists) {
+            editNoHPError.classList.remove('hidden');
+            editGuruBtn.disabled = true;
+        } else {
+            editNoHPError.classList.add('hidden');
+            editGuruBtn.disabled = false;
+        }
+    } catch (error) {
+        console.error('Error checking No HP:', error);
+    }
+});
+    
 </script>
 @endpush
