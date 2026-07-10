@@ -40,7 +40,13 @@ class TugasController extends Controller
 
     public function delete($id)
     {
-        Tugas::findOrFail($id)->delete();
+        $tugas = Tugas::findOrFail($id);
+
+        if (in_array($tugas->tipe, ['UTS', 'UAS'])) {
+            return redirect()->back()->with('error', 'UTS dan UAS wajib ada dan tidak bisa dihapus.');
+        }
+
+        $tugas->delete();
 
         return redirect()->back()->with('success', 'Tugas berhasil dihapus');
     }

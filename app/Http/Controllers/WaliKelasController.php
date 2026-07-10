@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Kelas;
+use App\Models\User;
 use App\Models\Siswa;
 use App\Models\Tugas;
 use App\Models\Nilai;
+use App\Models\PengaturanAkademik;
 use App\Models\Mp;
 
 class WaliKelasController extends Controller
@@ -110,6 +112,9 @@ class WaliKelasController extends Controller
         $guru  = Auth::user();
         $kelas = Kelas::where('wali_kelas_id', $guru->id)->first();
 
+        $pengaturanAkademik = PengaturanAkademik::first();
+        $kepalaSekolah = User::where('role', 'Kepala Sekolah')->first();
+
         if (!$kelas) {
             return view('pages.wali-kelas.rapor', ['kelas' => null]);
         }
@@ -158,7 +163,7 @@ class WaliKelasController extends Controller
 
                 if ($nilai === null) continue;
 
-                if (in_array($tugas->tipe, ['Tugas', 'UH'])) {
+                if (in_array($tugas->tipe, ['Tugas', 'Ulangan', 'PR'])) {
                     $totalTugas += $nilai;
                     $countTugas++;
                 } elseif ($tugas->tipe === 'UTS') {
@@ -184,7 +189,7 @@ class WaliKelasController extends Controller
         }
 
         return view('pages.wali-kelas.rapor', compact(
-            'kelas', 'siswas', 'allMps', 'selectedSiswa', 'selectedNis', 'mpScores'
+            'kelas', 'siswas', 'allMps', 'selectedSiswa', 'selectedNis', 'mpScores', 'pengaturanAkademik', 'kepalaSekolah'
         ));
     }
 

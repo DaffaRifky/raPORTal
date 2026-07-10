@@ -7,8 +7,8 @@
 
 @if(auth()->user()->role === 'Guru')
 <div class="container">
-    <div class="mb-6 p-6 bg-[#E2E2E2] rounded-lg shadow-md">
-        <div class="grid grid-cols-3 gap-4 mb-4">
+    <div class="mb-6 p-6 bg-linear-to-r from-slate-300 to-[#e2e2e2] rounded-lg shadow-md w-full">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-4 w-full">
             <div class="bg-white rounded-lg px-6 py-4 shadow-sm">
                 <p class="text-sm text-gray-500">Kelas Diampu</p>
                 <p class="text-3xl font-semibold mt-1">{{ $jumlahKelas }}</p>
@@ -44,8 +44,8 @@
 @if(auth()->user()->role === 'Admin TU')
     {{-- Stat Cards --}}
 <div class="container">
-    <div class="mb-6 p-6 bg-[#E2E2E2] rounded-lg shadow-md">
-        <div class="grid grid-cols-4 gap-4 mb-4">
+    <div class="mb-6 p-6 bg-linear-to-r from-slate-300 to-[#e2e2e2] rounded-lg shadow-md w-full">
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-4 mb-4 w-full">
             <div class="bg-white border border-gray-200 rounded-2xl px-6 py-4">
                 <p class="text-sm text-gray-500 mb-1">Jumlah Guru</p>
                 <p class="text-3xl font-bold text-gray-800">{{ $jumlahGuru }}</p>
@@ -75,23 +75,23 @@
 @endif
 
 @if(auth()->user()->role === 'Kepala Sekolah')
-    <div class="mb-6 p-6 bg-[#E2E2E2] rounded-lg shadow-md">
-        <div class="grid grid-cols-4 gap-6">
+    <div class="mb-6 p-6 bg-linear-to-r from-slate-300 to-[#e2e2e2] rounded-lg shadow-md w-full">
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-6 w-full">
             <div class="bg-white shadow-md rounded-xl p-4">
                 <p class="text-sm">Jumlah Guru</p>
-                <p class="text-2xl">{{ $jumlahGuru }}</p>   {{-- was hardcoded 35 --}}
+                <p class="text-2xl font-semibold">{{ $jumlahGuru }}</p>   {{-- was hardcoded 35 --}}
             </div>
             <div class="bg-white shadow-md rounded-xl p-4">
                 <p class="text-sm">Jumlah Kelas</p>
-                <p class="text-2xl">{{ $jumlahKelas }}</p>  {{-- was hardcoded 14 --}}
+                <p class="text-2xl font-semibold">{{ $jumlahKelas }}</p>  {{-- was hardcoded 14 --}}
             </div>
             <div class="bg-white shadow-md rounded-xl p-4">
                 <p class="text-sm">Jumlah Siswa</p>
-                <p class="text-2xl">{{ $jumlahSiswa }}</p>  {{-- was hardcoded 453 --}}
+                <p class="text-2xl font-semibold">{{ $jumlahSiswa }}</p>  {{-- was hardcoded 453 --}}
             </div>
             <div class="bg-white shadow-md rounded-xl p-4">
                 <p class="text-sm">Jumlah Admin</p>
-                <p class="text-2xl">{{ $jumlahAdminTU }}</p> {{-- was hardcoded 15 --}}
+                <p class="text-2xl font-semibold">{{ $jumlahAdminTU }}</p> {{-- was hardcoded 15 --}}
             </div>
         </div>
     </div>
@@ -100,7 +100,7 @@
 
 
 {{-- kartu data pribadi --}}
-    <div class="p-8  bg-[#E2E2E2] rounded-lg shadow-md flex gap-6 ">
+    <div class="p-8 bg-linear-to-r from-slate-300 to-[#e2e2e2] rounded-lg shadow-md flex gap-6 w-full">
         <div class="flex-none">
             @if (empty(Auth::user()->image))
                 {{-- show placeholder --}}

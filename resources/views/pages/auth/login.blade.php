@@ -1,7 +1,7 @@
 <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 <body class=" bg-linear-to-tl from-gray-900 via-gray-800 to-gray-900">
     <div class="flex items-center justify-center min-h-screen">
-        <div class="bg-indigo-900/10  border border-amber-100/20 p-8 rounded-lg shadow-md w-full max-w-md text-white">
+        <div class="bg-[#1e293b] border border-amber-100/20 p-8 rounded-lg shadow-md w-full max-w-md text-white">
 
         <div class="pb-6 flex justify-center">
             <svg class="mx-auto" width="254" height="49" viewBox="0 0 254 49" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -45,7 +45,7 @@
                         placeholder="NIP atau Nama"
                     >
                 </div>
-                <div class="mb-6">
+                <div class="mb-6 flex items-center">
                     <label for="password" class="block text-gray-700"></label>
                     <input
                         id="password"
@@ -56,6 +56,22 @@
                         class="w-full px-3 py-2 border border-amber-100/20 rounded-md bg-slate-900 text-white placeholder-gray-300 focus:outline-none focus:ring focus:ring-blue-200"
                         placeholder="Password"
                     >
+                    <span id="TogglePwd" class="hover:cursor-pointer pl-2" title="Tampilkan/Sembunyikan Password">
+                        <svg width="20px" height="20px" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                            <g id="SVGRepo_iconCarrier">
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M0 8L3.07945 4.30466C4.29638 2.84434 6.09909 2 8 2C9.90091 2 11.7036 2.84434 12.9206 4.30466L16 8L12.9206 11.6953C11.7036 13.1557 9.90091 14 8 14C6.09909 14 4.29638 13.1557 3.07945 11.6953L0 8ZM8 11C9.65685 11 11 9.65685 11 8C11 6.34315 9.65685 5 8 5C6.34315 5 5 6.34315 5 8C5 9.65685 6.34315 11 8 11Z" fill="#ffffff"></path>
+                            </g>
+                        </svg>
+                        <svg class="hidden" width="20px" height="20px" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                            <g id="SVGRepo_iconCarrier">
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M16 16H13L10.8368 13.3376C9.96488 13.7682 8.99592 14 8 14C6.09909 14 4.29638 13.1557 3.07945 11.6953L0 8L3.07945 4.30466C3.14989 4.22013 3.22229 4.13767 3.29656 4.05731L0 0H3L16 16ZM5.35254 6.58774C5.12755 7.00862 5 7.48941 5 8C5 9.65685 6.34315 11 8 11C8.29178 11 8.57383 10.9583 8.84053 10.8807L5.35254 6.58774Z" fill="#ffffff"></path> <path d="M16 8L14.2278 10.1266L7.63351 2.01048C7.75518 2.00351 7.87739 2 8 2C9.90091 2 11.7036 2.84434 12.9206 4.30466L16 8Z" fill="#ffffff"></path>
+                            </g>
+                        </svg>
+                    </span>
                 </div>
                 <div class="mb-6">
                     <label class="flex items-center text-gray-300">
@@ -81,4 +97,22 @@
     </div>
 </body>
 
+<script src="{{ asset('js/app.js') }}"></script>
+<script>
+function setupPasswordToggle(inputId, toggleId) {
+    const passwordInput = document.getElementById(inputId);
+    const toggleButton = document.getElementById(toggleId);
 
+    if (!passwordInput || !toggleButton) {
+        return;
+    }
+
+    toggleButton.addEventListener('click', () => {
+        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordInput.setAttribute('type', type);
+        toggleButton.querySelectorAll('svg').forEach(svg => svg.classList.toggle('hidden'));
+    });
+}
+
+setupPasswordToggle('password', 'TogglePwd');
+</script>

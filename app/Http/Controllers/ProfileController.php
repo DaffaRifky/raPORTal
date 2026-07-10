@@ -20,23 +20,54 @@ class ProfileController extends Controller
     {
         $user = Auth::user();
 
-        $user->update([
+        $request->validate([
+            'nama' => 'required|string|max:255',
+            'email' => 'required|email|max:255|unique:users,email,' . $user->id,
+            'no_hp' => 'nullable|string|max:20|unique:users,no_hp,' . $user->id,
+            'alamat' => 'nullable|string|max:500',
+            'current_password' => ['nullable', 'required_with:new_password', function ($attribute, $value, $fail) use ($user) {
+                if ($value && !Hash::check($value, $user->password)) {
+                    $fail('Password lama tidak cocok.');
+                }
+            }],
+            'new_password' => 'nullable|string|min:8|confirmed',
+        ]);
+
+        $data = [
             'nama' => $request->input('nama'),
             'no_hp' => $request->input('no_hp'),
             'email' => $request->input('email'),
             'alamat' => $request->input('alamat'),
-        ]);
+        ];
 
-        return redirect()->back()->with('success', 'Data berhasil diperbarui');
+        if ($request->filled('new_password')) {
+            $data['password'] = Hash::make($request->input('new_password'));
+        }
+
+        $user->update($data);
+
+        $message = $request->filled('new_password') ? 'Profil dan password berhasil diperbarui' : 'Profil berhasil diperbarui';
+
+        return redirect()->back()->with('success', $message);
     }
 
-    public function upload(Request $request)
+    public function uploadFP(Request $request)
     {
         if($request->hasFile('image')){
             $file = $request->image;
             $filename = $file->hashName();
             $request->image->storeAs('images',$filename,'public');
             Auth::user()->update(['image'=>$filename]);
+        }
+        return redirect()->back()->with('success', 'Image uploaded successfully.');
+    }
+    public function uploadTT(Request $request)
+    {
+        if($request->hasFile('tanda_tangan')){
+            $file = $request->tanda_tangan;
+            $filename = $file->hashName();
+            $request->tanda_tangan->storeAs('images',$filename,'public');
+            Auth::user()->update(['tanda_tangan'=>$filename]);
         }
         return redirect()->back()->with('success', 'Image uploaded successfully.');
     }

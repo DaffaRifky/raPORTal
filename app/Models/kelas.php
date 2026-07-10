@@ -5,6 +5,31 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @property int $id
+ * @property int $nomor_kelas
+ * @property string $huruf_kelas
+ * @property string|null $created_at
+ * @property string|null $updated_at
+ * @property int|null $wali_kelas_id
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\GuruMengajar> $gurumengajars
+ * @property-read int|null $gurumengajars_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\User> $gurus
+ * @property-read int|null $gurus_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Siswa> $siswas
+ * @property-read int|null $siswas_count
+ * @property-read \App\Models\User|null $waliKelas
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Kelas newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Kelas newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Kelas query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Kelas whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Kelas whereHurufKelas($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Kelas whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Kelas whereNomorKelas($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Kelas whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Kelas whereWaliKelasId($value)
+ * @mixin \Eloquent
+ */
 class Kelas extends Model
 {
     use HasFactory;

@@ -42,7 +42,7 @@ class Login extends Controller
         }
 
         return back()->withErrors([
-            'nama' => 'The provided credentials do not match our records.',
+            'nama' => 'nip atau nama atau password yang dimasukkan salah.',
         ])->withInput($request->only('nama'));
     }
 

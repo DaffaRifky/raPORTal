@@ -116,7 +116,7 @@ class="w-full px-3 py-2 border border-gray-300 rounded-xl
             <div class="grid grid-cols-5 gap-4">
                 <div class="col-span-2">
                     <label class="block text-sm font-medium text-gray-600 mb-1.5">NIP</label>
-                    <input type="text" name="NIP" id="addNIP" value="{{ old('NIP') }}" required
+                    <input type="text" inputmode="numeric" pattern="[0-9-]*" name="NIP" id="addNIP" value="{{ old('NIP') }}" required
                         class="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400">
                     <p id="addNIPError" class="text-red-500 text-xs mt-1 hidden">NIP sudah terdaftar</p>
                 </div>
@@ -130,8 +130,26 @@ class="w-full px-3 py-2 border border-gray-300 rounded-xl
 
             <div class="mb-4">
                 <label class="block text-sm font-medium text-gray-600 mb-1.5">Password</label>
-                <input type="text" name="password" value="{{ old('password') }}" required
-                    class="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400">
+                <div class="flex items-center gap-2">
+                    <input type="password" pattern=".{8,}" id="addPwd" name="password" value="{{ old('password') }}" required
+                        class="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400">
+                    <span id="addTogglePwd" class="hover:cursor-pointer" title="Tampilkan/Sembunyikan Password">
+                        <svg width="20px" height="20px" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                            <g id="SVGRepo_iconCarrier"> 
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M0 8L3.07945 4.30466C4.29638 2.84434 6.09909 2 8 2C9.90091 2 11.7036 2.84434 12.9206 4.30466L16 8L12.9206 11.6953C11.7036 13.1557 9.90091 14 8 14C6.09909 14 4.29638 13.1557 3.07945 11.6953L0 8ZM8 11C9.65685 11 11 9.65685 11 8C11 6.34315 9.65685 5 8 5C6.34315 5 5 6.34315 5 8C5 9.65685 6.34315 11 8 11Z" fill="#000000"></path> 
+                            </g>
+                        </svg>
+                        <svg class="hidden" width="20px" height="20px" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                            <g id="SVGRepo_iconCarrier"> 
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M16 16H13L10.8368 13.3376C9.96488 13.7682 8.99592 14 8 14C6.09909 14 4.29638 13.1557 3.07945 11.6953L0 8L3.07945 4.30466C3.14989 4.22013 3.22229 4.13767 3.29656 4.05731L0 0H3L16 16ZM5.35254 6.58774C5.12755 7.00862 5 7.48941 5 8C5 9.65685 6.34315 11 8 11C8.29178 11 8.57383 10.9583 8.84053 10.8807L5.35254 6.58774Z" fill="#000000"></path> <path d="M16 8L14.2278 10.1266L7.63351 2.01048C7.75518 2.00351 7.87739 2 8 2C9.90091 2 11.7036 2.84434 12.9206 4.30466L16 8Z" fill="#000000"></path> 
+                            </g>
+                        </svg>
+                    </span>
+                </div>
             </div>
 
             {{-- Mata Pelajaran chips --}}
@@ -173,14 +191,14 @@ class="w-full px-3 py-2 border border-gray-300 rounded-xl
             <div class="grid grid-cols-2 gap-4">
                 <div class="">
                     <label class="block text-sm font-medium text-gray-600 mb-1.5">Email</label>
-                    <input type="text" name="email" id="addEmail" value="{{ old('email') }}"
+                    <input type="email" pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$" name="email" id="addEmail" value="{{ old('email') }}"
                         class="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400">
                     <p id="addEmailError" class="text-red-500 text-xs mt-1 hidden">Email sudah terdaftar</p>
                 </div>
 
                 <div class="">
                     <label class="block text-sm font-medium text-gray-600 mb-1.5">No. HP</label>
-                    <input type="text" name="no_hp" id="addNoHP" value="{{ old('no_hp') }}"
+                    <input type="text" inputmode="numeric" pattern="[0-9-]*" name="no_hp" id="addNoHP" value="{{ old('no_hp') }}"
                         class="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400">
                     <p id="addNoHPError" class="text-red-500 text-xs mt-1 hidden">No. HP sudah terdaftar</p>
                 </div>
@@ -239,7 +257,7 @@ class="hidden fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-
             <div class="grid grid-cols-5 gap-4 mb-4">
                 <div class="col-span-2">
                     <label class="block text-sm font-medium text-gray-600 mb-1.5">NIP</label>
-                    <input type="text" id="edit-nip" name="nip" required
+                    <input type="text" inputmode="numeric" pattern="[0-9-]*" id="edit-nip" name="nip" required
                         class="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400">
                     <p id="editNIPError" class="text-red-500 text-xs mt-1 hidden">NIP sudah terdaftar</p>
                 </div>
@@ -253,8 +271,26 @@ class="hidden fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-
                 <label class="block text-sm font-medium text-gray-600 mb-1.5">Password Baru
                     <span class="text-gray-400 font-normal text-xs">(kosongkan jika tidak diubah)</span>
                 </label>
-                <input type="password" name="password"
-                    class="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400">
+                <div class="flex gap-2 items-center">
+                    <input type="password" pattern=".{8,}" id="editPwd" name="password" "
+                        class="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400">
+                    <span id="editTogglePwd" class="hover:cursor-pointer" title="Tampilkan/Sembunyikan Password">
+                        <svg width="20px" height="20px" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                            <g id="SVGRepo_iconCarrier"> 
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M0 8L3.07945 4.30466C4.29638 2.84434 6.09909 2 8 2C9.90091 2 11.7036 2.84434 12.9206 4.30466L16 8L12.9206 11.6953C11.7036 13.1557 9.90091 14 8 14C6.09909 14 4.29638 13.1557 3.07945 11.6953L0 8ZM8 11C9.65685 11 11 9.65685 11 8C11 6.34315 9.65685 5 8 5C6.34315 5 5 6.34315 5 8C5 9.65685 6.34315 11 8 11Z" fill="#000000"></path> 
+                            </g>
+                        </svg>
+                        <svg class="hidden" width="20px" height="20px" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                            <g id="SVGRepo_iconCarrier"> 
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M16 16H13L10.8368 13.3376C9.96488 13.7682 8.99592 14 8 14C6.09909 14 4.29638 13.1557 3.07945 11.6953L0 8L3.07945 4.30466C3.14989 4.22013 3.22229 4.13767 3.29656 4.05731L0 0H3L16 16ZM5.35254 6.58774C5.12755 7.00862 5 7.48941 5 8C5 9.65685 6.34315 11 8 11C8.29178 11 8.57383 10.9583 8.84053 10.8807L5.35254 6.58774Z" fill="#000000"></path> <path d="M16 8L14.2278 10.1266L7.63351 2.01048C7.75518 2.00351 7.87739 2 8 2C9.90091 2 11.7036 2.84434 12.9206 4.30466L16 8Z" fill="#000000"></path> 
+                            </g>
+                        </svg>
+                    </span>
+                </div>
             </div>
 
             {{-- Mata Pelajaran chips --}}
@@ -296,14 +332,14 @@ class="hidden fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-
             <div class="grid grid-cols-2 gap-4">
                 <div class="">
                     <label class="block text-sm font-medium text-gray-600 mb-1.5">Email</label>
-                    <input type="text" name="email" value="" id="editEmail"
+                    <input type="email" pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$" name="email" value="" id="editEmail"
                         class="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400">
                     <p id="editEmailError" class="text-red-500 text-xs mt-1 hidden">Email sudah terdaftar</p>
                 </div>
 
                 <div class="">
                     <label class="block text-sm font-medium text-gray-600 mb-1.5">No. HP</label>
-                    <input type="text" name="no_hp" value="" id="editNoHP"
+                    <input type="text" inputmode="numeric" pattern="[0-9-]*" name="no_hp" value="" id="editNoHP"
                         class="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400">
                     <p id="editNoHPError" class="text-red-500 text-xs mt-1 hidden">No. HP sudah terdaftar</p>
                 </div>
@@ -344,6 +380,24 @@ class="hidden fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-
 
 @push('scripts')
 <script>
+function setupPasswordToggle(inputId, toggleId) {
+    const passwordInput = document.getElementById(inputId);
+    const toggleButton = document.getElementById(toggleId);
+
+    if (!passwordInput || !toggleButton) {
+        return;
+    }
+
+    toggleButton.addEventListener('click', () => {
+        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordInput.setAttribute('type', type);
+        toggleButton.querySelectorAll('svg').forEach(svg => svg.classList.toggle('hidden'));
+    });
+}
+
+setupPasswordToggle('addPwd', 'addTogglePwd');
+setupPasswordToggle('editPwd', 'editTogglePwd');
+
 function toggleChip(button, containerId, inputName) {
     const id       = button.dataset.id;
     const inputDiv = document.getElementById(containerId);
@@ -449,14 +503,15 @@ const addNoHPError = document.getElementById('addNoHPError');
 const addGuruBtn = document.getElementById('addGuruBtn');
 
 addNIPInput.addEventListener('input', async function() {
+    this.value = this.value.replace(/[^0-9-]/g, '');
     const nip = this.value.trim();
-    
+
     if (nip.length === 0) {
         addNIPError.classList.add('hidden');
         addGuruBtn.disabled = false;
         return;
     }
-    
+
     try {
         const response = await fetch('{{ route("guru.checkDuplicate") }}', {
             method: 'POST',
@@ -466,9 +521,9 @@ addNIPInput.addEventListener('input', async function() {
             },
             body: JSON.stringify({ nip: nip })
         });
-        
+
         const data = await response.json();
-        
+
         if (data.exists) {
             addNIPError.classList.remove('hidden');
             addGuruBtn.disabled = true;
@@ -483,13 +538,13 @@ addNIPInput.addEventListener('input', async function() {
 
 addEmailInput.addEventListener('input', async function() {
     const email = this.value.trim();
-    
+
     if (email.length === 0) {
         addEmailError.classList.add('hidden');
         addGuruBtn.disabled = false;
         return;
     }
-    
+
     try {
         const response = await fetch('{{ route("guru.checkDuplicate") }}', {
             method: 'POST',
@@ -499,9 +554,9 @@ addEmailInput.addEventListener('input', async function() {
             },
             body: JSON.stringify({ email: email })
         });
-        
+
         const data = await response.json();
-        
+
         if (data.exists) {
             addEmailError.classList.remove('hidden');
             addGuruBtn.disabled = true;
@@ -515,14 +570,15 @@ addEmailInput.addEventListener('input', async function() {
 });
 
 addNoHPInput.addEventListener('input', async function() {
+    this.value = this.value.replace(/[^0-9-]/g, '');
     const no_hp = this.value.trim();
-    
+
     if (no_hp.length === 0) {
         addNoHPError.classList.add('hidden');
         addGuruBtn.disabled = false;
         return;
     }
-    
+
     try {
         const response = await fetch('{{ route("guru.checkDuplicate") }}', {
             method: 'POST',
@@ -532,9 +588,9 @@ addNoHPInput.addEventListener('input', async function() {
             },
             body: JSON.stringify({ no_hp: no_hp })
         });
-        
+
         const data = await response.json();
-        
+
         if (data.exists) {
             addNoHPError.classList.remove('hidden');
             addGuruBtn.disabled = true;
@@ -557,14 +613,15 @@ const editNoHPError = document.getElementById('editNoHPError');
 const editGuruBtn = document.getElementById('editGuruBtn');
 
 editNIPInput.addEventListener('input', async function() {
+    this.value = this.value.replace(/[^0-9-]/g, '');
     const nip = this.value.trim();
-    
+
     if (nip.length === 0) {
         editNIPError.classList.add('hidden');
         editGuruBtn.disabled = false;
         return;
     }
-    
+
     try {
         const response = await fetch('{{ route("guru.checkDuplicate") }}', {
             method: 'POST',
@@ -574,9 +631,9 @@ editNIPInput.addEventListener('input', async function() {
             },
             body: JSON.stringify({ nip: nip })
         });
-        
+
         const data = await response.json();
-        
+
         if (data.exists) {
             editNIPError.classList.remove('hidden');
             editGuruBtn.disabled = true;
@@ -591,13 +648,13 @@ editNIPInput.addEventListener('input', async function() {
 
 editEmailInput.addEventListener('input', async function() {
     const email = this.value.trim();
-    
+
     if (email.length === 0) {
         editEmailError.classList.add('hidden');
         editGuruBtn.disabled = false;
         return;
     }
-    
+
     try {
         const response = await fetch('{{ route("guru.checkDuplicate") }}', {
             method: 'POST',
@@ -607,9 +664,9 @@ editEmailInput.addEventListener('input', async function() {
             },
             body: JSON.stringify({ email: email })
         });
-        
+
         const data = await response.json();
-        
+
         if (data.exists) {
             editEmailError.classList.remove('hidden');
             editGuruBtn.disabled = true;
@@ -623,14 +680,15 @@ editEmailInput.addEventListener('input', async function() {
 });
 
 editNoHPInput.addEventListener('input', async function() {
+    this.value = this.value.replace(/[^0-9-]/g, '');
     const no_hp = this.value.trim();
-    
+
     if (no_hp.length === 0) {
         editNoHPError.classList.add('hidden');
         editGuruBtn.disabled = false;
         return;
     }
-    
+
     try {
         const response = await fetch('{{ route("guru.checkDuplicate") }}', {
             method: 'POST',
@@ -640,9 +698,9 @@ editNoHPInput.addEventListener('input', async function() {
             },
             body: JSON.stringify({ no_hp: no_hp })
         });
-        
+
         const data = await response.json();
-        
+
         if (data.exists) {
             editNoHPError.classList.remove('hidden');
             editGuruBtn.disabled = true;
@@ -654,6 +712,6 @@ editNoHPInput.addEventListener('input', async function() {
         console.error('Error checking No HP:', error);
     }
 });
-    
+
 </script>
 @endpush

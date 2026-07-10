@@ -32,7 +32,7 @@
     />
 </form>
 
-<div class="bg-amber-100 p-8 w-4xl mt-8">
+<div id="raporPrintArea" class="bg-amber-100 w-4xl p-8 mt-8 border-5 border-white m-auto">
 
 {{-- ===== STUDENT NAME HEADER ===== --}}
 @if ($selectedSiswa)
@@ -42,22 +42,22 @@
                 <tr>
                     <td>Nama Peserta Didik</td>
                     <td class="w-1 text-left">:</td>
-                    <td>{{ $selectedSiswa->nama }}</td>
+                    <td class=" text-sm text-gray-700">{{ $selectedSiswa->nama }}</td>
                 </tr>
                 <tr>
                     <td>NIS</td>
                     <td class="w-1 text-left">:</td>
-                    <td>{{ $selectedSiswa->nis }}</td>
+                    <td class=" text-sm text-gray-700">{{ $selectedSiswa->nis }}</td>
                 </tr>
                 <tr>
                     <td>Sekolah</td>
                     <td class="w-1 text-left">:</td>
-                    <td></td>
+                    <td class=" text-sm text-gray-700">{{ $pengaturanAkademik->nama_sekolah }}</td>
                 </tr>
                 <tr>
                     <td>Alamat</td>
                     <td class="w-1 text-left">:</td>
-                    <td></td>
+                    <td class=" text-sm text-gray-700">{{ $pengaturanAkademik->alamat_sekolah }}</td>
                 </tr>
             </tbody>
         </table>
@@ -66,22 +66,22 @@
                 <tr>
                     <td>Kelas</td>
                     <td class="w-1 text-left">:</td>
-                    <td>{{ $kelas->nomor_kelas }} - {{ $kelas->huruf_kelas }}</td>
+                    <td class=" text-sm text-gray-700">{{ $kelas->nomor_kelas }} - {{ $kelas->huruf_kelas }}</td>
                 </tr>
                 <tr>
                     <td>Fase</td>
                     <td class="w-1 text-left">:</td>
-                    <td>@if ($kelas->nomor_kelas === 10) E @else F @endif</td>
+                    <td class=" text-sm text-gray-700">@if ($kelas->nomor_kelas === 10) E @else F @endif</td>
                 </tr>
                 <tr>
                     <td>Semester</td>
                     <td class="w-1 text-left">:</td>
-                    <td></td>
+                    <td class=" text-sm text-gray-700">{{ $pengaturanAkademik->semester }}</td>
                 </tr>
                 <tr>
                     <td>Tahun Ajaran</td>
                     <td class="w-1 text-left">:</td>
-                    <td></td>
+                    <td class=" text-sm text-gray-700">{{ $pengaturanAkademik->tahun_ajaran }}
                 </tr>
             </tbody>
         </table>
@@ -90,115 +90,164 @@
 
 
 
-{{-- ===== RAPOR TABLE ===== --}}
-<div class="overflow-x-auto mt-4">
-    <table class="w-full border-collapse [&_td]:!border-4 [&_td]:!border-white [&_th]:!border-4 [&_th]:!border-white overflow-x-auto">
-        <thead class="bg-gray-100 text-gray-600">
-            <tr>
-                <th class="px-4 py-4 text-center font-semibold text-sm w-10">No.</th>
-                <th class="px-4 py-4 text-center font-semibold text-sm w-1/3">Mata Pelajaran</th>
-                <th class="px-4 py-4 text-center font-semibold text-sm bg-blue-50 text-blue-700 w-15">Nilai <br> Akhir</th>
-                {{-- <th class="px-4 py-4 text-center font-semibold text-sm w-28 bg-blue-50 text-blue-700">Predikat</th> --}}
-                <th class="px-4 py-4 text-center font-semibold text-sm bg-blue-50 text-blue-700 " >Capaian Kompetensi</th>
-            </tr>
-        </thead>
-        <tbody class="divide-y divide-gray-100">
-            @forelse ($allMps as $mp)
-                @php
-                    $score     = $mpScores[$mp->id]['rata_rata'] ?? null;
-                    $predikat  = $mpScores[$mp->id]['predikat']  ?? '-';
-
-                    // Colour the predikat badge
-                    $badgeClass = match($predikat) {
-                        'A'     => 'bg-green-100 text-green-700',
-                        'B'     => 'bg-blue-100 text-blue-700',
-                        'C'     => 'bg-yellow-100 text-yellow-700',
-                        'D'     => 'bg-red-100 text-red-700',
-                        'E'     => 'bg-red-300 text-red-900',
-                        default => 'bg-gray-100 text-gray-400',
-                    };
-                @endphp
-                <tr class="hover:bg-gray-50 transition">
-                    <td class="px-4 py-3 text-sm text-gray-400 text-center">{{ $loop->iteration }}</td>
-                    <td class="px-4 py-3 text-sm text-gray-700">{{ $mp->nama }}</td>
-
-                    <td class="px-4 py-3 text-center bg-blue-50">
-                        @if ($score !== null)
-                            <span class="font-bold text-sm text-gray-800">{{ $score }}</span>
-                        @else
-                            <span class="text-gray-300 text-sm">-</span>
-                        @endif
-                    </td>
-
-                    {{-- <td class="px-4 py-3 text-center bg-blue-50">
-                        <span class="inline-block px-2 py-0.5 rounded-full text-xs font-semibold {{ $badgeClass }}">
-                            {{ $predikat }}
-                        </span>
-                    </td> --}}
-
-                    <td class="px-4 py-3 text-center bg-blue-50 "><textarea name="capaian_kompetensi[]" rows="1" id=""class="w-full resize-none overflow-hidden" oninput="this.style.height = ''; this.style.height = this.scrollHeight + 'px'"></textarea></td>
-                </tr>
-            @empty
-                <tr>
-                    <td colspan="4" class="px-4 py-8 text-center text-sm text-gray-400">
-                        Belum ada mata pelajaran.
-                    </td>
-                </tr>
-            @endforelse
-        </tbody>
-    </table>
-</div>
-
-        {{-- EXTRAKULIKULER TABLE --}}
-        <table class="border border-gray-200 rounded-2xl overflow-x-auto mt-4 w-full [&_td]:!border-4 [&_td]:!border-white [&_th]:!border-4 [&_th]:!border-white overflow-x-auto">
-            <thead class="bg-gray-100 text-gray-600">
+    {{-- ===== RAPOR TABLE ===== --}}
+    <div class="overflow-x-auto mt-4">
+        <table class="w-full border-collapse [&_td]:!border-4 [&_td]:!border-white [&_th]:!border-4 [&_th]:!border-white overflow-x-auto bg-blue-50 ">
+            <thead class=" text-blue-700">
                 <tr>
                     <th class="px-4 py-4 text-center font-semibold text-sm w-10">No.</th>
-                    <th class="px-4 py-4 text-center font-semibold text-sm w-1/4">Ekstrakulikuler</th>
-                    <th class="px-4 py-4 text-center font-semibold text-sm w-full" colspan="2">Keterangan</th>
+                    <th class="px-4 py-4 text-center font-semibold text-sm w-1/3">Mata Pelajaran</th>
+                    <th class="px-4 py-4 text-center font-semibold text-sm bg-blue-50 text-blue-700 w-15">Nilai <br> Akhir</th>
+                    {{-- <th class="px-4 py-4 text-center font-semibold text-sm w-28 bg-blue-50 text-blue-700">Predikat</th> --}}
+                    <th class="px-4 py-4 text-center font-semibold text-sm bg-blue-50 text-blue-700 " >Capaian Kompetensi</th>
                 </tr>
             </thead>
             <tbody class="divide-y divide-gray-100">
-                <tr class="data-row">
-                    <td class="text-center">1</td>
-                    <td>P5BK</td>
-                    <td colspan="2"><input type="text" class="w-full"></td>
-                </tr>
-                <tr class="data-row">
-                    <td class="text-center">2</td>
-                    <td>Pramuka</td>
-                    <td colspan="2"><input type="text" class="w-full"></td>
-                </tr>
-                <tr class="add-row-tr">
-                    <td colspan="3" class=""><button type="button" onclick="addRow(this)" class="text-white bg-blue-400 hover:bg-blue-500 rounded-2xl px-4 py-2 text-center">Tambah Ekstrakulikuler</button></td>
-                </tr>
+                @forelse ($allMps as $mp)
+                    @php
+                        $score     = $mpScores[$mp->id]['rata_rata'] ?? null;
+                        $predikat  = $mpScores[$mp->id]['predikat']  ?? '-';
+
+                        // Colour the predikat badge
+                        $badgeClass = match($predikat) {
+                            'A'     => 'bg-green-100 text-green-700',
+                            'B'     => 'bg-blue-100 text-blue-700',
+                            'C'     => 'bg-yellow-100 text-yellow-700',
+                            'D'     => 'bg-red-100 text-red-700',
+                            'E'     => 'bg-red-300 text-red-900',
+                            default => 'bg-gray-100 text-gray-400',
+                        };
+                    @endphp
+                    <tr class=" transition">
+                        <td class="px-4 py-3 text-sm text-center">{{ $loop->iteration }}</td>
+                        <td class="px-4 py-3 text-sm text-gray-700">{{ $mp->nama }}</td>
+
+                        <td class="px-4 py-3 text-center bg-blue-50">
+                            @if ($score !== null)
+                                <span class="font-bold text-sm text-gray-800">{{ $score }}</span>
+                            @else
+                                <span class="text-gray-300 text-sm">-</span>
+                            @endif
+                        </td>
+
+                        {{-- <td class="px-4 py-3 text-center bg-blue-50">
+                            <span class="inline-block px-2 py-0.5 rounded-full text-xs font-semibold {{ $badgeClass }}">
+                                {{ $predikat }}
+                            </span>
+                        </td> --}}
+
+                        <td class="px-4 py-3 text-center bg-blue-50 text-sm text-gray-700"><textarea name="capaian_kompetensi[]" rows="1" id=""class="w-full resize-none overflow-hidden" oninput="this.style.height = ''; this.style.height = this.scrollHeight + 'px'"></textarea></td>
+                    </tr>
+                @empty
+                    <tr>
+                        <td colspan="4" class="px-4 py-8 text-center text-sm text-gray-400">
+                            Belum ada mata pelajaran.
+                        </td>
+                    </tr>
+                @endforelse
             </tbody>
         </table>
+    </div>
+
+        {{-- EXTRAKULIKULER TABLE --}}
+    <table class="border border-gray-200 rounded-2xl overflow-x-auto mt-4 w-full [&_td]:!border-4 [&_td]:!border-white [&_th]:!border-4 [&_th]:!border-white overflow-x-auto bg-blue-50">
+        <thead class=" text-blue-700">
+            <tr>
+                <th class="px-4 py-4 text-center font-semibold text-sm w-10">No.</th>
+                <th class="px-4 py-4 text-center font-semibold text-sm w-1/4">Ekstrakulikuler</th>
+                <th class="px-4 py-4 text-center font-semibold text-sm w-full" colspan="2">Keterangan</th>
+            </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-100">
+            <tr class="data-row">
+                <td class="text-center px-4 py-3 text-sm text-gray-700">1</td>
+                <td class="px-4 py-3 text-sm text-gray-700">P5BK</td>
+                <td colspan="2"><input type="text" class="w-full text-sm text-gray-700"></td>
+            </tr>
+            <tr class="data-row">
+                <td class="text-center px-4 py-3 text-sm text-gray-700">2</td>
+                <td class="px-4 py-3 text-sm text-gray-700">Pramuka</td>
+                <td colspan="2"><input type="text" class="w-full text-sm text-gray-700"></td>
+            </tr>
+            <tr class="add-row-tr">
+                <td colspan="3" class=""><button type="button" onclick="addRow(this)" class="text-white bg-blue-400 hover:bg-blue-500 rounded-2xl px-4 py-2 text-center">Tambah Ekstrakulikuler</button></td>
+            </tr>
+        </tbody>
+    </table>
 
 
-        {{-- KETIDAK HADIRAN TABLE --}}
-        <table class="border border-gray-200 rounded-2xl overflow-x-auto mt-4 w-auto [&_td]:!border-4 [&_td]:!border-white [&_th]:!border-4 [&_th]:!border-white overflow-x-auto">
-            <thead class="bg-gray-100 text-gray-600">
+    {{-- KETIDAK HADIRAN TABLE AND TEMPAT TANGGAL RAPOR --}}
+    <div class="grid grid-cols-3">
+        <table class="border border-gray-200 rounded-2xl overflow-x-auto mt-4 w-auto [&_td]:!border-4 [&_td]:!border-white [&_th]:!border-4 [&_th]:!border-white overflow-x-auto bg-blue-50 col-span-1">
+            <thead class=" text-blue-700">
                 <tr>
                     <th class="px-4 py-4 text-center font-semibold text-sm w-10" colspan="3">Ketidak Hadiran</th>
                 </tr>
             </thead>
             <tbody class="divide-y divide-gray-100">
                 <tr>
-                    <td>Sakit</td>
-                    <td><input type="text" class="w-full"></td>
+                    <td class=" text-sm text-gray-700">Sakit</td>
+                    <td><input type="text" class="w-full  text-sm text-gray-700"></td>
                 </tr>
                 <tr>
-                    <td>Izin</td>
-                    <td><input type="text" class="w-full"></td>
+                    <td class=" text-sm text-gray-700">Izin</td>
+                    <td><input type="text" class="w-full  text-sm text-gray-700"></td>
                 </tr>
                 <tr>
-                    <td>Nihil</td>
-                    <td><input type="text" class="w-full"></td>
+                    <td class=" text-sm text-gray-700">Nihil</td>
+                    <td><input type="text" class="w-full  text-sm text-gray-700"></td>
                 </tr>
             </tbody>
         </table>
+        <div class="col-span-1 col-start-3 flex flex-col items-center mt-10">
+            <p>Tempat, Tanggal Rapor</p>
+            <p class=" text-sm text-gray-700">Batam, {{ date('d F Y') }}</p>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-3 text-center mt-5 justify-items-center gap-8">
+        <div class="flex flex-col items-center">
+            <p>TTD Orang Tua Peserta Didik</p>
+            <div class="w-30 h-30 m-4"></div>
+            <p class="text-sm text-gray-700">___________________________</p>
+        </div>
+        <div class="flex flex-col items-center mt-15">
+            <p>TTD Kepala Sekolah</p>
+            @if (empty($kepalaSekolah->tanda_tangan))
+                <div class="w-30 h-30 m-4"></div>
+            @else
+                <img class="image w-30 h-30" src="{{ asset('storage/images/' . $kepalaSekolah->tanda_tangan) }}" alt="signature_image">
+            @endif
+            <p class="underline text-sm text-gray-700">{{ $kepalaSekolah->nama }}</p>
+            <p class=" text-sm text-gray-700">{{ $kepalaSekolah->nip }}</p>
+        </div>
+        <div class="flex flex-col items-center">
+            <p>TTD Wali Kelas</p>
+            @if (empty(Auth::user()->tanda_tangan))
+                <div class="w-30 h-30 m-4"></div>
+            @else
+                <img class="image w-30 h-30" src="{{ asset('storage/images/' . auth()->user()->tanda_tangan) }}" alt="signature_image">
+            @endif
+            <p class="underline text-sm text-gray-700">{{ auth()->user()->nama }}</p>
+            <p class=" text-sm text-gray-700">{{ auth()->user()->nip }}</p>
+        </div>
+    </div>
 </div>
+
+@if ($selectedSiswa)
+    <button type="button" onclick="window.print()"
+        class="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white
+                text-sm font-medium px-5 py-2.5 rounded-xl transition w-full mt-15 justify-center">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a1 1
+                    0 001-1v-4a1 1 0 00-1-1H9a1 1 0 00-1 1v4a1 1 0 001 1zm8-12V5a2 2 0 00-2-2H9a2
+                    2 0 00-2 2v4h10z"/>
+        </svg>
+        Cetak / Print PDF
+    </button>
+@endif
+
 
 @stack('scripts')
 <script>
@@ -209,11 +258,11 @@
     const newRow = document.createElement('tr');
     newRow.classList.add('data-row');
     newRow.innerHTML = `
-      <td class="text-center"></td>
-      <td><input type="text" name="ekstrakulikuler[]" class="w-full" /></td>
+      <td class="text-center px-4 py-3 text-sm text-gray-700"></td>
+      <td class="px-4 py-3 text-sm text-gray-700"><input type="text" name="ekstrakulikuler[]" class="w-full" /></td>
       <td colspan="2">
         <div class="flex gap-2">
-          <input type="text" name="keterangan[]" class="w-full" />
+          <input type="text" name="keterangan[]" class="w-full text-sm text-gray-700" />
           <button type="button" onclick="deleteRow(this)" class="bg-red-500 text-white px-4 rounded-full">X</button>
         </div>
       </td>
@@ -237,6 +286,53 @@
     });
   }
 </script>
+<style>
+    @media print {
+        body * {
+            visibility: hidden;
+        }
+
+        #raporPrintArea, #raporPrintArea * {
+            visibility: visible;
+        }
+
+        #raporPrintArea {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            margin: 0;
+            border: none;
+        }
+
+        * {
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+        }
+
+        /* Hide the "add row" button row specifically */
+        #raporPrintArea tr.add-row-tr {
+            display: none !important;
+        }
+
+        .no-print {
+            display: none !important;
+        }
+
+        textarea, input[type="text"] {
+            border: none !important;
+            background: transparent !important;
+            resize: none;
+            padding: 0 !important;
+        }
+
+        @page {
+            size: A3;
+            margin: none;
+            scale: 74;
+        }
+    }
+</style>
 @endif
 
 @endsection

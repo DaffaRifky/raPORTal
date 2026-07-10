@@ -1,9 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Redirect;
 use App\Http\Controllers\Auth\Login;
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\SalesController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\KelasController;
 use App\Http\Controllers\SiswaController;
@@ -15,11 +14,8 @@ use App\Http\Controllers\TugasController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\WaliKelasController;
 use App\Http\Controllers\KepalaSekolahController;
-use App\Http\Controllers\RaportController;
 
-Route::get('/', function () {
-    return redirect()->route('login');
-});
+Route::get('/', fn () => Redirect::route('login'));
 
 Route::get('/login', [Login::class, 'showLoginForm'])->name('login');
 Route::post('/login', [Login::class, 'login']);
@@ -75,10 +71,10 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/profil-saya',  [ProfileController::class, 'show'])->name('profil-saya.show');
     Route::put('/profil-saya', [ProfileController::class, 'update'])->name('profil-saya.update');
-    Route::post('/profil-saya', [ProfileController::class, 'upload'])->name('profil-saya.upload');
+    Route::post('/profil-saya/upload-foto-profil', [ProfileController::class, 'uploadFP'])->name('profil-saya.upload-foto-profil');
+    Route::post('/profil-saya/upload-tanda-tangan', [ProfileController::class, 'uploadTT'])->name('profil-saya.upload-tanda-tangan');
 
     Route::post('/guru-check-duplicate', [ProfileController::class, 'checkDuplicate'])->name('guru.checkDuplicate');
     Route::post('/admin-TU-check-duplicate', [ProfileController::class, 'checkDuplicate'])->name('admin-TU.checkDuplicate');
-    
 });
 

@@ -9,7 +9,7 @@
 <input type="text" id="searchInput"
     placeholder="Masukan Nama atau NIS"
     class="w-full px-4 py-2.5 border border-gray-300 rounded-xl mb-4
-           focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm">
+           focus:outline-none focus:ring-1 focus:ring-cyan-400 text-sm">
 
 {{-- Dropdown filters — reload page with selected values --}}
 <div class="grid grid-cols-3 gap-4 mb-6">
@@ -19,7 +19,7 @@
         <label class="block text-xs text-gray-500 mb-1">Pilih Mata Pelajaran</label>
         <select onchange="applyFilter('mp_id', this.value)"
             class="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-sm
-                   focus:outline-none focus:ring-2 focus:ring-blue-400">
+                   focus:outline-none focus:ring-1 focus:ring-cyan-400/50">
             @foreach ($myMps as $mp)
                 <option value="{{ $mp->id }}" {{ $mp->id == $selectedMpId ? 'selected' : '' }}>
                     {{ $mp->nama }}
@@ -33,7 +33,7 @@
         <label class="block text-xs text-gray-500 mb-1">Pilih Tugas</label>
         <select onchange="applyFilter('tugas_id', this.value)"
             class="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-sm
-                   focus:outline-none focus:ring-2 focus:ring-blue-400">
+                   focus:outline-none focus:ring-1 focus:ring-cyan-400/50">
             @forelse ($tugasList as $tugas)
                 <option value="{{ $tugas->id }}" {{ $tugas->id == $selectedTugasId ? 'selected' : '' }}>
                     {{ $tugas->nama }} ({{ $tugas->tipe }})
@@ -49,7 +49,7 @@
         <label class="block text-xs text-gray-500 mb-1">Pilih Kelas</label>
         <select onchange="applyFilter('kelas_id', this.value)"
             class="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-sm
-                   focus:outline-none focus:ring-2 focus:ring-blue-400">
+                   focus:outline-none focus:ring-1 focus:ring-cyan-400/50">
             @foreach ($myKelas as $k)
                 <option class="uppercase" value="{{ $k->id }}" {{ $k->id == $selectedKelasId ? 'selected' : '' }}>
                     {{ $k->nomor_kelas }} - {{ $k->huruf_kelas }}
@@ -86,7 +86,7 @@
                             value="{{ $siswa->nilai?->nilai ?? '' }}"
                             min="0" max="100" step="0.5"
                             class="hidden w-24 border border-gray-300 rounded-lg px-3 py-1.5
-                                   text-sm focus:outline-none focus:ring-2 focus:ring-blue-400">
+                                   text-sm focus:outline-none focus:ring-2 focus:ring-cyan-400">
                     </td>
 
                     {{-- Action cell --}}
@@ -95,7 +95,7 @@
                         <button id="btn-edit-{{ $siswa->id }}"
                             onclick="startEdit({{ $siswa->id }})"
                             class="px-3 py-1.5 rounded-lg text-xs font-medium text-white
-                                   {{ $siswa->nilai ? 'bg-yellow-400 hover:bg-yellow-500' : 'bg-blue-500 hover:bg-blue-600' }}">
+                                   {{ $siswa->nilai ? 'bg-amber-500 hover:bg-amber-600' : 'bg-cyan-500 hover:bg-cyan-600' }}">
                             {{ $siswa->nilai ? 'Edit Nilai' : 'Input Nilai' }}
                         </button>
 
@@ -188,11 +188,11 @@ async function saveNilai(siswaId, tugasId) {
         // Update display without reload
         document.getElementById(`nilai-display-${siswaId}`).textContent = nilai;
 
-        // Change button to yellow "Edit"
+        // Change button to amber "Edit"
         const editBtn = document.getElementById(`btn-edit-${siswaId}`);
         editBtn.textContent = `Edit Nilai`;
-        editBtn.classList.remove('bg-blue-500', 'hover:bg-blue-600');
-        editBtn.classList.add('bg-yellow-400', 'hover:bg-yellow-500');
+        editBtn.classList.remove('bg-cyan-500', 'hover:bg-cyan-600');
+        editBtn.classList.add('bg-amber-500', 'hover:bg-amber-600');
 
         cancelEdit(siswaId);
     } else {

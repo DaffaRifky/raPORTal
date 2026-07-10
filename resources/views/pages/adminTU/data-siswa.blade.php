@@ -81,7 +81,7 @@ class="hidden fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-
         <div class="grid grid-cols-5 gap-4">
             <div class="col-span-2">
                 <label class="block text-sm font-medium text-gray-600 mb-1.5">NIS</label>
-                <input type="text" name="NIS" id="addNIS" value="{{ old('NIS') }}"
+                <input type="text" inputmode="numeric" pattern="[0-9-]*" name="NIS" id="addNIS" value="{{ old('NIS') }}"
                     class="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400">
                 <p id="addNISError" class="text-red-500 text-xs mt-1 hidden">NIS sudah terdaftar</p>
             </div>
@@ -141,20 +141,21 @@ class="fixed flex inset-0 bg-black/50 items-center justify-center z-50 p-4 hidde
         <div class="grid grid-cols-4 gap-4">
             <div class="col-span-1">
                 <label class="block text-sm font-medium text-gray-600 mb-1.5">NIS</label>
-                <input type="text" name="NIS" value="" id="editNIS"
-                    class="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400">
+                <input type="text" inputmode="numeric" pattern="[0-9-]*" name="NIS" value="" id="editNIS"
+                    class="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400" required>
                 <p id="editNISError" class="text-red-500 text-xs mt-1 hidden">NIS sudah terdaftar</p>
             </div>
 
             <div class="col-span-2">
                 <label class="block text-sm font-medium text-gray-600 mb-1.5">Nama</label>
                 <input type="text" name="nama" value="" id="editNama"
-                    class="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400">
+                    class="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400" required>
             </div>
 
             <div class="col-span-1">
                 <label class="block text-sm font-medium text-gray-600 mb-1.5">Kelas</label>
-                <select name="kelas" id="editKelas"
+                <select name="kelas" id="editKelas" required
+                        class="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"></select>
                         class="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400">
                     @foreach ($kelas as $k)
                         <option value="{{ $k->id}}" {{ old('kelas') === $k->id ? 'selected' : '' }}>
@@ -217,6 +218,7 @@ const addNISError = document.getElementById('addNISError');
 const addSiswaBtn = document.getElementById('addSiswaBtn');
 
 addNISInput.addEventListener('input', async function() {
+    this.value = this.value.replace(/[^0-9-]/g, '');
     const nis = this.value.trim();
 
     if (nis.length === 0) {
@@ -255,6 +257,7 @@ const editNISError = document.getElementById('editNISError');
 const editSiswaBtn = document.getElementById('editSiswaBtn');
 
 editNISInput.addEventListener('input', async function() {
+    this.value = this.value.replace(/[^0-9-]/g, '');
     const nis = this.value.trim();
 
     if (nis.length === 0) {

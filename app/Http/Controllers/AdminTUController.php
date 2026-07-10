@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 
 class AdminTUController extends Controller
 {
     public function simpan(Request $request)
     {
-        user::create([
+        User::create([
             'nip'  => $request->input('NIP'),
             'nama' => $request->input('nama'),
             'role' => 'Admin TU',
@@ -26,9 +26,9 @@ class AdminTUController extends Controller
         return redirect()->back()->with('success', 'Admin berhasil disimpan');
     }
 
-        public function show()
+    public function show()
     {
-        $adminTUs = user::where('role', 'Admin TU')->get();
+        $adminTUs = User::where('role', 'Admin TU')->get();
         $NIP = [];
         $nama = [];
         foreach ($adminTUs as $adminTU) {
@@ -41,14 +41,14 @@ class AdminTUController extends Controller
 
         public function delete($id)
     {
-        user::findOrFail($id)->delete();
-        return redirect()->back()->with('success', 'Admin TU berhasil dihapus');
+        User::findOrFail($id)->delete();
+        return \redirect()->back()->with('success', 'Admin TU berhasil dihapus');
     }
 
     public function update(Request $request, $id)
     {
 
-        user::where('id', $id)->update([
+        User::where('id', $id)->update([
             'nip' => $request->input('NIP'),
             'nama' => $request->input('nama'),
             'no_hp' => $request->input('no_hp'),

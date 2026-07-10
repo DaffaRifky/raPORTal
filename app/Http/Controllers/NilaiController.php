@@ -107,7 +107,7 @@ class NilaiController extends Controller
         // Tugas filtered by selected MP
         $tugasList = $selectedMpId
             ? Tugas::where('mp_id', $selectedMpId)
-                   ->orderByRaw("FIELD(tipe, 'Tugas', 'UH', 'UTS', 'UAS')")
+                   ->orderByRaw("FIELD(tipe, 'Tugas', 'Ulangan', 'PR', 'UTS', 'UAS')")
                    ->orderBy('nama')
                    ->get()
             : collect();
@@ -135,7 +135,7 @@ class NilaiController extends Controller
 
                     if ($nilai !== null) {
                         // Kelompokkan berdasarkan tipe tugas
-                        if ($tugas->tipe === 'Tugas') {
+                        if ($tugas->tipe === 'Tugas' || $tugas->tipe === 'Ulangan' || $tugas->tipe === 'PR') {
                             $totalTugas += $nilai;
                             $countTugas++;
                         } elseif ($tugas->tipe === 'UTS') {

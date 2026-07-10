@@ -9,10 +9,20 @@
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.15.12/dist/cdn.min.js"></script>
     <title>{{ config('app.name', 'raPORTal') }} — @yield('title')</title>
 </head>
-<body >
- <x-sidebar />
- <x-header>@yield('header')</x-header>
-    <div class="ml-56 p-8">
+<body x-data="{ sidebarOpen: false }">
+    <x-sidebar />
+    <x-header>@yield('header')</x-header>
+
+    <!-- backdrop for mobile -->
+    <div
+        x-show="sidebarOpen"
+        x-transition.opacity
+        @click="sidebarOpen = false"
+        class="fixed inset-0 bg-black/50 z-30 lg:hidden"
+        style="display: none;"
+    ></div>
+
+    <div class="lg:ml-56 mt-15 p-8 ">
         @yield('content')
     </div>
 

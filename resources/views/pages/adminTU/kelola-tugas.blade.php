@@ -9,6 +9,10 @@
     <div class="mb-4 px-4 py-3 bg-green-100 text-green-700 rounded-xl text-sm">
         {{ session('success') }}
     </div>
+@elseif(session('error'))
+    <div class="mb-4 px-4 py-3 bg-red-100 text-red-700 rounded-xl text-sm">
+        {{ session('error') }}
+    </div>
 @endif
 
 {{-- Top bar --}}
@@ -30,70 +34,69 @@
         <thead class="bg-gray-100 text-gray-600">
             <tr>
                 <th class="px-6 py-4 text-left font-semibold">Nama Tugas</th>
-                <th class="px-6 py-4 text-left font-semibold">Mata Pelajaran</th>
                 <th class="px-6 py-4 text-left font-semibold">Tipe</th>
+                <th class="px-6 py-4 text-left font-semibold">Mata Pelajaran</th>
                 <th class="px-6 py-4 text-center font-semibold">Aksi</th>
             </tr>
         </thead>
-        <tbody class="divide-y divide-gray-200" id="tugasTable">
-            @forelse ($tugasList as $tugas)
-                <tr class="hover:bg-gray-50 transition">
-                    <td class="px-6 py-4 text-sm">{{ $tugas->nama }}</td>
-                    <td class="px-6 py-4 text-sm">{{ $tugas->mp->nama ?? '-' }}</td>
-                    <td class="px-6 py-4 text-sm">
-                        @php
-                            $tipeColor = match($tugas->tipe) {
-                                'UH'    => 'bg-orange-100 text-orange-700',
-                                'UTS'   => 'bg-purple-100 text-purple-700',
-                                'UAS'   => 'bg-red-100 text-red-700',
-                                default => 'bg-blue-100 text-blue-700',
-                            };
-                        @endphp
-                        <span class="px-2 py-0.5 rounded-full text-xs {{ $tipeColor }}">
-                            {{ $tugas->tipe }}
-                        </span>
-                    </td>
-                    <td class="px-6 py-4 text-center">
-                        {{-- Edit button --}}
-                        <button
-                            onclick="openEditModal(this)"
-                            data-id="{{ $tugas->id }}"
-                            data-nama="{{ $tugas->nama }}"
-                            data-tipe="{{ $tugas->tipe }}"
-                            data-mp="{{ $tugas->mp_id }}"
-                            class="text-blue-500 hover:text-blue-700 hover:bg-blue-100
+<tbody class="divide-y divide-gray-200" id="tugasTable">
+    @forelse ($tugasList as $tugas)
+        @if ($tugas->tipe !== 'UTS' && $tugas->tipe !== 'UAS')
+            <tr class="hover:bg-gray-50 transition">
+                <td class="px-6 py-4 text-sm">{{ $tugas->nama }}</td>
+                <td class="px-6 py-4 text-sm">
+                    @php
+                        $tipeColor = match($tugas->tipe) {
+                            'UH'    => 'bg-orange-100 text-orange-700',
+                            'PR'    => 'bg-yellow-100 text-yellow-700',
+                            default => 'bg-blue-100 text-blue-700',
+                        };
+                    @endphp
+                    <span class="px-2 py-0.5 rounded-full text-xs {{ $tipeColor }}">
+                        {{ $tugas->tipe }}
+                    </span>
+                </td>
+                <td class="px-6 py-4 text-sm">{{ $tugas->mp->nama ?? '-' }}</td>
+                <td class="px-6 py-4 text-center">
+                    <button
+                        onclick="openEditModal(this)"
+                        data-id="{{ $tugas->id }}"
+                        data-nama="{{ $tugas->nama }}"
+                        data-tipe="{{ $tugas->tipe }}"
+                        data-mp="{{ $tugas->mp_id }}"
+                        class="text-blue-500 hover:text-blue-700 hover:bg-blue-100
+                               rounded-lg transition px-1">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                        </svg>
+                    </button>
+
+                    <form method="POST" action="{{ route('tugas.delete', $tugas->id) }}"
+                        style="display:inline;"
+                        onsubmit="return confirm('Yakin ingin menghapus tugas ini? Semua nilai terkait juga akan terhapus.')">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit"
+                            class="text-red-500 hover:text-red-700 hover:bg-red-100
                                    rounded-lg transition px-1">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
                             </svg>
                         </button>
-
-                        {{-- Delete button --}}
-                        <form method="POST" action="{{ route('tugas.delete', $tugas->id) }}"
-                            style="display:inline;"
-                            onsubmit="return confirm('Yakin ingin menghapus tugas ini? Semua nilai terkait juga akan terhapus.')">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit"
-                                class="text-red-500 hover:text-red-700 hover:bg-red-100
-                                       rounded-lg transition px-1">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
-                                </svg>
-                            </button>
-                        </form>
-                    </td>
-                </tr>
-            @empty
-                <tr>
-                    <td colspan="4" class="px-6 py-8 text-center text-gray-400 text-sm">
-                        Belum ada tugas. Klik "+ Tambah Tugas" untuk menambahkan.
-                    </td>
-                </tr>
-            @endforelse
-        </tbody>
+                    </form>
+                </td>
+            </tr>
+        @endif
+    @empty
+        <tr>
+            <td colspan="4" class="px-6 py-8 text-center text-gray-400 text-sm">
+                Belum ada tugas. Klik "+ Tambah Tugas" untuk menambahkan.
+            </td>
+        </tr>
+    @endforelse
+</tbody>
     </table>
 </div>
 
@@ -122,10 +125,9 @@
                 <select name="tipe"
                     class="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-sm
                            focus:outline-none focus:ring-2 focus:ring-blue-400" required>
-                    <option value="Tugas">Tugas Harian</option>
-                    <option value="UH">Ulangan Harian (UH)</option>
-                    <option value="UTS">UTS</option>
-                    <option value="UAS">UAS</option>
+                    <option value="Tugas">Tugas</option>
+                    <option value="Ulangan">Ulangan</option>
+                    <option value="PR">PR</option>
                 </select>
             </div>
 
@@ -184,10 +186,9 @@
                 <select name="tipe" id="edit-tipe"
                     class="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-sm
                            focus:outline-none focus:ring-2 focus:ring-blue-400" required>
-                    <option value="Tugas">Tugas Harian</option>
-                    <option value="UH">Ulangan Harian (UH)</option>
-                    <option value="UTS">UTS</option>
-                    <option value="UAS">UAS</option>
+                    <option value="Tugas">Tugas</option>
+                    <option value="Ulangan">Ulangan</option>
+                    <option value="PR">PR</option>
                 </select>
             </div>
 
