@@ -71,7 +71,7 @@
             @forelse ($siswas as $siswa)
                 <tr class="hover:bg-gray-50 transition">
                     <td class="px-4 py-3 text-sm text-gray-600">{{ $siswa->NIS }}</td>
-                    <td class="px-4 py-3 text-sm uppercase font-medium">{{ $siswa->nama }}</td>
+                    <td class="px-4 py-3 text-sm ">{{ $siswa->nama }}</td>
 
                     @forelse ($tugasList as $tugas)
                         @php $score = $siswa->scores[$tugas->id] ?? null; @endphp
@@ -91,7 +91,7 @@
                     <td class="px-4 py-3 text-center bg-blue-50">
                         @if ($siswa->rata_rata !== null)
                             <span class="font-bold text-sm
-                                {{ $siswa->rata_rata >= 75 ? 'text-blue-600' : 'text-red-500' }}">
+                                {{ $siswa->rata_rata }}">
                                 {{ $siswa->rata_rata }}
                             </span>
                         @else

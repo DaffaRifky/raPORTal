@@ -251,9 +251,9 @@
 
 @stack('scripts')
 <script>
-  function addRow(btn) {
-    const addRowTr = btn.closest('tr');      // the row containing the clicked button
-    const tbody = addRowTr.closest('tbody');  // its own tbody, not the whole page
+function addRow(btn) {
+    const addRowTr = btn.closest('tr');
+    const tbody = addRowTr.closest('tbody');
 
     const newRow = document.createElement('tr');
     newRow.classList.add('data-row');
@@ -263,14 +263,15 @@
       <td colspan="2">
         <div class="flex gap-2">
           <input type="text" name="keterangan[]" class="w-full text-sm text-gray-700" />
-          <button type="button" onclick="deleteRow(this)" class="bg-red-500 text-white px-4 rounded-full">X</button>
+          <button type="button" onclick="deleteRow(this)"
+            class="no-print bg-red-500 text-white px-4 rounded-full">X</button>
         </div>
       </td>
     `;
 
     tbody.insertBefore(newRow, addRowTr);
     renumberRows(tbody);
-  }
+}
 
   function deleteRow(btn) {
     const row = btn.closest('tr');
@@ -329,7 +330,6 @@
         @page {
             size: A3;
             margin: none;
-            scale: 74;
         }
     }
 </style>

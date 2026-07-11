@@ -37,21 +37,21 @@
             @endif
 
             {{-- Tanda Tangan --}}
-            @if(auth()->user()->role !== 'Admin TU')
+            @if(auth()->user()->role === 'Kepala Sekolah' || auth()->check() && \App\Models\Kelas::where('wali_kelas_id', auth()->id())->exists())
                 <h1 class="text-white mb-2 text-center text-xl font-medium mt-5">Tanda Tangan</h1>
                 @if (empty(Auth::user()->tanda_tangan))
                     {{-- show placeholder --}}
                     <a onclick="document.getElementById('updateTandaTanganModal').classList.remove('hidden')" class="bg-white cursor-pointer hover:bg-gray-100 w-60 h-60 border border-black/30 rounded-xl shadow-md m-6 mt-3 text-lg text-gray-500 text-center flex items-center justify-center">No Image <br> (QR atau Scan)</a>
                 @else
                 <a onclick="document.getElementById('updateTandaTanganModal').classList.remove('hidden')" class="w-60 h-60 cursor-pointer hover:bg-amber-50 rounded-xl shadow-md m-6 mt-3 text-xl font-medium text-gray-500 text-center flex items-center justify-center">
-                    <img class="image rounded-xl md:w-60 md:h-60 w-30 h-30 shadow-md border-2 border-black/30 absolute hover:opacity-30"
+                    <img class="image rounded-xl md:w-60 md:h-60 w-30 h-30 shadow-md border-2 border-black/30 absolute hover:opacity-30 bg-white"
                         src="{{ asset('storage/images/' . auth()->user()->tanda_tangan) }}"
                         alt="signature_image">Pilih Tanda Tangan Baru <br>(QR atau Scan)</a>
                 @endif
             @endif
         </div>
 
-        <div class="w-full p-8 pt-6 bg-linear-to-r from-slate-300 to-[#e2e2e2] rounded-br-xl rounded-bl-xl md:rounded-tr-xl md:rounded-bl-none shadow-md">
+        <div class="w-full flex flex-col min-h-[calc(100vh-someheader)] p-8 pt-6 bg-linear-to-r from-slate-300 to-[#e2e2e2] rounded-br-xl rounded-bl-xl md:rounded-tr-xl md:rounded-bl-none shadow-md">
             <h1 class="text-xl font-bold mb-4">Data Pribadi</h1>
             <div class="grid grid-cols-2 gap-4 mb-13">
                 <div class="col-span-2 lg:col-span-1">
@@ -85,7 +85,7 @@
                 </div>
             </div>
             <h1 class="text-xl font-bold mb-4">Ubah Password</h1>
-            <div class="lg:grid lg:grid-cols-3 gap-4">
+            <div class="lg:grid lg:grid-cols-3 gap-4 flex flex-col min-h-[calc(100vh-someheader)] mb-4">
                 <div>
                     <label for="current_password" class="block text-sm font-medium mb-1">Password Lama</label>
                     <input id="current_password" name="current_password" class="w-full px-3 py-2 border-2 bg-gray-50 border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-200" type="password" autocomplete="current-password">
@@ -99,9 +99,7 @@
                     <input id="new_password_confirmation" name="new_password_confirmation" class="w-full px-3 py-2 border-2 bg-gray-50 border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-200" type="password" autocomplete="new-password">
                 </div>
             </div>
-            <div class="mb-4 flex justify-end">
-                <button type="submit" class="w-full text-center bg-cyan-500 hover:bg-cyan-600 cursor-pointer text-white p-2 rounded-2xl">Simpan Perubahan</button>
-            </div>
+            <button type="submit" class="w-full mt-auto text-center bg-cyan-500 hover:bg-cyan-600 cursor-pointer text-white p-2 rounded-2xl">Simpan Perubahan</button>
         </div>
     </div>
 </form>
@@ -140,7 +138,7 @@
         <hr class="mb-4 opacity-30 border">
         <form action="{{route('profil-saya.upload-tanda-tangan')}}" method="POST" class="grid grid-cols-3 gap-4" enctype="multipart/form-data">
                 @csrf
-                <input type="file" class="col-span-2 px-3 py-2 border-2 bg-gray-50 border-gray-300 rounded-xl focus:outline-none focus:ring focus:ring-blue-200" name="image">
+                <input type="file" class="col-span-2 px-3 py-2 border-2 bg-gray-50 border-gray-300 rounded-xl focus:outline-none focus:ring focus:ring-blue-200" name="tanda_tangan">
                 <input type="submit" class="text-center bg-[#0A95FF] text-white p-2 rounded-xl" value="Upload">
         </form>
     </div>

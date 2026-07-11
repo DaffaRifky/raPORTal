@@ -53,23 +53,30 @@ class ProfileController extends Controller
 
     public function uploadFP(Request $request)
     {
-        if($request->hasFile('image')){
-            $file = $request->image;
-            $filename = $file->hashName();
-            $request->image->storeAs('images',$filename,'public');
-            Auth::user()->update(['image'=>$filename]);
-        }
-        return redirect()->back()->with('success', 'Image uploaded successfully.');
+        $request->validate([
+            'image' => 'required|image|mimes:jpg,jpeg,png,svg|max:10240',
+        ]);
+
+        $file = $request->file('image');
+        $filename = $file->hashName();
+        $file->storeAs('images', $filename, 'public');
+        Auth::user()->update(['image' => $filename]);
+
+        return redirect()->back()->with('success', 'Foto profil berhasil diunggah.');
     }
+
     public function uploadTT(Request $request)
     {
-        if($request->hasFile('tanda_tangan')){
-            $file = $request->tanda_tangan;
-            $filename = $file->hashName();
-            $request->tanda_tangan->storeAs('images',$filename,'public');
-            Auth::user()->update(['tanda_tangan'=>$filename]);
-        }
-        return redirect()->back()->with('success', 'Image uploaded successfully.');
+        $request->validate([
+            'tanda_tangan' => 'required|image|mimes:jpg,jpeg,png,svg|max:10240',
+        ]);
+
+        $file = $request->file('tanda_tangan');
+        $filename = $file->hashName();
+        $file->storeAs('images', $filename, 'public');
+        Auth::user()->update(['tanda_tangan' => $filename]);
+
+        return redirect()->back()->with('success', 'Tanda tangan berhasil diunggah.');
     }
 
     public function checkDuplicate(Request $request)
@@ -78,7 +85,7 @@ class ProfileController extends Controller
         $email = $request->input('email');
         $no_hp = $request->input('no_hp');
         $excludeId = $request->input('exclude_id');
-        
+
         $query = User::where(function ($q) use ($nip, $email, $no_hp) {
             if ($nip) {
                 $q->orWhere('nip', $nip);
@@ -90,13 +97,13 @@ class ProfileController extends Controller
                 $q->orWhere('no_hp', $no_hp);
             }
         });
-        
+
         if ($excludeId) {
             $query->where('id', '!=', $excludeId);
         }
-        
+
         $exists = $query->exists();
-        
+
         return response()->json(['exists' => $exists]);
     }
 }

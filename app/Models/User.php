@@ -66,6 +66,7 @@ class User extends Authenticatable
         'pendidikan',
         'alamat',
         'image',
+        'tanda_tangan',
         'password',
     ];
 
