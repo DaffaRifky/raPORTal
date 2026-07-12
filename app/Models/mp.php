@@ -30,7 +30,7 @@ class Mp extends Model
     use HasFactory;
 
     protected $table = 'mps';   // tell Laravel the table name explicitly
-    protected $fillable = ['nama'];  // or whatever columns mps has
+    protected $fillable = ['nama', 'singkatan'];  // allow mass assignment for singkatan
     public function users()
     {
         return $this->belongsToMany(User::class, 'mp_user', 'mp_id', 'user_id');
