@@ -27,9 +27,9 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/logout', [Login::class, 'logout'])->middleware('auth')->name('logout');
 
-    Route::get('/data-kelas',         [KelasController::class, 'show'])->name('kelas.show');
-    Route::post('/data-kelas',        [KelasController::class, 'simpan'])->name('kelas.simpan');
-    Route::put('/data-kelas/{id}',    [KelasController::class, 'update'])->name('kelas.update');
+    Route::get('/data-kelas', [KelasController::class, 'show'])->name('kelas.show');
+    Route::post('/data-kelas', [KelasController::class, 'simpan'])->name('kelas.simpan');
+    Route::put('/data-kelas/{id}', [KelasController::class, 'update'])->name('kelas.update');
     Route::delete('/data-kelas/{id}', [KelasController::class, 'delete'])->name('kelas.delete');
 
     Route::get('/data-siswa', [SiswaController::class, 'show'])->name('siswa.show');
@@ -58,10 +58,10 @@ Route::middleware('auth')->group(function () {
     Route::delete('/data-admin-TU/{id}', [AdminTUController::class, 'delete'])->name('admin-TU.delete');
     Route::put('/data-admin-TU/{id}', [AdminTUController::class, 'update'])->name('admin-TU.update');
 
-    Route::get('/kelola-tugas',          [TugasController::class, 'index'])->name('tugas.index');
-    Route::post('/kelola-tugas',         [TugasController::class, 'simpan'])->name('tugas.simpan');
-    Route::put('/kelola-tugas/{id}',     [TugasController::class, 'update'])->name('tugas.update');
-    Route::delete('/kelola-tugas/{id}',  [TugasController::class, 'delete'])->name('tugas.delete');
+    Route::get('/kelola-tugas', [TugasController::class, 'index'])->name('tugas.index');
+    Route::post('/kelola-tugas', [TugasController::class, 'simpan'])->name('tugas.simpan');
+    Route::put('/kelola-tugas/{id}', [TugasController::class, 'update'])->name('tugas.update');
+    Route::delete('/kelola-tugas/{id}', [TugasController::class, 'delete'])->name('tugas.delete');
 
     Route::get('/wali-kelas/kelas-saya', [WaliKelasController::class, 'kelas_saya'])->name('wali-kelas.kelas-saya');
     Route::get('/wali-kelas/rapor', [WaliKelasController::class, 'rapor'])->name('wali-kelas.rapor');
@@ -69,7 +69,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/kepala-sekolah/penilaian-siswa', [KepalaSekolahController::class, 'index'])
      ->name('kepala-sekolah.penilaian-siswa');
 
-    Route::get('/profil-saya',  [ProfileController::class, 'show'])->name('profil-saya.show');
+    Route::get('/profil-saya', [ProfileController::class, 'show'])->name('profil-saya.show');
     Route::put('/profil-saya', [ProfileController::class, 'update'])->name('profil-saya.update');
     Route::post('/profil-saya/upload-foto-profil', [ProfileController::class, 'uploadFP'])->name('profil-saya.upload-foto-profil');
     Route::post('/profil-saya/upload-tanda-tangan', [ProfileController::class, 'uploadTT'])->name('profil-saya.upload-tanda-tangan');
