@@ -216,7 +216,7 @@
             </ul>
         </nav>
     </div>
-    
+
     <div class="mt-auto">
         <hr class="border-white/50 border-t-2">
         <div class="p-2">
@@ -227,7 +227,7 @@
                     <span class="text-xl font-bold text-slate-600">{{ strtoupper(substr(Auth::user()->nama, 0, 1)) }}</span>
                 </div>
             @else
-                <img class="image rounded-full w-5 h-5 shadow-md border-2 border-black/30"
+                <img class="image rounded-full w-8 h-8 shadow-md border-2 border-black/30 object-fill"
                     src="{{ asset('storage/images/' . auth()->user()->image) }}"
                     alt="profile_image">
             @endif
@@ -248,6 +248,6 @@
             </button>
         </form>
         </div>
-        
+
     </div>
 </aside>
